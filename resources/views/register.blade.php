@@ -20,16 +20,13 @@
    <!-- Left side with image and text -->
    <section class="relative md:w-1/2 w-full rounded-t-[40px] md:rounded-l-[40px] md:rounded-tr-none overflow-hidden">
     <img alt="Group of friends traveling in forest with jeep, four people having fun outdoors" class="w-full h-full object-cover" height="800" src="https://storage.googleapis.com/a1aa/image/9f824814-4ade-4203-0737-cbd84fc6c7ba.jpg" width="600"/>
-    <div class="absolute bottom-20 left-6 right-6 text-white font-semibold text-sm leading-tight drop-shadow-[0_0_3px_rgba(0,0,0,0.8)]">
+    <div class="absolute bottom-20 left-0 right-0 text-white font-semibold text-sm leading-tight drop-shadow-[0_0_3px_rgba(0,0,0,0.8)]">
      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore mit
     </div>
-    <div class="absolute bottom-6 left-6 flex space-x-2">
-     <span class="w-8 h-3 rounded-full bg-[#3b6dfd]">
-     </span>
-     <span class="w-5 h-3 rounded-full bg-[#a9b3f7]">
-     </span>
-     <span class="w-5 h-3 rounded-full bg-[#a9b3f7]">
-     </span>
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex justify-center space-x-2 px-4">
+     <span class="w-6 sm:w-8 h-2 sm:h-3 rounded-full bg-[#3b6dfd]"></span>
+     <span class="w-4 sm:w-5 h-2 sm:h-3 rounded-full bg-[#a9b3f7]"></span>
+     <span class="w-4 sm:w-5 h-2 sm:h-3 rounded-full bg-[#a9b3f7]"></span>
     </div>
    </section>
    <!-- Right side with form -->

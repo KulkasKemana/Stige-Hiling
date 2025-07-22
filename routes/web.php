@@ -11,3 +11,6 @@ Route::get('/forgot-password', function () {
 Route::get('/register', function () {
     return view('register');
 })->name('register');
+Route::get('/otp', function () {
+    return view('otp');
+})->name('otp');

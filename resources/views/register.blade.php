@@ -16,23 +16,23 @@
   <main class="bg-white rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.15)] max-w-5xl w-full flex flex-col md:flex-row overflow-hidden">
     
     <!-- LEFT: Carousel -->
-    <section class="relative md:w-1/2 w-full rounded-t-[40px] md:rounded-l-[40px] md:rounded-tr-none overflow-hidden">
-      <div class="relative w-full h-full">
+    <section class="md:w-1/2 w-full bg-white flex flex-col justify-center relative p-2 md:p-3">
+      <div class="overflow-hidden rounded-tl-[29px] rounded-bl-[29px] rounded-br-[120px] relative w-full aspect-[3/4] shadow-md">
         <img id="imgA" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="z-index:0; transform: translateX(0);" />
         <img id="imgB" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="z-index:0; transform: translateX(100%);" />
-      </div>
-      <div id="caption" class="absolute bottom-20 left-6 right-6 text-white font-semibold text-sm drop-shadow-[0_0_3px_rgba(0,0,0,0.8)] transition-all duration-700">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-      </div>
-      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
-        <span id="dot-0" onclick="setCarousel(0, true)" class="cursor-pointer w-6 sm:w-8 h-2 sm:h-3 rounded-full bg-[#3b6dfd]"></span>
-        <span id="dot-1" onclick="setCarousel(1, true)" class="cursor-pointer w-4 sm:w-5 h-2 sm:h-3 rounded-full bg-[#a9b3f7]"></span>
-        <span id="dot-2" onclick="setCarousel(2, true)" class="cursor-pointer w-4 sm:w-5 h-2 sm:h-3 rounded-full bg-[#a9b3f7]"></span>
+        <div id="carousel-caption" class="absolute bottom-20 left-4 right-4 text-white font-semibold text-xs sm:text-sm leading-tight drop-shadow-[0_0_3px_rgba(0,0,0,0.8)]">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+        </div>
+        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
+          <span onclick="setCarousel(0)" id="dot-0" class="cursor-pointer w-5 h-2 rounded-full bg-[#3b6dfd] transition"></span>
+          <span onclick="setCarousel(1)" id="dot-1" class="cursor-pointer w-4 h-2 rounded-full bg-[#a9b3f7] transition"></span>
+          <span onclick="setCarousel(2)" id="dot-2" class="cursor-pointer w-4 h-2 rounded-full bg-[#a9b3f7] transition"></span>
+        </div>
       </div>
     </section>
 
     <!-- RIGHT: Register Form -->
-    <section class="md:w-1/2 w-full p-10 md:p-14 flex flex-col justify-center">
+    <section class="md:w-1/2 w-full p-10 md:p-10 flex flex-col justify-center">
       <div class="flex items-center space-x-3 mb-6">
         <img src="{{asset('assets/Logo_Healing_no_bg.png')}}" alt="logo" class="w-10 h-10 object-contain" />
         <div class="text-sm font-bold leading-tight">
@@ -47,6 +47,15 @@
         <input type="password" placeholder="Password" class="w-full border border-black rounded-lg px-5 py-3 text-base placeholder-black focus:outline-none" required />
         <button type="submit" class="w-full bg-[#ff914d] text-white font-semibold rounded-lg py-3 text-lg hover:bg-[#ff7a1a] transition">Sign Up</button>
       </form>
+      <div class="flex items-center my-6 text-sm text-black">
+        <hr class="flex-grow border-t border-black" />
+        <span class="mx-3 font-medium">or continue</span>
+        <hr class="flex-grow border-t border-black" />
+      </div>
+      <button type="button" class="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-3 shadow-sm hover:shadow-md transition">
+        <img src="{{ asset('assets/LogoGoogle-removebg-preview.png') }}" alt="google" class="w-5 h-5 object-contain" />
+        Log in with Google
+      </button>
       <p class="text-center mt-6 text-sm">
         Already have an account?
         <a href="#" class="text-blue-600 hover:underline">Log in</a>
@@ -56,71 +65,75 @@
 
   <!-- Script Carousel -->
   <script>
-    const images = [
-      {src: "{{asset('assets/GitarBoy.jpg')}}", caption: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore mit"},
-      {src: "{{asset('assets/Gunung.jpg')}}", caption: "Lorem ipsum dolor"},
-      {src: "{{asset('assets/Pantai.jpg')}}", caption: "Lorem ipsum dol"}
-    ]
+  const images = [
+    { src: "{{ asset('assets/GitarBoy.jpg') }}", caption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+    { src: "{{ asset('assets/Gunung.jpg') }}", caption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore" },
+    { src: "{{ asset('assets/Pantai.jpg') }}", caption: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt" }
+  ]
 
-    const imgA = document.getElementById('imgA')
-    const imgB = document.getElementById('imgB')
-    const caption = document.getElementById('caption')
+  const imgA = document.getElementById('imgA')
+  const imgB = document.getElementById('imgB')
+  const caption = document.getElementById('carousel-caption')
 
-    let currentIdx = 0
-    let isCurrentA = true
-    let interval
+  let currentIdx = 0
+  let isCurrentA = true
+  let isTransitioning = false
+  let interval
 
-    function updateDots(idx) {
-      for (let i = 0; i < 3; i++) {
-        const dot = document.getElementById(`dot-${i}`)
-        dot.className = `cursor-pointer w-${i === idx ? '6 sm:w-8' : '4 sm:w-5'} h-2 sm:h-3 rounded-full ${i === idx ? 'bg-[#3b6dfd]' : 'bg-[#a9b3f7]'}`
-      }
+  function updateDots(idx) {
+    for (let i = 0; i < 3; i++) {
+      const dot = document.getElementById(`dot-${i}`)
+      dot.className = `cursor-pointer w-${i === idx ? '6 sm:w-8' : '4 sm:w-5'} h-2 sm:h-3 rounded-full ${i === idx ? 'bg-[#3b6dfd]' : 'bg-[#a9b3f7]'}`
     }
+  }
 
-    function setCarousel(idx, animate = false) {
-      if (idx === currentIdx) return
-      const nextImg = isCurrentA ? imgB : imgA
-      const currentImg = isCurrentA ? imgA : imgB
+  function setCarousel(idx) {
+    if (idx === currentIdx || isTransitioning) return
+    isTransitioning = true
 
-      nextImg.src = images[idx].src
-      nextImg.style.transition = 'none'
-      nextImg.style.transform = 'translateX(100%)'
-      caption.style.transition = 'none'
-      caption.style.opacity = '0'
-      caption.style.transform = 'translateX(100%)'
+    const nextImg = isCurrentA ? imgB : imgA
+    const currentImg = isCurrentA ? imgA : imgB
 
-      nextImg.offsetWidth
+    nextImg.src = images[idx].src
+    nextImg.style.transition = 'none'
+    nextImg.style.transform = 'translateX(100%)'
+    caption.style.transition = 'none'
+    caption.style.opacity = '0'
+    caption.style.transform = 'translateX(100%)'
 
-      nextImg.style.transition = 'transform 0.7s'
-      currentImg.style.transition = 'transform 0.7s'
-      nextImg.style.transform = 'translateX(0)'
-      currentImg.style.transform = 'translateX(-100%)'
+    nextImg.offsetWidth
 
-      caption.innerText = images[idx].caption
-      caption.style.transition = 'transform 0.7s, opacity 0.7s'
-      caption.style.transform = 'translateX(0)'
-      caption.style.opacity = '1'
+    nextImg.style.transition = 'transform 0.7s'
+    currentImg.style.transition = 'transform 0.7s'
+    nextImg.style.transform = 'translateX(0)'
+    currentImg.style.transform = 'translateX(-100%)'
 
-      setTimeout(() => {
-        currentImg.style.transition = 'none'
-        currentImg.style.transform = 'translateX(100%)'
-        isCurrentA = !isCurrentA
-        currentIdx = idx
-        updateDots(idx)
-      }, 700)
-    }
+    caption.innerText = images[idx].caption
+    caption.style.transition = 'transform 0.7s, opacity 0.7s'
+    caption.style.transform = 'translateX(0)'
+    caption.style.opacity = '1'
 
-    function startCarousel() {
-      interval = setInterval(() => {
-        const next = (currentIdx + 1) % images.length
-        setCarousel(next, true)
-      }, 3500)
-    }
+    setTimeout(() => {
+      currentImg.style.transition = 'none'
+      currentImg.style.transform = 'translateX(100%)'
+      isCurrentA = !isCurrentA
+      currentIdx = idx
+      updateDots(idx)
+      isTransitioning = false
+    }, 700)
+  }
 
-    startCarousel()
-    updateDots(0)
-    imgA.src = images[0].src
-    caption.innerText = images[0].caption
-  </script>
+  function startCarousel() {
+    interval = setInterval(() => {
+      const next = (currentIdx + 1) % images.length
+      setCarousel(next)
+    }, 3500)
+  }
+
+  startCarousel()
+  updateDots(0)
+  imgA.src = images[0].src
+  caption.innerText = images[0].caption
+</script>
 </body>
 </html>

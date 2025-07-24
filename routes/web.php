@@ -8,9 +8,9 @@ Route::get('/', function () {
 Route::get('/forgot-password', function () {
     return view('forgot-password');
 })->name('forgot-password');
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+Route::get('/create-account', function () {
+    return view('create-account');
+})->name('create-accountr');
 Route::get('/otp', function () {
     return view('otp');
 })->name('otp');

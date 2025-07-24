@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Healing Tour and Travel Register</title>
+  <title>Healing Tour and Travel Create Account</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
   <style>
@@ -31,7 +31,7 @@
       </div>
     </section>
 
-    <!-- RIGHT: Register Form -->
+    <!-- RIGHT: Create Account Form -->
     <section class="md:w-1/2 w-full p-10 md:p-10 flex flex-col justify-center">
       <div class="flex items-center space-x-3 mb-6">
         <img src="{{asset('assets/Logo_Healing_no_bg.png')}}" alt="logo" class="w-10 h-10 object-contain" />

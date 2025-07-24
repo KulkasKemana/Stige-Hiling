@@ -30,13 +30,35 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < 3; i++) {
       const dot = document.getElementById(`dot-${i}`);
       dot.className = `cursor-pointer w-${i === idx ? "6 sm:w-8" : "4 sm:w-5"} h-2 sm:h-3 rounded-full ${
-        i === idx ? "bg-[#3b6dfd]" : "bg-[#a9b3f7]"
-      }`;
+        i === idx ? "bg-[#3b6dfd]" : "bg-[#a9b3f7]"}`
     }
   }
 
-  window.setCarousel = function (idx) {
-    if (idx === currentIdx || isTransitioning) return;
+  function startCarousel() {
+    interval = setInterval(() => {
+      const next = (currentIdx + 1) % images.length;
+      runTransition(next);
+    }, 3500);
+  }
+
+  function resetCarouselTimerTo(idx) {
+    clearInterval(interval);
+    currentIdx = idx;
+    updateDots(idx);
+    imgA.src = images[idx].src;
+    caption.innerText = images[idx].caption;
+    isCurrentA = true;
+    isTransitioning = false;
+    startCarousel();
+  }
+
+  function runTransition(idx) {
+    if (idx === currentIdx || isTransitioning) {
+      resetCarouselTimerTo(currentIdx);
+      return;
+    }
+
+    clearInterval(interval);
     isTransitioning = true;
 
     const nextImg = isCurrentA ? imgB : imgA;
@@ -68,17 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
       currentIdx = idx;
       updateDots(idx);
       isTransitioning = false;
+      startCarousel();
     }, 700);
-  };
-
-  function startCarousel() {
-    interval = setInterval(() => {
-      const next = (currentIdx + 1) % images.length;
-      setCarousel(next);
-    }, 3500);
   }
 
-  // Init
+  // expose ke global
+  window.setCarousel = runTransition;
+
+  // init pertama
   startCarousel();
   updateDots(0);
   imgA.src = images[0].src;

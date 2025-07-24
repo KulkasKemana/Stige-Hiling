@@ -14,7 +14,7 @@
   <main class="bg-white rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.15)] max-w-5xl w-full flex flex-col md:flex-row overflow-hidden">
 
     <!-- LEFT: Carousel -->
-    <section class="md:w-1/2 w-full bg-white flex flex-col justify-center relative p-2 md:p-3">
+    <section class="hidden md:flex md:w-1/2 w-full bg-white flex-col justify-center relative p-2 md:p-3">
       <div class="overflow-hidden rounded-tl-[24px] rounded-bl-[24px] rounded-br-[120px] relative w-full aspect-[3/4] shadow-md">
         <img id="imgA" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="transform: translateX(0);" />
         <img id="imgB" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="transform: translateX(100%);" />
@@ -43,7 +43,7 @@
         <input type="email" placeholder="Email" class="w-full border border-black rounded-lg px-5 py-3 text-base placeholder-black focus:outline-none" required />
         <div class="relative">
           <input type="password" placeholder="Password" class="w-full border border-black rounded-lg px-5 py-3 text-base placeholder-black focus:outline-none" required />
-          <a href="#" class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline">Forget Password?</a>
+          <a href="/forgot-password" class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline">Forget Password?</a>
         </div>
         <button type="submit" class="w-full bg-[#ff914d] text-white font-semibold rounded-lg py-3 text-lg hover:bg-[#ff7a1a] transition">Sign In</button>
       </form>
@@ -58,7 +58,7 @@
       </button>
       <p class="text-center mt-6 text-sm">
         Don’t have an account?
-        <a href="#" class="text-blue-600 hover:underline">Sign Up</a>
+        <a href="/register" class="text-blue-600 hover:underline">Sign Up</a>
       </p>
     </section>
   </main>

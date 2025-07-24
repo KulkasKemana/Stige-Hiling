@@ -20,7 +20,9 @@
     </style>
   </head>
   <body class="bg-[#f3f3f3] min-h-screen flex items-center justify-center p-6">
-    <main class="bg-white rounded-3xl shadow-[0_0_20px_rgba(0,0,0,0.15)] max-w-4xl w-full p-10 sm:p-20 flex flex-col items-center h-[510px]">
+    <main
+      class="bg-white rounded-3xl shadow-[0_0_20px_rgba(0,0,0,0.15)] max-w-4xl w-full p-10 sm:p-20 flex flex-col items-center h-[510px]"
+    >
       <h1 class="text-3xl font-extrabold mb-3">Forgot password</h1>
       <p class="text-gray-500 mb-16 text-center text-sm max-w-sm leading-relaxed">
         Enter your email account to reset your password
@@ -38,27 +40,36 @@
         >
           Reset Password
         </button>
+
+        <!-- Tombol Kembali -->
+        <p class="text-center mt-1 text-sm">
+        Remember Your Password?
+        <a href="/" class="text-blue-600 hover:underline">Go Back To login</a>
+      </p>
       </form>
-    <!-- Popup -->
-    <div
-      id="popup"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
-    >
+
+      <!-- Popup -->
       <div
-        id="popupContent"
-        class="bg-white rounded-2xl px-10 py-8 flex flex-col items-center shadow-xl max-w-md w-full text-center opacity-0 scale-95 transition-all duration-300"
+        id="popup"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
       >
-        <div class="bg-orange-400 text-white rounded-full w-16 h-16 flex items-center justify-center mb-5">
-          <i class="fas fa-envelope text-2xl"></i>
+        <div
+          id="popupContent"
+          class="bg-white rounded-2xl px-10 py-8 flex flex-col items-center shadow-xl max-w-md w-full text-center opacity-0 scale-95 transition-all duration-300"
+        >
+          <div
+            class="bg-orange-400 text-white rounded-full w-16 h-16 flex items-center justify-center mb-5"
+          >
+            <i class="fas fa-envelope text-2xl"></i>
+          </div>
+          <h2 class="text-xl font-bold mb-2">Check your email</h2>
+          <p class="text-gray-500 text-sm">
+            We have sent password recovery instructions to your email
+          </p>
         </div>
-        <h2 class="text-xl font-bold mb-2">Check your email</h2>
-        <p class="text-gray-500 text-sm">
-          We have sent password recovery instructions to your email
-        </p>
       </div>
-    </div>
+    </main>
 
     <script src="{{ asset('js/forgot-pw.js') }}"></script>
-
   </body>
 </html>

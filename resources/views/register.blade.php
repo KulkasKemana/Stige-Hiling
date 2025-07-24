@@ -16,7 +16,7 @@
   <main class="bg-white rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.15)] max-w-5xl w-full flex flex-col md:flex-row overflow-hidden">
     
     <!-- LEFT: Carousel -->
-    <section class="md:w-1/2 w-full bg-white flex flex-col justify-center relative p-2 md:p-3">
+    <section class="hidden md:flex md:w-1/2 w-full bg-white flex-col justify-center relative p-2 md:p-3">
       <div class="overflow-hidden rounded-tl-[29px] rounded-bl-[29px] rounded-br-[120px] relative w-full aspect-[3/4] shadow-md">
         <img id="imgA" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="z-index:0; transform: translateX(0);" />
         <img id="imgB" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="z-index:0; transform: translateX(100%);" />
@@ -45,7 +45,7 @@
         <input type="text" placeholder="Name" class="w-full border border-black rounded-lg px-5 py-3 text-base placeholder-black focus:outline-none" required />
         <input type="email" placeholder="Email" class="w-full border border-black rounded-lg px-5 py-3 text-base placeholder-black focus:outline-none" required />
         <input type="password" placeholder="Password" class="w-full border border-black rounded-lg px-5 py-3 text-base placeholder-black focus:outline-none" required />
-        <button type="submit" class="w-full bg-[#ff914d] text-white font-semibold rounded-lg py-3 text-lg hover:bg-[#ff7a1a] transition">Sign Up</button>
+        <button type="submit" class="w-full bg-[#ff914d] text-white font-semibold rounded-lg py-3 text-lg hover:bg-[#ff7a1a] transition">Create Account</button>
       </form>
       <div class="flex items-center my-6 text-sm text-black">
         <hr class="flex-grow border-t border-black" />
@@ -58,7 +58,7 @@
       </button>
       <p class="text-center mt-6 text-sm">
         Already have an account?
-        <a href="#" class="text-blue-600 hover:underline">Log in</a>
+        <a href="/" class="text-blue-600 hover:underline">Log in</a>
       </p>
     </section>
   </main>

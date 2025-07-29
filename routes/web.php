@@ -14,3 +14,6 @@ Route::get('/create-account', function () {
 Route::get('/otp', function () {
     return view('otp');
 })->name('otp');
+Route::get('/home', function () {
+    return view('home');
+})->name('home');

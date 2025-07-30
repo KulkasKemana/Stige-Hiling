@@ -25,29 +25,33 @@
   <!-- Navbar -->
   <nav class="sticky top-0 z-50 h-20 flex items-center justify-between px-8 bg-[#EDEDED] shadow-md">
   <div class="flex items-center gap-8">
-    <div class="relative bg-white h-[80px] w-[240px] overflow-hidden shadow-md -ml-8 rounded-r-[50px]">
-  <div class="relative z-10 flex items-center pl-4 h-full">
-    <img src="assets/logo_healing_no_bg.png" class="h-10 w-auto mr-2" />
-    <div class="text-left leading-tight">
-      <h1 class="font-bold text-sm text-gray-800">Healing</h1>
-      <p class="text-xs text-gray-500">Tour And Travel</p>
+    <div class="relative w-[340px] h-[130px] rounded-md">
+      
+      <img src="assets/logobg.png"
+     alt="logo bg"
+     class="absolute top-4 -left-10 w-[500px] h-[102px] object-cover z-0" />
+
+      <div class="relative z-10 flex items-center h-full pl-4">
+        <img src="assets/logo_healing_no_bg.png" class="h-16 w-auto mr-2" />
+        <div class="text-left leading-tight">
+          <h1 class="font-bold text-sm text-gray-800">Healing</h1>
+          <p class="text-xs text-gray-500">Tour And Travel</p>
     </div>
   </div>
 </div>
-    <ul class="flex gap-6 font-Montserrat text-gray-700">
+    <ul class="flex gap-6 font-Montserrat text-gray-700 -ml-20">
       <li><a href="#" class="text-orange-500 border-b-2 border-orange-500">Home</a></li>
       <li><a href="#" class="hover:text-orange-500">Calendar</a></li>
       <li><a href="#" class="hover:text-orange-500">Best Destination</a></li>
     </ul>
   </div>
-   <div class="flex items-center space-x-4">
-    <div class="relative">
+   <div class="flex items-center space-x-4 transform -translate-x-20">
+    <div class="relative w-[350px]">
     <input
       type="text"
-      placeholder="Search..."
-      class="pl-10 pr-4 py-2 rounded-full border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:w-40 md:w-56"
-    />
-    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm"></i>
+      placeholder="Search here"
+      class="w-full pl-4 pr-10 py-3 text-sm rounded-full bg-white text-gray-600 placeholder-gray-400 border-none outline-none focus:ring-orange-400 focus:ring-2 transition"/>
+    <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
   </div>
   <!-- notifikasi -->
   <button class="relative p-2.5 bg-white rounded-full shadow hover:bg-orange-50">
@@ -67,6 +71,11 @@
   <button class="relative p-2.5 bg-white rounded-full shadow hover:bg-orange-50">
     <img src="assets/profile-icon.png" alt="Profil" class="w-5 h-5 object-contain" />
   </button>
+
+  <button class="text-white hover:text-orange-400 -ml-2px">
+    <i class="fas fa-chevron-down text-sm"></i>
+  </button>
+</div>
 </div>
   </nav>
   <!-- Hero Section -->

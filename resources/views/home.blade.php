@@ -109,97 +109,173 @@
    </p>
   </section>
   <!-- Carousel Section -->
-  <section class="mt-8 relative px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 overflow-x-auto scrollbar-hide">
-   <div class="flex space-x-6">
-    <!-- Left arrow -->
-    <button aria-label="Scroll left" class="flex items-center justify-center w-10 h-10 rounded-full bg-orange-400 text-white shrink-0">
-     <i class="fas fa-chevron-left">
-     </i>
-    </button>
-    <!-- Cards -->
-    <div class="flex space-x-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-pl-6" style="scroll-behavior: smooth;">
-     <!-- Card 1 -->
-     <div class="snap-center flex-shrink-0 w-48 sm:w-56 md:w-64 rounded-xl overflow-hidden relative">
-      <img alt="Beach with deck chairs and umbrella on sandy shore with blue sky and ocean" class="w-full h-full object-cover" height="320" src="https://storage.googleapis.com/a1aa/image/b1072067-50f1-426b-41e0-e982427d7c17.jpg" width="256"/>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent p-3 flex flex-col justify-end text-white text-xs sm:text-sm">
-       <div class="font-semibold">
-        Lorem ipsum
-       </div>
-       <div class="line-clamp-2">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+<!-- Carousel Section Start -->
+  <section
+    id="carousel"
+    class="mt-20 relative bg-gradient-to-r from-white via-gray-100 to-white py-16 overflow-visible"
+  >
+    <div class="max-w-7xl mx-auto px-4 relative flex items-center justify-center">
+      <button
+        id="prevBtn"
+        aria-label="Previous"
+        class="z-20 absolute left-6 top-1/2 -translate-y-1/2 bg-orange-400 hover:bg-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
+      >
+        <i class="fas fa-chevron-left text-2xl"></i>
+      </button>
+      <div
+        id="carouselItems"
+        class="flex space-x-6 overflow-hidden max-w-5xl items-center justify-center"
+      >
+        <div
+          class="carousel-card relative rounded-xl overflow-hidden flex-shrink-0 opacity-90 transition-all duration-500"
+        >
+          <img
+            alt="Beach relaxation scene with deck chairs and sunny sky"
+            class="w-full h-full object-cover"
+            src="https://storage.googleapis.com/a1aa/image/53857ae2-ac22-45e9-ffc7-46658543411c.jpg"
+            width="160"
+            height="213"
+          />
+        </div>
+        <div
+          class="carousel-card relative rounded-xl overflow-hidden flex-shrink-0 opacity-90 transition-all duration-500"
+        >
+          <img
+            alt="Vintage off-road vehicle parked in nature with trees"
+            class="w-full h-full object-cover"
+            src="https://storage.googleapis.com/a1aa/image/26a741ea-7413-4a6e-d0a4-f90c2fa83f9b.jpg"
+            width="192"
+            height="256"
+          />
+        </div>
+        <div
+          class="carousel-card relative rounded-xl overflow-hidden flex-shrink-0 transition-all duration-500"
+        >
+          <img
+            alt="Middle Eastern mosque with blue sky and birds flying"
+            class="w-full h-full object-cover"
+            src="https://storage.googleapis.com/a1aa/image/4ddcc17e-1ff4-43ea-d075-eb717fd24592.jpg"
+            width="320"
+            height="426"
+          />
+          <button
+            aria-label="Bookmark"
+            class="absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 p-2 rounded-full text-white"
+          >
+            <i class="far fa-bookmark"></i>
+          </button>
+          <div
+            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-transparent p-5 rounded-b-xl text-white"
+          >
+            <h2 class="text-xl font-semibold mb-1">Lorem ipsum</h2>
+            <p class="text-sm mb-2 leading-snug">
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
               nonummy
-       </div>
-       <div class="flex items-center space-x-1 mt-1">
-        <i class="fas fa-map-marker-alt text-orange-400 text-xs">
-        </i>
-        <span>
-         Beach
-        </span>
-       </div>
-       <div class="mt-1 font-semibold">
-        Rp 1.000.000
-       </div>
+            </p>
+            <div class="flex items-center text-xs mb-2 opacity-80">
+              <i class="fas fa-map-marker-alt mr-1"></i>Arab Saudi
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-lg">Rp 5.000.000</span>
+              <button
+                class="bg-white bg-opacity-30 hover:bg-opacity-50 rounded-lg px-4 py-2 text-sm font-medium text-white"
+              >
+                View Details
+              </button>
+            </div>
+            <div
+              class="absolute top-5 right-5 flex items-center space-x-1 text-yellow-400 text-sm font-semibold"
+            >
+              <i class="fas fa-star"></i>
+              <span>5.0</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="carousel-card relative rounded-xl overflow-hidden flex-shrink-0 opacity-90 transition-all duration-500"
+        >
+          <img
+            alt="Eiffel Tower under clear blue sky"
+            class="w-full h-full object-cover"
+            src="https://storage.googleapis.com/a1aa/image/3613aac4-86ba-4cb1-f2ec-f522a012ec1e.jpg"
+            width="192"
+            height="256"
+          />
+        </div>
+        <div
+          class="carousel-card relative rounded-xl overflow-hidden flex-shrink-0 opacity-90 transition-all duration-500"
+          style="width: 160px; height: 213px;"
+        >
+          <img
+            alt="Japanese Torii gates in forest path"
+            class="w-full h-full object-cover"
+            src="https://storage.googleapis.com/a1aa/image/7da3375e-5a03-4d9a-c234-4a36ae74ccb2.jpg"
+            width="160"
+            height="213"
+          />
+        </div>
       </div>
-     </div>
-     <!-- Card 2 -->
-     <div class="snap-center flex-shrink-0 w-48 sm:w-56 md:w-64 rounded-xl overflow-hidden relative">
-      <img alt="Off-road vehicle parked in forest area with green trees and blue sky" class="w-full h-full object-cover" height="320" src="https://storage.googleapis.com/a1aa/image/695e5801-9e5d-4a11-a9ab-df55120fe6b7.jpg" width="256"/>
-     </div>
-     <!-- Card 3 (highlighted) -->
-     <div class="snap-center flex-shrink-0 w-48 sm:w-56 md:w-64 rounded-xl overflow-hidden relative bg-gradient-to-t from-black/60 to-transparent">
-      <img alt="Large mosque with minaret under clear blue sky" class="w-full h-full object-cover rounded-xl" height="320" src="https://storage.googleapis.com/a1aa/image/a1ac9d06-dee1-4ce3-c23c-d122c013c04b.jpg" width="256"/>
-      <div class="absolute top-3 right-3 bg-white bg-opacity-30 rounded-full p-1 cursor-pointer" title="Bookmark">
-       <i class="fas fa-bookmark text-white">
-       </i>
-      </div>
-      <div class="absolute bottom-3 left-3 right-3 text-white text-xs sm:text-sm">
-       <div class="font-semibold">
-        Lorem ipsum
-       </div>
-       <div class="line-clamp-2">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy
-       </div>
-       <div class="flex items-center space-x-1 mt-1 text-yellow-400">
-        <i class="fas fa-star">
-        </i>
-        <span>
-         5.0
-        </span>
-       </div>
-       <div class="flex items-center space-x-1 mt-1 text-white text-xs">
-        <i class="fas fa-map-marker-alt">
-        </i>
-        <span>
-         Arab Saudi
-        </span>
-       </div>
-       <div class="mt-2 bg-white bg-opacity-30 rounded-full px-3 py-1 text-xs font-semibold inline-block">
-        View Details
-       </div>
-       <div class="mt-1 font-semibold">
-        Rp 5.000.000
-       </div>
-      </div>
-     </div>
-     <!-- Card 4 -->
-     <div class="snap-center flex-shrink-0 w-48 sm:w-56 md:w-64 rounded-xl overflow-hidden relative">
-      <img alt="Eiffel Tower under clear blue sky" class="w-full h-full object-cover" height="320" src="https://storage.googleapis.com/a1aa/image/123a18c5-5905-442e-6fad-c345b2c778fe.jpg" width="256"/>
-     </div>
-     <!-- Card 5 -->
-     <div class="snap-center flex-shrink-0 w-48 sm:w-56 md:w-64 rounded-xl overflow-hidden relative">
-      <img alt="Traditional Japanese torii gate in forest with green trees" class="w-full h-full object-cover" height="320" src="https://storage.googleapis.com/a1aa/image/71abb561-24bd-4d12-5150-66657eeb9016.jpg" width="256"/>
-     </div>
+      <button
+        id="nextBtn"
+        class="absolute right-6 top-1/2 -translate-y-1/2 bg-orange-400 hover:bg-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
+        aria-label="Next"
+      >
+        <i class="fas fa-chevron-right text-2xl"></i>
+      </button>
+      <a
+        class="absolute right-6 top-6 text-blue-500 font-medium hover:underline"
+        href="#"
+        >View All</a
+      >
     </div>
-    <!-- Right arrow -->
-    <button aria-label="Scroll right" class="flex items-center justify-center w-10 h-10 rounded-full bg-orange-400 text-white shrink-0">
-     <i class="fas fa-chevron-right">
-     </i>
-    </button>
-   </div>
-   <div class="text-right mt-2 text-xs text-blue-600 font-semibold cursor-pointer select-none">
-    View All
-   </div>
   </section>
+<script src="{{ asset('js/home.js') }}" ></script>
+<style>
+.carousel-card {
+  transition:
+    transform 0.6s cubic-bezier(0.4,0,0.2,1),
+    z-index 0.3s,
+    width 0.6s cubic-bezier(0.4,0,0.2,1),
+    height 0.6s cubic-bezier(0.4,0,0.2,1),
+    opacity 0.6s cubic-bezier(0.4,0,0.2,1),
+    filter 0.6s cubic-bezier(0.4,0,0.2,1),
+    border-radius 0.6s cubic-bezier(0.4,0,0.2,1),
+    box-shadow 0.6s cubic-bezier(0.4,0,0.2,1),
+    border 0.6s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform, width, height, opacity, filter, border-radius, box-shadow, border;
+  width: 120px;
+  height: 160px;
+  opacity: 1;
+  filter: brightness(1);
+  border-radius: 1.25rem;
+}
+.carousel-card.center {
+  width: 320px !important;
+  height: 426px !important;
+  z-index: 10;
+  transform: scale(1.1);
+  opacity: 1;
+  filter: brightness(1);
+  border-radius: 2rem !important;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 2px 8px 0 rgba(255,140,0,0.10);
+  border: 4px solid rgba(255,255,255,0.7);
+}
+.carousel-card.near-center {
+  width: 192px !important;
+  height: 256px !important;
+  z-index: 5;
+  transform: scale(1);
+  opacity: 0.8;
+  filter: brightness(0.9);
+}
+.carousel-card.far {
+  width: 140px !important;
+  height: 186px !important;
+  z-index: 1;
+  transform: scale(0.85);
+  opacity: 0.5;
+  filter: brightness(0.7);
+}
+</style>
  </body>
 </html> 

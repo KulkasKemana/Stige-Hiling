@@ -11,7 +11,7 @@ function scrollCarousel(direction) {
       carousel.appendChild(first);
       carousel.scrollLeft -= cardWidth;
       highlightCenterCard();
-    }, 500); // lebih lama agar sinkron dengan CSS
+    }, 120);
   } else {
     // Rotasi DOM dulu, lalu geser kiri
     const last = carousel.lastElementChild;
@@ -20,7 +20,7 @@ function scrollCarousel(direction) {
     carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
     setTimeout(() => {
       highlightCenterCard();
-    }, 500);
+    }, 120);
   }
 }
 

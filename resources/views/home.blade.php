@@ -141,7 +141,7 @@
           <img
             alt="Beach relaxation scene with deck chairs and sunny sky"
             class="w-full h-full object-cover"
-            src="https://storage.googleapis.com/a1aa/image/53857ae2-ac22-45e9-ffc7-46658543411c.jpg"
+            src="assets/chill.png"
             width="160"
             height="213"
           />
@@ -152,7 +152,7 @@
           <img
             alt="Vintage off-road vehicle parked in nature with trees"
             class="w-full h-full object-cover"
-            src="https://storage.googleapis.com/a1aa/image/26a741ea-7413-4a6e-d0a4-f90c2fa83f9b.jpg"
+            src="assets/jeep.png"
             width="192"
             height="256"
           />
@@ -163,7 +163,7 @@
           <img
             alt="Middle Eastern mosque with blue sky and birds flying"
             class="w-full h-full object-cover"
-            src="https://storage.googleapis.com/a1aa/image/4ddcc17e-1ff4-43ea-d075-eb717fd24592.jpg"
+            src="assets/masjid.png"
             width="320"
             height="426"
           />
@@ -206,7 +206,7 @@
           <img
             alt="Eiffel Tower under clear blue sky"
             class="w-full h-full object-cover"
-            src="https://storage.googleapis.com/a1aa/image/3613aac4-86ba-4cb1-f2ec-f522a012ec1e.jpg"
+            src="assets/eifel.png"
             width="192"
             height="256"
           />
@@ -218,7 +218,7 @@
           <img
             alt="Japanese Torii gates in forest path"
             class="w-full h-full object-cover"
-            src="https://storage.googleapis.com/a1aa/image/7da3375e-5a03-4d9a-c234-4a36ae74ccb2.jpg"
+            src="assets/shrine.png"
             width="160"
             height="213"
           />
@@ -242,15 +242,15 @@
 <style>
 .carousel-card {
   transition:
-    transform 0.6s cubic-bezier(0.4,0,0.2,1),
-    z-index 0.3s,
-    width 0.6s cubic-bezier(0.4,0,0.2,1),
-    height 0.6s cubic-bezier(0.4,0,0.2,1),
-    opacity 0.6s cubic-bezier(0.4,0,0.2,1),
-    filter 0.6s cubic-bezier(0.4,0,0.2,1),
-    border-radius 0.6s cubic-bezier(0.4,0,0.2,1),
-    box-shadow 0.6s cubic-bezier(0.4,0,0.2,1),
-    border 0.6s cubic-bezier(0.4,0,0.2,1);
+    transform 0s cubic-bezier(0.4,0,0.2,1),
+    z-index 2s,
+    width 0s cubic-bezier(0.4,0,0.2,1),
+    height 0s cubic-bezier(0.4,0,0.2,1),
+    opacity 0s cubic-bezier(0.4,0,0.2,1),
+    filter 0s cubic-bezier(0.4,0,0.2,1),
+    border-radius 0s cubic-bezier(0.4,0,0.2,1),
+    box-shadow 0s cubic-bezier(0.4,0,0.2,1),
+    border 0s cubic-bezier(0.4,0,0.2,1);
   will-change: transform, width, height, opacity, filter, border-radius, box-shadow, border;
   width: 120px;
   height: 160px;
@@ -262,7 +262,7 @@
   width: 320px !important;
   height: 426px !important;
   z-index: 10;
-  transform: scale(1.1);
+  transform: scale(0.85);
   opacity: 1;
   filter: brightness(1);
   border-radius: 2rem !important;

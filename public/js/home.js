@@ -3,25 +3,26 @@ function scrollCarousel(direction) {
   const card = carousel.querySelector('.carousel-card');
   const cardWidth = card.offsetWidth + 24; // 24 = space-x-6
 
-  if (direction === 1) {
-    // Geser kanan, lalu rotasi DOM
-    carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
-    setTimeout(() => {
-      const first = carousel.firstElementChild;
-      carousel.appendChild(first);
-      carousel.scrollLeft -= cardWidth;
-      highlightCenterCard();
-    }, 120);
-  } else {
-    // Rotasi DOM dulu, lalu geser kiri
-    const last = carousel.lastElementChild;
-    carousel.insertBefore(last, carousel.firstElementChild);
-    carousel.scrollLeft += cardWidth;
-    carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-    setTimeout(() => {
-      highlightCenterCard();
-    }, 120);
-  }
+if (direction === 1) {
+  // Geser kanan, lalu rotasi DOM
+  carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  setTimeout(() => {
+    const first = carousel.firstElementChild;
+    carousel.appendChild(first);
+    carousel.scrollLeft -= cardWidth;
+    highlightCenterCard();
+  }, 0); // waktu sesuai durasi animasi scroll
+} else {
+  // Rotasi DOM dulu, lalu geser kiri
+  const last = carousel.lastElementChild;
+  carousel.prepend(last);
+  carousel.scrollLeft += cardWidth;
+  carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+  setTimeout(() => {
+    highlightCenterCard();
+  }, 0);
+}
+
 }
 
 function highlightCenterCard() {

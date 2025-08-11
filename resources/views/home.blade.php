@@ -252,8 +252,8 @@
     box-shadow 0s cubic-bezier(0.4,0,0.2,1),
     border 0s cubic-bezier(0.4,0,0.2,1);
   will-change: transform, width, height, opacity, filter, border-radius, box-shadow, border;
-  width: 120px;
-  height: 160px;
+  width: 640px;
+  height: 852px;
   opacity: 1;
   filter: brightness(1);
   border-radius: 1.25rem;

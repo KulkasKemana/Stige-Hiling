@@ -11,7 +11,7 @@ if (direction === 1) {
     carousel.appendChild(first);
     carousel.scrollLeft -= cardWidth;
     highlightCenterCard();
-  }, 0); // waktu sesuai durasi animasi scroll
+  }, 100); // waktu sesuai durasi animasi scroll
 } else {
   // Rotasi DOM dulu, lalu geser kiri
   const last = carousel.lastElementChild;
@@ -20,7 +20,7 @@ if (direction === 1) {
   carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
   setTimeout(() => {
     highlightCenterCard();
-  }, 0);
+  }, 100);
 }
 
 }
@@ -34,7 +34,7 @@ function highlightCenterCard() {
 
   cards.forEach((card, idx) => {
     const cardRect = card.getBoundingClientRect();
-    const cardCenter = cardRect.left + cardRect.width / 2;
+    const cardCenter = cardRect.left + cardRect.width / 1.7;
     const carouselCenter = carouselRect.left + carouselRect.width / 2;
     const diff = Math.abs(carouselCenter - cardCenter);
     if (diff < minDiff) {

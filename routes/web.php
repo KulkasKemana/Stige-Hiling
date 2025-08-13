@@ -17,3 +17,7 @@ Route::get('/otp', function () {
 Route::get('/home', function () {
     return view('home');
 })->name('home');
+Route::get('/bookmark', function () {
+    return view('bookmark');
+})->name('bookmark');
+

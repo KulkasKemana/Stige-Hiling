@@ -18,7 +18,13 @@
         font-family: "Callisten";
         src: url("fonts/callisten.ttf") format("truetype");
     }
-
+    @keyframes fadeInDown {
+     from { opacity: 0; transform: translateY(-10px); }
+     to { opacity: 1; transform: translateY(0); }
+   }
+   .animate-fadeInDown {
+     animation: fadeInDown 0.3s ease-out forwards;
+   }
   </style>
  </head>
  <body class="bg-white">
@@ -29,9 +35,9 @@
       
       <img src="assets/logobg.png"
      alt="logo bg"
-     class="absolute top-4 -left-10 w-[500px] h-[102px] object-cover z-0" />
+     class="absolute top-4 -left-11 w-[400px] h-[100px] object-cover z-0" />
 
-      <div class="relative z-10 flex items-center h-full pl-4">
+      <div class="relative z-20 flex items-center h-full pl-4">
         <img src="assets/logo_healing_no_bg.png" class="h-16 w-auto mr-2" />
         <div class="text-left leading-tight">
           <h1 class="font-bold text-sm text-gray-800">Healing</h1>
@@ -40,12 +46,12 @@
   </div>
 </div>
     <ul class="flex gap-6 font-Montserrat text-gray-700 -ml-20">
-      <li><a href="#" class="text-orange-500 border-b-2 border-orange-500">Home</a></li>
       <li><a href="#" class="hover:text-orange-500">Calendar</a></li>
       <li><a href="#" class="hover:text-orange-500">Best Destination</a></li>
+      <li><a href="#" class="hover:text-orange-500">Calendar</a></li>
     </ul>
   </div>
-   <div class="flex items-center space-x-4 transform -translate-x-20">
+   <div class="flex items-center space-x-4 transform -translate-x-20 relative">
     <div class="relative w-[350px]">
     <input
       type="text"
@@ -68,16 +74,194 @@
     </button>
 
   <!-- profil -->
-  <button class="relative p-2.5 bg-white rounded-full shadow hover:bg-orange-50">
-    <img src="assets/profile-icon.png" alt="Profil" class="w-5 h-5 object-contain" />
-  </button>
+<button id="profileButton" class="relative p-2.5 bg-white rounded-full shadow hover:bg-orange-50">
+  <img src="assets/profile-icon.png" alt="Profil" class="w-5 h-5 object-contain" />
+</button>
 
-  <button class="text-white hover:text-orange-400 -ml-2px">
-    <i class="fas fa-chevron-down text-sm"></i>
-  </button>
-</div>
+<button id="arrowButton" class="text-white hover:text-orange-400 -ml-2px">
+  <i id="arrowIcon" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
+</button>
+
+<!-- Profile dropdown -->
+<div id="profileDropdown" class="absolute left-[150px] top-[55px] translate-x-[900px] w-[400px] bg-white rounded-2xl shadow-lg z-50 hidden">
+  <div class="p-6">
+    
+    <!-- profil -->
+    <div class="flex items-center space-x-4 mb-6 text-left">
+      <div class="w-14 h-14 rounded-full border-2 border-gray-300 overflow-hidden">
+        <img src="assets/profile-icon.png" alt="Profil" class="w-full h-full object-cover"/>
+      </div>
+      <div>
+        <h1 class="text-lg font-semibold text-gray-900 leading-tight">StigeHealing</h1>
+        <p class="text-sm text-gray-500 leading-tight">stigehealing@gmail.com</p>
+      </div>
+    </div>
+
+    <!-- Statistik -->
+    <div class="flex justify-center border-b border-gray-300 py-4 mb-6 text-center">
+      <div class="px-4">
+        <p class="text-xs font-semibold text-gray-700 mb-1">Reward Points</p>
+        <p class="text-orange-600 font-semibold text-base">0</p>
+      </div>
+      <div class="px-4 border-l border-gray-300">
+        <p class="text-xs font-semibold text-gray-700 mb-1">Travel Trips</p>
+        <p class="text-orange-600 font-semibold text-base">0</p>
+      </div>
+      <div class="px-4">
+        <p class="text-xs font-semibold text-gray-700 mb-1">Bucket List</p>
+        <p class="text-orange-600 font-semibold text-base">0</p>
+      </div>
+    </div>
+
+    <!-- Menu -->
+    <nav class="space-y-6">
+      <a class="flex items-center justify-between px-6 text-gray-900" href="#"> 
+        <div class="flex items-center space-x-4">
+          <i class="far fa-user text-gray-400 text-lg"></i>
+          <span class="text-base font-normal">Profile</span>
+        </div>
+        <i class="fas fa-chevron-right text-gray-400"></i>
+      </a>
+      <a class="flex items-center justify-between px-6 text-gray-900" href="/bookmark">
+        <div class="flex items-center space-x-4">
+          <i class="far fa-bookmark text-gray-400 text-lg"></i>
+          <span class="text-base font-normal">Bookmarked</span>
+        </div>
+        <i class="fas fa-chevron-right text-gray-400"></i>
+      </a>
+      <a class="flex items-center justify-between px-6 text-gray-900" href="#">
+        <div class="flex items-center space-x-4">
+          <i class="fas fa-globe-americas text-gray-400 text-lg"></i>
+          <span class="text-base font-normal">Previous Trips</span>
+        </div>
+        <i class="fas fa-chevron-right text-gray-400"></i>
+      </a>
+      <a class="flex items-center justify-between px-6 text-gray-900" href="#">
+        <div class="flex items-center space-x-4">
+          <i class="fas fa-cog text-gray-400 text-lg"></i>
+          <span class="text-base font-normal">Settings</span>
+        </div>
+        <i class="fas fa-chevron-right text-gray-400"></i>
+      </a>
+      <a class="flex items-center justify-between px-6 text-gray-900" href="/">
+        <div class="flex items-center space-x-4">
+          <i class="fas fa-sign-out-alt text-gray-400 text-lg"></i>
+          <span class="text-base font-normal">Log Out</span>
+        </div>
+        <i class="fas fa-chevron-right text-gray-400"></i>
+      </a>
+    </nav>
+  </div>
 </div>
   </nav>
+  <!-- dropdown -->
+<style>
+  #arrowButton {
+  transition: transform 0.3s ease;
+  margin-left: 10px;
+  }
+  #arrowButton.rotate {
+    transform: rotate(180deg);
+  }
+
+  #profileDropdown {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  #profileDropdown.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<!-- script dropdown profile -->
+<script>
+  const profileButton = document.getElementById('profileButton')
+  const arrowButton = document.getElementById('arrowButton')
+  const profileDropdown = document.getElementById('profileDropdown')
+
+  function toggleDropdown() {
+    const isHidden = profileDropdown.classList.contains('hidden')
+    if (isHidden) {
+      profileDropdown.classList.remove('hidden')
+      setTimeout(() => {
+        profileDropdown.classList.add('show')
+      }, 10)
+      arrowButton.classList.add('rotate')
+    } else {
+      profileDropdown.classList.remove('show')
+      arrowButton.classList.remove('rotate')
+      setTimeout(() => {
+        profileDropdown.classList.add('hidden')
+      }, 250)
+    }
+  }
+
+  profileButton?.addEventListener('click', toggleDropdown)
+  arrowButton?.addEventListener('click', toggleDropdown)
+
+  window.addEventListener('click', function (event) {
+    if (
+      !profileButton?.contains(event.target) &&
+      !arrowButton?.contains(event.target) &&
+      !profileDropdown?.contains(event.target)
+    ) {
+      profileDropdown.classList.remove('show')
+      arrowButton.classList.remove('rotate')
+      setTimeout(() => {
+        profileDropdown.classList.add('hidden')
+      }, 250)
+    }
+  })
+</script>
+
+<!-- script carousel -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carouselItems = document.querySelectorAll('.carousel-item')
+    let currentIndex = 0
+
+    function updateCarousel() {
+      carouselItems.forEach((item, index) => {
+        item.classList.remove(
+          'center',
+          'near-center',
+          'far',
+          'hidden'
+        )
+        if (index === currentIndex) {
+          item.classList.add('center')
+        } else if (
+          index === (currentIndex + 1) % carouselItems.length
+        ) {
+          item.classList.add('near-center')
+        } else if (
+          index === (currentIndex + 2) % carouselItems.length
+        ) {
+          item.classList.add('far')
+        } else {
+          item.classList.add('hidden')
+        }
+      })
+    }
+
+    function moveCarousel(direction) {
+      currentIndex =
+        (currentIndex + direction + carouselItems.length) % carouselItems.length
+      updateCarousel()
+    }
+
+    document
+      .getElementById('prevBtn')
+      .addEventListener('click', () => moveCarousel(-1))
+    document
+      .getElementById('nextBtn')
+      .addEventListener('click', () => moveCarousel(1))
+
+    updateCarousel()
+  })
+</script>
   <!-- Hero Section -->
   <section class="relative w-full h-[400px] sm:h-[480px] md:h-[520px] lg:h-[560px] xl:h-[600px]">
   <img 

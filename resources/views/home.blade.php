@@ -37,16 +37,11 @@
      alt="logo bg"
      class="absolute top-4 -left-11 w-[400px] h-[100px] object-cover z-0" />
 
-      <div class="relative z-20 flex items-center h-full pl-4">
-        <img src="assets/logo_healing_no_bg.png" class="h-16 w-auto mr-2" />
-        <div class="text-left leading-tight">
-          <h1 class="font-bold text-sm text-gray-800">Healing</h1>
-          <p class="text-xs text-gray-500">Tour And Travel</p>
-    </div>
+      
   </div>
 </div>
     <ul class="flex gap-6 font-Montserrat text-gray-700 -ml-20">
-      <li><a href="#" class="hover:text-orange-500">Calendar</a></li>
+      <li><a href="/home" class="hover:text-orange-500">Home</a></li>
       <li><a href="#" class="hover:text-orange-500">Best Destination</a></li>
       <li><a href="#" class="hover:text-orange-500">Calendar</a></li>
     </ul>
@@ -266,7 +261,6 @@
   <section class="relative w-full h-[400px] sm:h-[480px] md:h-[520px] lg:h-[560px] xl:h-[600px]">
   <img 
     src="assets/homepage-img.png" 
-    alt="Man wearing red jacket and green backpack standing on a rock overlooking a mountain valley at sunset" 
     class="w-full h-full object-cover" 
     width="1440" 
     height="600"

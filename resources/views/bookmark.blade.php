@@ -37,16 +37,11 @@
      alt="logo bg"
      class="absolute top-4 -left-10 w-[500px] h-[102px] object-cover z-0" />
 
-      <div class="relative z-10 flex items-center h-full pl-4">
-        <img src="assets/logo_healing_no_bg.png" class="h-16 w-auto mr-2" />
-        <div class="text-left leading-tight">
-          <h1 class="font-bold text-sm text-gray-800">Healing</h1>
-          <p class="text-xs text-gray-500">Tour And Travel</p>
-    </div>
+      
   </div>
 </div>
     <ul class="flex gap-6 font-Montserrat text-gray-700 -ml-20">
-      <li><a href="#" class="hover:text-orange-500">Home</a></li>
+      <li><a href="/home" class="hover:text-orange-500">Home</a></li>
       <li><a href="#" class="hover:text-orange-500">Calendar</a></li>
       <li><a href="#" class="hover:text-orange-500">Best Destination</a></li>
     </ul>
@@ -183,3 +178,312 @@
     }
   });
 </script>
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20">
+   <h1 class="text-4xl font-semibold text-gray-900 mb-8">
+    Bookmarked List
+   </h1>
+   <section class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+    <!-- Flutter style card repeated 8 times -->
+    <article class="flex space-x-6">
+     <img class="w-40 h-40 rounded-xl object-cover flex-shrink-0" src="assets/Bookmark.png"/>
+     <div class="flex flex-col justify-between">
+      <div>
+       <h2 class="font-semibold text-sm mb-1">
+        Beijing - China
+       </h2>
+       <p class="text-[9px] leading-[1.1] text-gray-900 font-normal mb-3 max-w-[220px]">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       </p>
+       <p class="text-xs font-normal mb-1">
+        Rp 3.000.000/Person
+       </p>
+       <div class="flex items-center space-x-1 text-xs mb-3">
+        <div class="flex items-center space-x-0.5 text-yellow-400">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star-half-alt">
+         </i>
+        </div>
+        <span class="text-gray-900 font-semibold">
+         4.3
+        </span>
+        <span class="text-gray-500 flex items-center space-x-1">
+         <i class="fas fa-user">
+         </i>
+         <span>
+          7K
+         </span>
+        </span>
+       </div>
+      </div>
+      <button class="bg-[#FF9343] text-white text-xs rounded-md px-4 py-1 w-max hover:bg-[#ff7e21] transition">
+        Book Now
+      </button>
+     </div>
+    </article>
+    <article class="flex space-x-6">
+     <img class="w-40 h-40 rounded-xl object-cover flex-shrink-0" src="assets/Bookmark.png"/>
+     <div class="flex flex-col justify-between">
+      <div>
+       <h2 class="font-semibold text-sm mb-1">
+        Beijing - China
+       </h2>
+       <p class="text-[9px] leading-[1.1] text-gray-900 font-normal mb-3 max-w-[220px]">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       </p>
+       <p class="text-xs font-normal mb-1">
+        Rp 3.000.000/Person
+       </p>
+       <div class="flex items-center space-x-1 text-xs mb-3">
+        <div class="flex items-center space-x-0.5 text-yellow-400">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star-half-alt">
+         </i>
+        </div>
+        <span class="text-gray-900 font-semibold">
+         4.3
+        </span>
+        <span class="text-gray-500 flex items-center space-x-1">
+         <i class="fas fa-user">
+         </i>
+         <span>
+          7K
+         </span>
+        </span>
+       </div>
+      </div>
+      <button class="bg-[#FF9343] text-white text-xs rounded-md px-4 py-1 w-max hover:bg-[#ff7e21] transition">
+        Book Now
+      </button>
+     </div>
+    </article>
+    <article class="flex space-x-6">
+     <img class="w-40 h-40 rounded-xl object-cover flex-shrink-0" src="assets/Bookmark.png"/>
+     <div class="flex flex-col justify-between">
+      <div>
+       <h2 class="font-semibold text-sm mb-1">
+        Beijing - China
+       </h2>
+       <p class="text-[9px] leading-[1.1] text-gray-900 font-normal mb-3 max-w-[220px]">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       </p>
+       <p class="text-xs font-normal mb-1">
+        Rp 3.000.000/Person
+       </p>
+       <div class="flex items-center space-x-1 text-xs mb-3">
+        <div class="flex items-center space-x-0.5 text-yellow-400">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star-half-alt">
+         </i>
+        </div>
+        <span class="text-gray-900 font-semibold">
+         4.3
+        </span>
+        <span class="text-gray-500 flex items-center space-x-1">
+         <i class="fas fa-user">
+         </i>
+         <span>
+          7K
+         </span>
+        </span>
+       </div>
+      </div>
+      <button class="bg-[#FF9343] text-white text-xs rounded-md px-4 py-1 w-max hover:bg-[#ff7e21] transition">
+        Book Now
+      </button>
+     </div>
+    </article>
+    <article class="flex space-x-6">
+     <img class="w-40 h-40 rounded-xl object-cover flex-shrink-0" src="assets/Bookmark.png"/>
+     <div class="flex flex-col justify-between">
+      <div>
+       <h2 class="font-semibold text-sm mb-1">
+        Beijing - China
+       </h2>
+       <p class="text-[9px] leading-[1.1] text-gray-900 font-normal mb-3 max-w-[220px]">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       </p>
+       <p class="text-xs font-normal mb-1">
+        Rp 3.000.000/Person
+       </p>
+       <div class="flex items-center space-x-1 text-xs mb-3">
+        <div class="flex items-center space-x-0.5 text-yellow-400">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star-half-alt">
+         </i>
+        </div>
+        <span class="text-gray-900 font-semibold">
+         4.3
+        </span>
+        <span class="text-gray-500 flex items-center space-x-1">
+         <i class="fas fa-user">
+         </i>
+         <span>
+          7K
+         </span>
+        </span>
+       </div>
+      </div>
+      <button class="bg-[#FF9343] text-white text-xs rounded-md px-4 py-1 w-max hover:bg-[#ff7e21] transition">
+        Book Now
+      </button>
+     </div>
+    </article>
+    <article class="flex space-x-6">
+     <img class="w-40 h-40 rounded-xl object-cover flex-shrink-0" src="assets/Bookmark.png"/>
+     <div class="flex flex-col justify-between">
+      <div>
+       <h2 class="font-semibold text-sm mb-1">
+        Beijing - China
+       </h2>
+       <p class="text-[9px] leading-[1.1] text-gray-900 font-normal mb-3 max-w-[220px]">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       </p>
+       <p class="text-xs font-normal mb-1">
+        Rp 3.000.000/Person
+       </p>
+       <div class="flex items-center space-x-1 text-xs mb-3">
+        <div class="flex items-center space-x-0.5 text-yellow-400">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star-half-alt">
+         </i>
+        </div>
+        <span class="text-gray-900 font-semibold">
+         4.3
+        </span>
+        <span class="text-gray-500 flex items-center space-x-1">
+         <i class="fas fa-user">
+         </i>
+         <span>
+          7K
+         </span>
+        </span>
+       </div>
+      </div>
+      <button class="bg-[#FF9343] text-white text-xs rounded-md px-4 py-1 w-max hover:bg-[#ff7e21] transition">
+        Book Now
+      </button>
+     </div>
+    </article>
+    <article class="flex space-x-6">
+     <img class="w-40 h-40 rounded-xl object-cover flex-shrink-0" src="assets/Bookmark.png"/>
+     <div class="flex flex-col justify-between">
+      <div>
+       <h2 class="font-semibold text-sm mb-1">
+        Beijing - China
+       </h2>
+       <p class="text-[9px] leading-[1.1] text-gray-900 font-normal mb-3 max-w-[220px]">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       </p>
+       <p class="text-xs font-normal mb-1">
+        Rp 3.000.000/Person
+       </p>
+       <div class="flex items-center space-x-1 text-xs mb-3">
+        <div class="flex items-center space-x-0.5 text-yellow-400">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star-half-alt">
+         </i>
+        </div>
+        <span class="text-gray-900 font-semibold">
+         4.3
+        </span>
+        <span class="text-gray-500 flex items-center space-x-1">
+         <i class="fas fa-user">
+         </i>
+         <span>
+          7K
+         </span>
+        </span>
+       </div>
+      </div>
+      <button class="bg-[#FF9343] text-white text-xs rounded-md px-4 py-1 w-max hover:bg-[#ff7e21] transition">
+        Book Now
+      </button>
+     </div>
+    </article>
+    <article class="flex space-x-6">
+     <img class="w-40 h-40 rounded-xl object-cover flex-shrink-0" src="assets/Bookmark.png"/>
+     <div class="flex flex-col justify-between">
+      <div>
+       <h2 class="font-semibold text-sm mb-1">
+        Beijing - China
+       </h2>
+       <p class="text-[9px] leading-[1.1] text-gray-900 font-normal mb-3 max-w-[220px]">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       </p>
+       <p class="text-xs font-normal mb-1">
+        Rp 3.000.000/Person
+       </p>
+       <div class="flex items-center space-x-1 text-xs mb-3">
+        <div class="flex items-center space-x-0.5 text-yellow-400">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star-half-alt">
+         </i>
+        </div>
+        <span class="text-gray-900 font-semibold">
+         4.3
+        </span>
+        <span class="text-gray-500 flex items-center space-x-1">
+         <i class="fas fa-user">
+         </i>
+         <span>
+          7K
+         </span>
+        </span>
+       </div>
+      </div>
+      <button class="bg-[#FF9343] text-white text-xs rounded-md px-4 py-1 w-max hover:bg-[#ff7e21] transition">
+      Book Now
+      </button>
+     </div>
+    </article>
+   </section>
+  </main>

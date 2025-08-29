@@ -1,28 +1,27 @@
 function scrollCarousel(direction) {
   const carousel = document.getElementById('carouselItems');
   const card = carousel.querySelector('.carousel-card');
-  const cardWidth = card.offsetWidth + 24; // 24 = space-x-6
+  const cardWidth = card.offsetWidth + 24;
 
-if (direction === 1) {
-  // Geser kanan, lalu rotasi DOM
-  carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
-  setTimeout(() => {
-    const first = carousel.firstElementChild;
-    carousel.appendChild(first);
-    carousel.scrollLeft -= cardWidth;
-    highlightCenterCard();
-  }, 100); // waktu sesuai durasi animasi scroll
-} else {
-  // Rotasi DOM dulu, lalu geser kiri
-  const last = carousel.lastElementChild;
-  carousel.prepend(last);
-  carousel.scrollLeft += cardWidth;
-  carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-  setTimeout(() => {
-    highlightCenterCard();
-  }, 100);
-}
-
+  if (direction === 1) {
+    // Geser kanan, lalu rotasi DOM
+    carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    setTimeout(() => {
+      const first = carousel.firstElementChild;
+      carousel.appendChild(first);
+      carousel.scrollLeft -= cardWidth;
+      highlightCenterCard();
+    }, 100); // waktu sesuai durasi animasi scroll
+  } else {
+    // Rotasi DOM dulu, lalu geser kiri
+    const last = carousel.lastElementChild;
+    carousel.prepend(last);
+    carousel.scrollLeft += cardWidth;
+    carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    setTimeout(() => {
+      highlightCenterCard();
+    }, 100);
+  }
 }
 
 function highlightCenterCard() {
@@ -55,11 +54,10 @@ function highlightCenterCard() {
   });
 }
 
-  window.addEventListener('DOMContentLoaded', function() {
-    highlightCenterCard();
-    window.addEventListener('resize', highlightCenterCard);
-  });
+window.addEventListener('DOMContentLoaded', function() {
+  highlightCenterCard();
+  window.addEventListener('resize', highlightCenterCard);
+});
 
-  // Event listener untuk tombol
-  document.getElementById('prevBtn').onclick = function() { scrollCarousel(-1); };
-  document.getElementById('nextBtn').onclick = function() { scrollCarousel(1); };
+document.getElementById('prevBtn').onclick = function() { scrollCarousel(-1); };
+document.getElementById('nextBtn').onclick = function() { scrollCarousel(1); };

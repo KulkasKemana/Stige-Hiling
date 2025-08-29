@@ -20,4 +20,9 @@ Route::get('/home', function () {
 Route::get('/bookmark', function () {
     return view('bookmark');
 })->name('bookmark');
-
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
+Route::get('/checkout', function () {
+    return view('checkout');
+})->name('checkout');

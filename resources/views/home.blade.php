@@ -464,5 +464,42 @@
   filter: brightness(0.7);
 }
 </style>
+ <!-- Footer -->
+<footer class="border-t border-gray-200 py-8 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-gray-600 text-sm space-y-4 sm:space-y-0">
+  <div class="flex items-center space-x-2">
+    <img class="w-8 h-8" height="32" src="assets/Logo_Healing_no_bg.png" width="32"/>
+    <span>
+      Healing Tour and Travel
+    </span>
+  </div>
+  <nav class="flex space-x-8 text-gray-700 font-semibold">
+    <a class="hover:text-orange-500 transition" href="#">
+      Home
+    </a>
+    <a class="hover:text-orange-500 transition" href="#">
+      Schedule
+    </a>
+    <a class="hover:text-orange-500 transition" href="#">
+      Destinations
+    </a>
+  </nav>
+  <div class="flex space-x-6 text-gray-700 text-lg">
+    <a aria-label="Facebook" class="hover:text-orange-500 transition" href="#">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a aria-label="Twitter" class="hover:text-orange-500 transition" href="#">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a aria-label="Instagram" class="hover:text-orange-500 transition" href="#">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a aria-label="LinkedIn" class="hover:text-orange-500 transition" href="#">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </div>
+</footer>
+<div class="text-center text-gray-400 text-xs py-4 border-t border-gray-100">
+  © 2025 Healing Tour and Travel
+</div>
  </body>
-</html> 
+</html>

@@ -26,3 +26,12 @@ Route::get('/profile', function () {
 Route::get('/checkout', function () {
     return view('checkout');
 })->name('checkout');
+Route::get('/destinations', function () {
+    return view('destinations');
+})->name('destinations');
+Route::get('/keranjang', function () {
+    return view('keranjang');
+})->name('keranjang');
+Route::get('/book', function () {
+    return view('book');
+})->name('book');

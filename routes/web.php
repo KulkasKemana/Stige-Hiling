@@ -15,6 +15,22 @@ Route::get('/home', function () {
     return view('home');
 });
 
+Route::get('/schedule', function () {
+        return view('schedule');
+    })->name('schedule');
+
+Route::get('/payment', function () {
+        return view('payment');
+    })->name('payment');
+
+Route::get('/ps', function () {
+        return view('ps');
+    })->name('ps');
+
+    Route::get('/pf', function () {
+        return view('pf');
+    })->name('pf');
+
 // Auth Routes (Guest only)
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

@@ -1,876 +1,426 @@
+<!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>Travel Page</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
-  <style>
-   body {
-     font-family: "Inter", sans-serif;
-   }
-   @font-face {
-     font-family: "Callisten";
-     src: url("fonts/callisten.ttf") format("truetype");
-   }
-   @keyframes fadeInDown {
-     from { opacity: 0; transform: translateY(-10px); }
-     to   { opacity: 1; transform: translateY(0); }
-   }
-   .animate-fadeInDown {
-     animation: fadeInDown 0.3s ease-out forwards;
-   }
-   @keyframes popupIn {
-    from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  @keyframes popupOut {
-    from { opacity: 1; transform: translateY(0) scale(1); }
-    to   { opacity: 0; transform: translateY(-12px) scale(0.98); }
-  }
-  .popup-animate-in { animation: popupIn 320ms cubic-bezier(.2,.9,.2,1) both; }
-  .popup-animate-out { animation: popupOut 240ms cubic-bezier(.4,0,.2,1) both; }
-  #arrowButton.rotate {
-    transform: rotate(180deg);
-  }
-
-  #arrowButton i {
-    display: inline-block;
-    transition: transform 220ms cubic-bezier(.2,.9,.2,1);
-    transform: rotate(0deg);
-    transform-origin: center;
-  }
-  #arrowButton.rotate i {
-    transform: rotate(180deg);
-  }
-  </style>
- </head>
- <body class="bg-white pt-16">
-  <!-- Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm">
-    <div class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-3 relative">
-  <!-- Left: Logo -->
-  <div class="flex items-center gap-3">
-    <img src="assets/Logo_Healing_no_bg.png" class="w-10 h-10 object-contain" width="40" height="40" alt="Logo" />
-    <div class="text-[11px] leading-[14px]">
-      <div class="font-semibold text-black">Healing</div>
-      <div class="text-black">Tour And Travel</div>
-    </div>
-  </div>
-
-  <!-- Center: Navigation -->
-  <nav class="flex space-x-8 text-[14px] font-medium text-black">
-    <a href="/home" class="hover:underline transition-colors">Home</a>
-    <a href="#" class="hover:underline transition-colors">Schedule</a>
-    <a href="/destinations" class="text-[#F97316] hover:underline transition-colors">Destinations</a>
-  </nav>
-
-  <!-- Right: User info -->
-  <div class="flex items-center gap-3">
-    <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
-      <img src="assets/Profile-Icon.png" class="w-8 h-8 rounded-full object-cover" width="32" height="32" />
-      <div class="min-w-[120px] text-right">
-        <div class="text-sm font-semibold">StigeHealing</div>
-        <div class="text-xs text-gray-500">stigehealing@gmail.com</div>
-      </div>
-    </button>
-    <button id="arrowButton" aria-label="Open user menu" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
-      <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
-    </button>
-  </div>
-
-  <!-- Profile dropdown (moved inside header so it follows the navbar) -->
-  <div id="profileDropdown" class="absolute right-6 top-full mt-2 min-w-[300px] max-w-[360px] w-auto bg-white rounded-2xl shadow-lg z-50 hidden overflow-auto">
-      <div class="p-3 flex flex-col">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-            <img src="assets/profile-icon.png" alt="Profil" class="w-full h-full object-cover"/>
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="text-sm font-semibold text-gray-900 truncate">StigeHealing</div>
-            <div class="text-[11px] text-gray-500 truncate">stigehealing@gmail.com</div>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between bg-gray-50 rounded-lg py-1.5 px-2 text-center text-xs mt-3">
-          <div class="flex-1">
-            <div class="font-semibold text-gray-700">0</div>
-            <div class="text-gray-500">Points</div>
-          </div>
-          <div class="w-px h-6 bg-gray-200 mx-2"></div>
-          <div class="flex-1">
-            <div class="font-semibold text-gray-700">0</div>
-            <div class="text-gray-500">Trips</div>
-          </div>
-          <div class="w-px h-6 bg-gray-200 mx-2"></div>
-          <div class="flex-1">
-            <div class="font-semibold text-gray-700">0</div>
-            <div class="text-gray-500">Bucket</div>
-          </div>
-        </div>
-
-        <nav class="mt-3 overflow-auto">
-          <ul class="flex flex-col divide-y divide-gray-100 text-sm">
-            <li>
-              <a href="/profile" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                <div class="flex items-center gap-3"><i class="far fa-user text-gray-400 w-5 text-center"></i><span class="truncate">Profile</span></div>
-                <i class="fas fa-chevron-right text-gray-400"></i>
-              </a>
-            </li>
-            <li>
-              <a href="/bookmark" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                <div class="flex items-center gap-3"><i class="far fa-bookmark text-gray-400 w-5 text-center"></i><span class="truncate">Bookmarked</span></div>
-                <i class="fas fa-chevron-right text-gray-400"></i>
-              </a>
-            </li>
-            <li>
-              <a href="/keranjang" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                <div class="flex items-center gap-3"><i class="fas fa-shopping-cart text-gray-400 w-5 text-center"></i><span class="truncate">Keranjang</span></div>
-                <i class="fas fa-chevron-right text-gray-400"></i>
-              </a>
-            </li>
-            <li>
-              <a href="/" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                <div class="flex items-center gap-3"><i class="fas fa-sign-out-alt text-gray-400 w-5 text-center"></i><span class="truncate">Log Out</span></div>
-                <i class="fas fa-chevron-right text-gray-400"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <div class="mt-3 text-center text-[11px] text-gray-400 py-1">Healing Tour & Travel</div>
-      </div>
-    </div>
-  </header>
-  <!--- Main --->
-  <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $destination->name }} - Book Now | Healing Tour & Travel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: "Inter", sans-serif; }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.8) 0%, rgba(249, 115, 22, 0.9) 100%);
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            background-color: #f8f9fa;
-            color: #333;
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .back-btn {
-            background: none;
-            border: none;
-            font-size: 18px;
-            margin-right: 15px;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .title-section h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .location {
-            color: #666;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-
-        .location::before {
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            content: "\f3c5";
-            margin-right: 5px;
-        }
-
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .left-section {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        }
-
-        .image-gallery {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 25px;
-            height: 300px;
-        }
-
-        .main-image {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e8c5a0"/><circle cx="200" cy="150" r="60" fill="%23d4a574"/><rect x="190" y="50" width="20" height="80" fill="%238b6f47"/><text x="200" y="250" text-anchor="middle" font-size="14" fill="%23654321">Masjid Haram</text></svg>') center/cover;
-            border-radius: 8px;
-            grid-row: span 2;
-        }
-
-        .small-image {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 145"><rect width="200" height="145" fill="%23e8c5a0"/><circle cx="100" cy="72" r="30" fill="%23d4a574"/><rect x="95" y="30" width="10" height="40" fill="%238b6f47"/></svg>') center/cover;
-            border-radius: 8px;
-        }
-
-        .description h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .description p {
-            font-family: 'Poppins', sans-serif;
-            font-size: 12px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            line-height: 1.6;
-            color: #000000ff;
-            margin-bottom: 20px;
-        }
-
-        .facilities {
-            margin-top: 30px;
-        }
-
-        .facilities h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .facility-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .facility-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            color: #666;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        .facility-item i {
-            margin-right: 8px;
-            width: 16px;
-        }
-
-        .terms {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-
-        .terms h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .terms-list {
-            list-style: none;
-        }
-
-        .terms-list li {
-            display: flex;
-            align-items: center;
-            padding: 5px 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .terms-list li i {
-            margin-right: 8px;
-            width: 16px;
-        }
-
-        .right-section {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .booking-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        }
-
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .rating-score {
-            font-size: 24px;
-            font-weight: 700;
-            color: #f59e0b;
-        }
-
-        .stars {
-            display: flex;
-            gap: 2px;
-        }
-
-        .star {
-            color: #f59e0b;
-            font-size: 16px;
-        }
-
-        .price-info {
-            margin: 20px 0;
-        }
-
-        .price {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .price-detail {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .book-btn {
-            background: linear-gradient(135deg, #f59e0b, #f97316);
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        .book-btn:hover {
+        .feature-card:hover {
             transform: translateY(-2px);
-        }
-
-        .reviews-section {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        }
-
-        .reviews-header {
-            margin-bottom: 25px;
-        }
-
-        .reviews-header h2 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .rating-overview {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .overall-rating {
-            text-align: center;
-        }
-
-        .overall-score {
-            font-size: 36px;
-            font-weight: 700;
-            color: #f59e0b;
-        }
-
-        .rating-breakdown {
-            flex: 1;
-        }
-
-        .rating-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .rating-number {
-            font-size: 14px;
-            width: 15px;
-        }
-
-        .bar-container {
-            flex: 1;
-            background: #f3f4f6;
-            border-radius: 4px;
-            height: 6px;
-        }
-
-        .bar-fill {
-            height: 100%;
-            border-radius: 4px;
-            background: #f59e0b;
-        }
-
-        .bar-count {
-            font-size: 12px;
-            color: #666;
-            width: 30px;
-            text-align: right;
-        }
-
-        .review-item {
-            border-bottom: 1px solid #f3f4f6;
-            padding: 20px 0;
-        }
-
-        .review-item:last-child {
-            border-bottom: none;
-        }
-
-        .reviewer-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .reviewer-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #f59e0b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .reviewer-details h4 {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .reviewer-details .date {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .review-rating {
-            display: flex;
-            gap: 2px;
-            margin-bottom: 8px;
-        }
-
-        .review-text {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #555;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .image-gallery {
-                grid-template-columns: 1fr 1fr;
-                height: 250px;
-            }
-
-            .main-image {
-                grid-column: span 2;
-            }
-
-            .facility-list {
-                grid-template-columns: 1fr;
-            }
-
-            .rating-overview {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+            transition: all 0.3s ease;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <button class="back-btn">←</button>
-            <div class="title-section">
-                <h1>Makkah - Masjidil Haram</h1>
-                <div class="location">7.2 km • 5 days • Makkah Saudi Arabia</div>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm">
+        <div class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-3">
+            <div class="flex items-center gap-3">
+                <img src="{{ asset('assets/Logo_Healing_no_bg.png') }}" class="w-10 h-10 object-contain" alt="Logo" />
+                <div class="text-[11px] leading-[14px]">
+                    <div class="font-semibold text-black">Healing</div>
+                    <div class="text-black">Tour And Travel</div>
+                </div>
+            </div>
+            
+            <nav class="flex space-x-8 text-[14px] font-medium text-black">
+                <a href="/home" class="hover:underline transition-colors">Home</a>
+                <a href="#" class="hover:underline transition-colors">Schedule</a>
+                <a href="{{ route('destinations.index') }}" class="hover:underline transition-colors">Destinations</a>
+            </nav>
+            
+            <div class="flex items-center gap-3">
+                @auth
+                    <span class="text-sm">{{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="text-sm text-gray-600 hover:text-gray-800">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 hover:text-orange-500">Login</a>
+                @endauth
             </div>
         </div>
+    </header>
 
-        <div class="main-content">
-            <div class="left-section">
-                <div class="image-gallery">
-                    <div class="main-image"></div>
-                    <div class="small-image"></div>
-                    <div class="small-image"></div>
-                    <div class="small-image"></div>
-                    <div class="small-image"></div>
-                </div>
+    <!-- Breadcrumb -->
+    <div class="pt-20 pb-4">
+        <div class="max-w-7xl mx-auto px-4">
+            <nav class="flex items-center gap-2 text-sm text-gray-600">
+                <a href="/home" class="hover:text-orange-500">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <a href="{{ route('destinations.index') }}" class="hover:text-orange-500">Destinations</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900 font-medium">{{ $destination->name }}</span>
+            </nav>
+        </div>
+    </div>
 
-                <div class="description">
-                    <h2>Description</h2>
-                    <p>Masjid al-Haram adalah masjid terbesar di dunia dan merupakan tempat tersuci dalam Islam. Masjid ini mengelilingi Ka'bah, yang merupakan kiblat umat Islam di seluruh dunia. Setiap tahun, jutaan Muslim dari seluruh dunia berkunjung ke sini untuk menunaikan ibadah haji dan umrah serta melaksanakan ibadah dzikir lainnya.</p>
-                </div>
-
-                <div class="facilities">
-                    <h3>Facility</h3>
-                    <div class="facility-list">
-                        <div class="facility-item"><i class="fas fa-bed"></i>5 Bedrooms</div>
-                        <div class="facility-item"><i class="fas fa-bus"></i>Transportation</div>
-                        <div class="facility-item"><i class="fas fa-utensils"></i>Breakfast</div>
-                        <div class="facility-item"><i class="fas fa-map-marked-alt"></i>Tour</div>
-                    </div>
-                </div>
-
-                <div class="terms">
-                    <h3>Terms and Conditions Trip</h3>
-                    <ul class="terms-list">
-                        <li><i class="fas fa-clock"></i>Check-in from 2pm and check-out at 12pm</li>
-                        <li><i class="fas fa-users"></i>Maximum 50 Person</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="right-section">
-                <div class="booking-card">
-                    <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">Makkah</h3>
-                    <p style="color: #999; font-size: 14px; margin-bottom: 15px;">Saudi Arabia</p>
-                    
-                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                        <div style="width: 20px; height: 20px; border: 2px solid #666; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 8px;">
-                            <div style="width: 6px; height: 6px; background: #666; border-radius: 50%;"></div>
+    <!-- Hero Section -->
+    <section class="relative">
+        <div class="relative h-96 bg-cover bg-center hero-gradient" 
+             style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{{ $destination->image }}');">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white px-4">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name }}</h1>
+                    <p class="text-xl mb-6 max-w-2xl">{{ $destination->description ?? 'Discover the beauty and wonder of this amazing destination with our expertly crafted tour packages.' }}</p>
+                    <div class="flex items-center justify-center gap-6 text-sm">
+                        <div class="flex items-center gap-2">
+                            <i class="far fa-clock"></i>
+                            <span>{{ $destination->duration ?? '3 days 2 nights' }}</span>
                         </div>
-                        <span style="color: #666; font-size: 14px;">
-  <i class="fas fa-clock" style="margin-right: 5px;"></i> 2 days - 4 days
-</span>
-
-                    </div>
-
-                    <div style="margin-bottom: 25px;">
-                        <p style="color: #999; font-size: 12px; margin-bottom: 5px;">From</p>
-                        <div style="font-size: 18px; font-weight: 700; color: #333;">Rp 5.000.000/Person</div>
-                    </div>
-
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <span style="color: #ffa500; font-size: 16px;">★</span>
-                            <span style="font-weight: 600;">4.75</span>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ $destination->location ?? $destination->name }}</span>
                         </div>
-                        <span style="color: #999; font-size: 12px;">419k Reviews</span>
-                    </div>
-
-                    <button class="book-btn">Book Now</button>
-                    <div style="text-align: center; margin-top: 12px;">
-                        <a href="#" style="color: #007bff; font-size: 14px; text-decoration: none;">Terms & Conditions</a>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-users"></i>
+                            <span>Group Tour</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="reviews-section">
-            <div class="reviews-header">
-                <h2>Ratings and Reviews</h2>
-                <p style="color: #666; font-size: 14px;">Here are reviews from recent travelers who give good ratings</p>
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-12 px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Content -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Overview -->
+                <div class="bg-white rounded-2xl shadow-sm p-8">
+                    <h2 class="text-2xl font-bold mb-6">Tour Overview</h2>
+                    <div class="prose max-w-none">
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            {{ $destination->description ?? 'Embark on an unforgettable journey to one of the world\'s most captivating destinations. Our carefully curated tour package offers the perfect blend of adventure, culture, and relaxation, ensuring you create memories that will last a lifetime.' }}
+                        </p>
+                        
+                        <h3 class="text-xl font-semibold mb-4">What Makes This Tour Special</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span>Expert local guides with extensive knowledge</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span>Carefully selected accommodations for comfort</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span>Authentic cultural experiences and local cuisine</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-green-500 mt-1"></i>
+                                <span>Small group sizes for personalized attention</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Itinerary -->
+                <div class="bg-white rounded-2xl shadow-sm p-8">
+                    <h2 class="text-2xl font-bold mb-6">Tour Itinerary</h2>
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-orange-500 pl-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Day 1 - Arrival & Welcome</h3>
+                            <p class="text-gray-600">Airport pickup, hotel check-in, welcome dinner, and orientation session with your tour guide.</p>
+                        </div>
+                        <div class="border-l-4 border-orange-300 pl-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Day 2 - City Exploration</h3>
+                            <p class="text-gray-600">Full day city tour visiting major landmarks, museums, and cultural sites with authentic local lunch.</p>
+                        </div>
+                        <div class="border-l-4 border-orange-300 pl-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Day 3 - Adventure & Nature</h3>
+                            <p class="text-gray-600">Outdoor activities, nature exploration, scenic viewpoints, and traditional cultural performances.</p>
+                        </div>
+                        @if(str_contains($destination->duration ?? '', '4') || str_contains($destination->duration ?? '', '5') || str_contains($destination->duration ?? '', '6'))
+                        <div class="border-l-4 border-orange-200 pl-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Day 4 - Free Time & Departure</h3>
+                            <p class="text-gray-600">Free time for shopping, relaxation, or optional activities before airport transfer and departure.</p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Inclusions & Exclusions -->
+                <div class="bg-white rounded-2xl shadow-sm p-8">
+                    <h2 class="text-2xl font-bold mb-6">What's Included</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4 text-green-600">✓ Included</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Accommodation ({{ str_contains($destination->duration ?? '', '3') ? '2' : (str_contains($destination->duration ?? '', '4') ? '3' : '4') }} nights)</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Daily breakfast & selected meals</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Airport transfers</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Professional tour guide</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Entrance fees to attractions</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Travel insurance</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4 text-red-600">✗ Not Included</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-times text-red-500"></i>
+                                    <span>International flights</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-times text-red-500"></i>
+                                    <span>Personal expenses</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-times text-red-500"></i>
+                                    <span>Optional activities</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-times text-red-500"></i>
+                                    <span>Tips for guide & driver</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-times text-red-500"></i>
+                                    <span>Visa fees (if required)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews -->
+                <div class="bg-white rounded-2xl shadow-sm p-8">
+                    <h2 class="text-2xl font-bold mb-6">Customer Reviews</h2>
+                    <div class="space-y-6">
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex items-start gap-4">
+                                <img src="{{ asset('assets/Profile-Icon.png') }}" alt="User" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <h4 class="font-semibold">Sarah Johnson</h4>
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600">"Amazing experience! The tour was well organized and our guide was incredibly knowledgeable. Would definitely recommend!"</p>
+                                    <p class="text-sm text-gray-400 mt-2">2 weeks ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex items-start gap-4">
+                                <img src="{{ asset('assets/Profile-Icon.png') }}" alt="User" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <h4 class="font-semibold">Michael Chen</h4>
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600">"Great value for money. The accommodations were comfortable and the itinerary was perfect for first-time visitors."</p>
+                                    <p class="text-sm text-gray-400 mt-2">1 month ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="rating-overview">
-                <div class="overall-rating">
-                    <div class="overall-score">4.7</div>
-                    <div class="stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">☆</span>
-                    </div>
-                    <div style="font-size: 12px; color: #666; margin-top: 5px;">182 reviews</div>
-                </div>
+            <!-- Right Sidebar - Booking Form -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-24">
+                    <!-- Price Card -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-orange-500">
+                                Rp {{ number_format($destination->price ?? 0, 0, ',', '.') }}
+                            </div>
+                            <div class="text-sm text-gray-500">per person</div>
+                        </div>
 
-                <div class="rating-breakdown">
-                    <div class="rating-bar">
-                        <span class="rating-number">5</span>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="width: 70%"></div>
-                        </div>
-                        <span class="bar-count">128</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span class="rating-number">4</span>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="width: 20%"></div>
-                        </div>
-                        <span class="bar-count">36</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span class="rating-number">3</span>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="width: 8%"></div>
-                        </div>
-                        <span class="bar-count">15</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span class="rating-number">2</span>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="width: 1%"></div>
-                        </div>
-                        <span class="bar-count">2</span>
-                    </div>
-                    <div class="rating-bar">
-                        <span class="rating-number">1</span>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="width: 0.5%"></div>
-                        </div>
-                        <span class="bar-count">1</span>
-                    </div>
-                </div>
-            </div>
+                        <!-- Booking Form -->
+                        @auth
+                            <form action="{{ route('book.store') }}" method="POST" class="space-y-4">
+                                @csrf
+                                <input type="hidden" name="destination_id" value="{{ $destination->id }}">
+                                
+                                <div>
+                                    <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">
+                                        <i class="fas fa-users mr-1"></i>
+                                        Number of Travelers
+                                    </label>
+                                    <select name="quantity" id="quantity" 
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                        @for($i = 1; $i <= 10; $i++)
+                                            <option value="{{ $i }}">{{ $i }} Person{{ $i > 1 ? 's' : '' }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="booking_date" class="block text-sm font-medium text-gray-700 mb-2">
+                                        <i class="far fa-calendar mr-1"></i>
+                                        Departure Date
+                                    </label>
+                                    <input type="date" name="booking_date" id="booking_date" 
+                                           min="{{ date('Y-m-d') }}"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                </div>
+                                
+                                <!-- Total Price Display -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-600">Total Price:</span>
+                                        <span id="totalPrice" class="font-semibold text-lg">Rp {{ number_format($destination->price ?? 0, 0, ',', '.') }}</span>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" 
+                                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Add to Cart
+                                </button>
+                            </form>
+                        @else
+                            <div class="text-center">
+                                <p class="text-gray-600 mb-4">Please login to book this destination</p>
+                                <a href="{{ route('login') }}" 
+                                   class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 inline-flex items-center justify-center gap-2">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Login to Book
+                                </a>
+                            </div>
+                        @endauth
 
-            <div class="review-item">
-                <div class="reviewer-info">
-                    <div class="reviewer-avatar">A</div>
-                    <div class="reviewer-details">
-                        <h4>Ahmad Subeki</h4>
-                        <div class="date">3 days ago • Recommended</div>
+                        <!-- Features -->
+                        <div class="mt-6 pt-6 border-t border-gray-200">
+                            <h3 class="text-sm font-semibold mb-3 text-gray-900">Why Book With Us?</h3>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-shield-alt text-green-500"></i>
+                                    <span>Best Price Guarantee</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-undo text-blue-500"></i>
+                                    <span>Free Cancellation</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-headset text-purple-500"></i>
+                                    <span>24/7 Customer Support</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-award text-yellow-500"></i>
+                                    <span>Verified Reviews</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="review-rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="review-text">
-                    Perjalanan yang sangat berkesan! Fasilitas yang disediakan sangat baik dan pelayanan guide yang ramah. Pengalaman spiritual yang tak terlupakan di Tanah Suci. Tempat yang sangat suci dan penuh berkah.
-                </div>
-            </div>
 
-            <div class="review-item">
-                <div class="reviewer-info">
-                    <div class="reviewer-avatar">S</div>
-                    <div class="reviewer-details">
-                        <h4>Siti Aisyah</h4>
-                        <div class="date">5 days ago • Recommended</div>
+                    <!-- Contact Card -->
+                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
+                        <h3 class="text-lg font-semibold mb-3">Need Help?</h3>
+                        <p class="text-sm mb-4 text-orange-100">Our travel experts are here to help you plan the perfect trip.</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-phone"></i>
+                                <span>+62 890 9989 7356</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-envelope"></i>
+                                <span>healing@gmail.com</span>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/62890998973563" target="_blank"
+                           class="mt-4 w-full bg-white text-orange-600 font-medium py-2 px-4 rounded-lg transition duration-200 inline-flex items-center justify-center gap-2 hover:bg-gray-50">
+                            <i class="fab fa-whatsapp"></i>
+                            Chat on WhatsApp
+                        </a>
                     </div>
-                </div>
-                <div class="review-rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">☆</span>
-                </div>
-                <div class="review-text">
-                    Alhamdulillah, perjalanan umrah yang sangat lancar. Hotel dekat dengan Masjidil Haram, makanan halal dan enak. Terima kasih atas pelayanan yang memuaskan. Semoga bisa kembali lagi.
-                </div>
-            </div>
-
-            <div class="review-item">
-                <div class="reviewer-info">
-                    <div class="reviewer-avatar">M</div>
-                    <div class="reviewer-details">
-                        <h4>Muhammad Ridho</h4>
-                        <div class="date">1 week ago • Recommended</div>
-                    </div>
-                </div>
-                <div class="review-rating">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="review-text">
-                    Pengalaman yang luar biasa! Organisasi trip sangat baik, jadwal tersusun rapi, dan pembimbing sangat berpengalaman. Fasilitas hotel dan transportasi juga sangat nyaman. Highly recommended!
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Success/Error Messages -->
+    @if(session('success'))
+        <div class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-check"></i>
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-times"></i>
+                {{ session('error') }}
+            </div>
+        </div>
+    @endif
+
+    <!-- JavaScript -->
     <script>
-        // Simple interactivity
-        document.querySelector('.book-btn').addEventListener('click', function() {
-            alert('Terima kasih! Anda akan diarahkan ke halaman booking.');
-        });
+        // Calculate total price based on quantity
+        const quantitySelect = document.getElementById('quantity');
+        const totalPriceElement = document.getElementById('totalPrice');
+        const basePrice = {{ $destination->price ?? 0 }};
 
-        document.querySelector('.back-btn').addEventListener('click', function() {
-            alert('Kembali ke halaman sebelumnya');
-        });
+        if (quantitySelect && totalPriceElement) {
+            quantitySelect.addEventListener('change', function() {
+                const quantity = parseInt(this.value);
+                const totalPrice = basePrice * quantity;
+                totalPriceElement.textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
+            });
+        }
 
-        // Smooth scroll for mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            const bookBtn = document.querySelector('.book-btn');
-            bookBtn.addEventListener('click', function(e) {
+        // Auto hide messages after 5 seconds
+        setTimeout(function() {
+            const messages = document.querySelectorAll('.fixed.bottom-4');
+            messages.forEach(msg => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.style.display = 'none', 300);
+            });
+        }, 5000);
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                this.style.transform = 'translateY(-2px) scale(0.98)';
-                setTimeout(() => {
-                    this.style.transform = 'translateY(-2px)';
-                }, 150);
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
     </script>
-</body>
-</html>
-<!-- Footer -->
-  <footer class="bg-[#3B2F33] text-white w-full">
-  <div class="max-w-7xl mx-auto px-6 py-10">
-    <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-10 md:gap-0">
-      <div class="md:w-1/4 space-y-3">
-        <div class="flex items-center space-x-2">
-          <img class="w-8 h-8" height="32" src="assets/Logo_Healing_no_bg.png" width="32"/>
-          <div class="text-xs leading-tight">
-            <p class="font-semibold">Healing</p>
-            <p>Tour And Travel</p>
-          </div>
-        </div>
-        <p class="text-[10px] leading-tight max-w-[180px]">
-          Kami berkomitmen untuk memberikan pengalaman healing journey terbaik yang akan mengubah hidup anda menuju kebahagiaan dan kedamaian.
-        </p>
-      </div>
-
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Destinations</p>
-        <p>Saudi Arabia</p>
-        <p>Japan</p>
-        <p>Bali</p>
-        <p>France</p>
-        <p>Italia</p>
-      </div>
-
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Follow Us</p>
-        <p class="flex items-center gap-2"><i class="fas fa-globe"></i>@healingtourandtravel</p>
-        <p class="flex items-center gap-2"><i class="fab fa-twitter"></i>@healingtourandtravel</p>
-        <p class="flex items-center gap-2"><i class="fas fa-phone-alt"></i>+62 8909 9897 3563</p>
-        <p class="flex items-center gap-2"><i class="fas fa-envelope"></i>healing@gmail.com</p>
-      </div>
-
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Company</p>
-        <p>About Us</p>
-        <p>Partners</p>
-      </div>
-
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Help</p>
-        <p>Help Center</p>
-        <p>FAQ</p>
-        <p>Terms &amp; Conditions</p>
-        <p>Privacy Policy</p>
-      </div>
-    </div>
-
-    <div class="mt-10 border-t border-[#5A4E50] pt-4 text-[10px] text-center">
-      Copyright © 2025 Healing Tour and Travel
-    </div>
-
-    <div class="flex justify-end mt-4">
-      <a aria-label="WhatsApp" href="https://wa.me/62890998973563" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1ebe57] transition-colors duration-300">
-        <i class="fab fa-whatsapp text-white text-2xl"></i>
-      </a>
-    </div>
-  </div>
-</footer>
-  <!-- script dropdown profile -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const profileButton = document.getElementById('profileButton');
-    const arrowButton = document.getElementById('arrowButton');
-    const profileDropdown = document.getElementById('profileDropdown');
-    if (!profileDropdown) return;
-
-    function onAnimationEnd(e) {
-      if (e.target !== profileDropdown) return;
-      if (profileDropdown.classList.contains('popup-animate-out')) {
-        profileDropdown.classList.remove('popup-animate-out');
-        profileDropdown.classList.add('hidden');
-      } else if (profileDropdown.classList.contains('popup-animate-in')) {
-        profileDropdown.classList.remove('popup-animate-in');
-      }
-    }
-
-    profileDropdown.addEventListener('animationend', onAnimationEnd);
-
-    function openDropdown(evt) {
-      evt?.stopPropagation();
-      profileDropdown.classList.remove('hidden');
-      profileDropdown.classList.add('show');
-      // restart animation
-      profileDropdown.classList.remove('popup-animate-out');
-      // force reflow
-      void profileDropdown.offsetWidth;
-      profileDropdown.classList.add('popup-animate-in');
-      arrowButton?.classList.add('rotate');
-    }
-
-    function closeDropdown(evt) {
-      evt?.stopPropagation();
-      profileDropdown.classList.remove('popup-animate-in');
-      profileDropdown.classList.remove('show');
-      // start out animation; animationend will add hidden
-      profileDropdown.classList.add('popup-animate-out');
-      arrowButton?.classList.remove('rotate');
-    }
-
-    function toggleDropdown(e) {
-      e?.stopPropagation();
-      if (profileDropdown.classList.contains('hidden')) openDropdown(e); else closeDropdown(e);
-    }
-
-    profileButton?.addEventListener('click', toggleDropdown);
-    arrowButton?.addEventListener('click', toggleDropdown);
-
-    // keep clicks inside dropdown from closing it
-    profileDropdown.addEventListener('click', function (e) { e.stopPropagation(); });
-
-    // click outside closes dropdown
-    window.addEventListener('click', function (event) {
-      if (!profileDropdown.classList.contains('hidden')) {
-        if (!profileButton?.contains(event.target) && !arrowButton?.contains(event.target) && !profileDropdown.contains(event.target)) {
-          closeDropdown();
-        }
-      }
-    });
-  });
-</script>
 </body>
 </html>

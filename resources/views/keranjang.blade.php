@@ -226,10 +226,13 @@
           </div>
         </div>
 
-        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center gap-2">
-          Continue to Payment
-          <i class="fas fa-arrow-right"></i>
-        </button>
+        <form method="POST" action="{{ route('cart.checkout') }}">
+            @csrf
+            <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+              Continue to Payment
+              <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
       </div>
     </div>
   </div>

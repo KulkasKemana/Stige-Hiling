@@ -68,20 +68,26 @@
 
   <!-- Right: User info -->
   <div class="flex items-center gap-3">
-    <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
-      <img src="assets/Profile-Icon.png" class="w-8 h-8 rounded-full object-cover" width="32" height="32" />
-      <div class="min-w-[120px] text-right">
-        <div class="text-sm font-semibold">StigeHealing</div>
-        <div class="text-xs text-gray-500">stigehealing@gmail.com</div>
-      </div>
-    </button>
-    <button id="arrowButton" aria-label="Open user menu" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
-      <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
-    </button>
+    @auth
+      <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
+        <img src="assets/Profile-Icon.png" class="w-8 h-8 rounded-full object-cover" width="32" height="32" />
+        <div class="min-w-[120px] text-right">
+          <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
+          <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
+        </div>
+      </button>
+      <button id="arrowButton" aria-label="Open user menu" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
+        <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
+      </button>
+    @else
+      <a href="/login" class="text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors">Login</a>
+      <a href="/register" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
+    @endauth
   </div>
 
-  <!-- Profile dropdown (moved inside header so it follows the navbar) -->
-  <div id="profileDropdown" class="absolute right-6 top-full mt-2 min-w-[300px] max-w-[360px] w-auto bg-white rounded-2xl shadow-lg z-50 hidden overflow-auto">
+  <!-- Profile dropdown (only shown when authenticated) -->
+  @auth
+    <div id="profileDropdown" class="absolute right-6 top-full mt-2 min-w-[300px] max-w-[360px] w-auto bg-white rounded-2xl shadow-lg z-50 hidden overflow-auto">
       <div class="p-3 flex flex-col">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
@@ -142,6 +148,7 @@
         <div class="mt-3 text-center text-[11px] text-gray-400 py-1">Healing Tour & Travel</div>
       </div>
     </div>
+  @endauth
   </header>
   <!-- Hero Section with Search -->
     <section class="relative w-full h-96 bg-cover bg-center" style="background-image: url('assets/banner.png');">
@@ -220,254 +227,33 @@
         </div>
 
         <!-- Destinations Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="destinationsGrid">
-            <!-- Kyoto Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural bestseller">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($destinations as $destination)
+            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg">
                 <div class="relative">
-                    <img src="assets/banner.png" 
+                    <img src="{{ $destination['image'] }}" 
+                         alt="{{ $destination['name'] }}" 
                          class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Kyoto</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">5.0</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 4.000.000/Person</p>
-                    <div class="flex items-center text-xs text-gray-500 mb-3">
-                        <i class="far fa-clock mr-1"></i>
-                        <span>5 days</span>
-                    </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Book Now
+                    <button class="absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 p-2 rounded-full">
+                        <i class="far fa-bookmark text-white"></i>
                     </button>
                 </div>
-            </div>
-
-            <!-- Beijing Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural city">
-                <div class="relative">
-                    <img src="assets/Bookmark.png" 
-                         class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
                 <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Beijing</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">4.8</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 3.500.000/Person</p>
+                    <h3 class="text-lg font-semibold mb-2">{{ $destination['name'] }}</h3>
+                    <p class="text-sm text-gray-600 mb-3">Rp {{ number_format($destination['price']) }}/Person</p>
                     <div class="flex items-center text-xs text-gray-500 mb-3">
                         <i class="far fa-clock mr-1"></i>
-                        <span>7 days</span>
+                        <span>{{ $destination['duration'] }}</span>
                     </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
+                    <a href="{{ route('book.show', ['id' => $destination['id']]) }}" 
+                       class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
                         Book Now
-                    </button>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
-
-            <!-- Yogyakarta Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural nature bestseller">
-                <div class="relative">
-                    <img src="assets/borobudur.png" 
-                         class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Yogya</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">4.9</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 2.500.000/Person</p>
-                    <div class="flex items-center text-xs text-gray-500 mb-3">
-                        <i class="far fa-clock mr-1"></i>
-                        <span>3 days</span>
-                    </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Book Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Rome Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural city bestseller">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1552832230-c0197040cd5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                         alt="Rome Colosseum" class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Rome</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">4.7</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 6.500.000/Person</p>
-                    <div class="flex items-center text-xs text-gray-500 mb-3">
-                        <i class="far fa-clock mr-1"></i>
-                        <span>6 days</span>
-                    </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Book Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Additional Cards (Second Row) -->
-            <!-- Kyoto Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural bestseller">
-                <div class="relative">
-                    <img src="assets/banner.png" 
-                         class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Kyoto</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">5.0</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 4.000.000/Person</p>
-                    <div class="flex items-center text-xs text-gray-500 mb-3">
-                        <i class="far fa-clock mr-1"></i>
-                        <span>5 days</span>
-                    </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Book Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Beijing Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural city">
-                <div class="relative">
-                    <img src="assets/Bookmark.png" 
-                         class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Beijing</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">4.8</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 3.500.000/Person</p>
-                    <div class="flex items-center text-xs text-gray-500 mb-3">
-                        <i class="far fa-clock mr-1"></i>
-                        <span>7 days</span>
-                    </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Book Now
-                    </button>
-                </div>
-            </div>
-            <!-- Yogyakarta Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural nature bestseller">
-                <div class="relative">
-                    <img src="assets/borobudur.png" 
-                         class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Yogya</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">4.9</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 2.500.000/Person</p>
-                    <div class="flex items-center text-xs text-gray-500 mb-3">
-                        <i class="far fa-clock mr-1"></i>
-                        <span>3 days</span>
-                    </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Book Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Rome Card -->
-            <div class="destination-card bg-white rounded-2xl overflow-hidden shadow-lg" data-category="cultural city bestseller">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1552832230-c0197040cd5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
-                         alt="Rome Colosseum" class="w-full h-48 object-cover">
-                    <div class="absolute top-3 right-3">
-                        <button class="bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition duration-200">
-                            <i class="far fa-bookmark text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-semibold text-lg text-gray-900">Rome</h3>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">4.7</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-3">Rp 6.500.000/Person</p>
-                    <div class="flex items-center text-xs text-gray-500 mb-3">
-                        <i class="far fa-clock mr-1"></i>
-                        <span>6 days</span>
-                    </div>
-                    <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-right mr-2"></i>
-                        Book Now
-                    </button>
-                </div>
-            </div>
+            @endforeach
+        </div>
           </section>
 
     <!-- JavaScript for Filter Functionality -->

@@ -68,20 +68,26 @@
 
   <!-- Right: User info -->
   <div class="flex items-center gap-3">
-    <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
-      <img src="assets/Profile-Icon.png" class="w-8 h-8 rounded-full object-cover" width="32" height="32" />
-      <div class="min-w-[120px] text-right">
-        <div class="text-sm font-semibold">StigeHealing</div>
-        <div class="text-xs text-gray-500">stigehealing@gmail.com</div>
-      </div>
-    </button>
-    <button id="arrowButton" aria-label="Open user menu" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
-      <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
-    </button>
+    @auth
+      <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
+        <img src="assets/Profile-Icon.png" class="w-8 h-8 rounded-full object-cover" width="32" height="32" />
+        <div class="min-w-[120px] text-right">
+          <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
+          <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
+        </div>
+      </button>
+      <button id="arrowButton" aria-label="Open user menu" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
+        <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
+      </button>
+    @else
+      <a href="/login" class="text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors">Login</a>
+      <a href="/create-account" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
+    @endauth
   </div>
 
-  <!-- Profile dropdown (moved inside header so it follows the navbar) -->
-  <div id="profileDropdown" class="absolute right-6 top-full mt-2 min-w-[300px] max-w-[360px] w-auto bg-white rounded-2xl shadow-lg z-50 hidden overflow-auto">
+  <!-- Profile dropdown (only shown when authenticated) -->
+  @auth
+    <div id="profileDropdown" class="absolute right-6 top-full mt-2 min-w-[300px] max-w-[360px] w-auto bg-white rounded-2xl shadow-lg z-50 hidden overflow-auto">
       <div class="p-3 flex flex-col">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
@@ -142,6 +148,7 @@
         <div class="mt-3 text-center text-[11px] text-gray-400 py-1">Healing Tour & Travel</div>
       </div>
     </div>
+  @endauth
   </header>
   <!-- Hero Section -->
   <section class="relative w-full h-[400px] sm:h-[480px] md:h-[520px] lg:h-[560px] xl:h-[600px]">

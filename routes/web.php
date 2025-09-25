@@ -16,20 +16,21 @@ Route::get('/home', function () {
 });
 
 Route::get('/schedule', function () {
-        return view('schedule');
-    })->name('schedule');
+    return view('schedule');
+})->name('schedule');
 
+// Payment Routes
 Route::get('/payment', function () {
-        return view('payment');
-    })->name('payment');
+    return view('payment.payment'); 
+})->name('payment.index');
 
-Route::get('/ps', function () {
-        return view('ps');
-    })->name('ps');
+Route::get('/payment/form', function () {
+    return view('payment.pf');
+})->name('payment.form');
 
-    Route::get('/pf', function () {
-        return view('pf');
-    })->name('pf');
+Route::get('/payment/success', function () {
+    return view('payment.ps');
+})->name('payment.success');
 
 // Auth Routes (Guest only)
 Route::middleware(['guest'])->group(function () {

@@ -62,7 +62,7 @@
   <!-- Center: Navigation -->
   <nav class="flex space-x-8 text-[14px] font-medium text-black">
     <a href="/home" class="text-[#F97316] hover:underline transition-colors">Home</a>
-    <a href="#" class="hover:underline transition-colors">Schedule</a>
+    <a href="/schedule" class="hover:underline transition-colors">Schedule</a>
     <a href="/destinations" class="hover:underline transition-colors">Destinations</a>
   </nav>
 
@@ -81,7 +81,7 @@
       </button>
     @else
       <a href="/login" class="text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors">Login</a>
-      <a href="/create-account" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
+      <a href="/register" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
     @endauth
   </div>
 
@@ -94,8 +94,8 @@
             <img src="assets/profile-icon.png" alt="Profil" class="w-full h-full object-cover"/>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-sm font-semibold text-gray-900 truncate">StigeHealing</div>
-            <div class="text-[11px] text-gray-500 truncate">stigehealing@gmail.com</div>
+            <div class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</div>
+            <div class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</div>
           </div>
         </div>
 

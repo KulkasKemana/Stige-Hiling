@@ -66,7 +66,7 @@
   <!-- Center: Navigation -->
   <nav class="flex space-x-8 text-[14px] font-medium text-black">
     <a href="/home" class="hover:underline transition-colors">Home</a>
-    <a href="#" class="hover:underline transition-colors">Schedule</a>
+    <a href="/schedule" class="hover:underline transition-colors">Schedule</a>
     <a href="#" class="hover:underline transition-colors">Destinations</a>
   </nav>
 
@@ -75,8 +75,8 @@
     <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
       <img src="assets/Profile-Icon.png" class="w-8 h-8 rounded-full object-cover" width="32" height="32" />
       <div class="min-w-[120px] text-right">
-        <div class="text-sm font-semibold">StigeHealing</div>
-        <div class="text-xs text-gray-500">stigehealing@gmail.com</div>
+        <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
+        <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
       </div>
     </button>
     <button id="arrowButton" aria-label="Open user menu" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
@@ -92,8 +92,8 @@
             <img src="assets/profile-icon.png" alt="Profil" class="w-full h-full object-cover"/>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-sm font-semibold text-gray-900 truncate">StigeHealing</div>
-            <div class="text-[11px] text-gray-500 truncate">stigehealing@gmail.com</div>
+            <div class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</div>
+            <div class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</div>
           </div>
         </div>
 
@@ -176,7 +176,7 @@
   <!-- First Name -->
   <div>
     <p class="text-gray-400 text-xs mb-1">First Name</p>
-    <p class="text-black text-sm font-semibold">Stige</p>
+    <p class="text-black text-sm font-semibold">{{ Auth::user()->name }}</p>
   </div>
   <!-- Last Name -->
   <div>
@@ -186,7 +186,7 @@
   <!-- Email Address -->
   <div>
     <p class="text-gray-400 text-xs mb-1">Email Address</p>
-    <p class="text-black text-sm font-semibold">stigehealing@gmail.com</p>
+    <p class="text-black text-sm font-semibold">{{ Auth::user()->email }}</p>
   </div>
   <!-- Phone Number -->
   <div>

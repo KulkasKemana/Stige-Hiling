@@ -1,757 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hajiya Travel & Tours</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            padding-top: 70px; /* Add padding for fixed header */
-        }
-
-        /* Header styles */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 40;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 24px;
-            position: relative;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #10b981, #059669);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .logo-text {
-            font-size: 11px;
-            line-height: 14px;
-        }
-
-        .logo-text .brand-name {
-            font-weight: 600;
-            color: black;
-        }
-
-        .logo-text .brand-sub {
-            color: black;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: black;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .nav-menu a:hover {
-            text-decoration: underline;
-        }
-
-        .nav-menu a.active {
-            color: #10b981;
-            text-decoration: underline;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .profile-button {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-        }
-
-        .profile-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #10b981, #059669);
-        }
-
-        .profile-info {
-            text-align: right;
-            min-width: 120px;
-        }
-
-        .profile-name {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .profile-email {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .arrow-button {
-            background: #f3f4f6;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 4px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .arrow-button:hover {
-            background: #e5e7eb;
-        }
-
-        .profile-dropdown {
-            position: absolute;
-            right: 24px;
-            top: 100%;
-            margin-top: 8px;
-            min-width: 300px;
-            max-width: 360px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            z-index: 50;
-            display: none;
-            overflow: hidden;
-        }
-
-        .dropdown-content {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .dropdown-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .dropdown-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 1px solid #e5e7eb;
-            flex-shrink: 0;
-            background: linear-gradient(45deg, #10b981, #059669);
-        }
-
-        .dropdown-user-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .dropdown-user-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #111827;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .dropdown-user-email {
-            font-size: 11px;
-            color: #6b7280;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .stats-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #f9fafb;
-            border-radius: 8px;
-            padding: 6px 8px;
-            text-align: center;
-            font-size: 12px;
-            margin-top: 12px;
-        }
-
-        .stat-item {
-            flex: 1;
-        }
-
-        .stat-value {
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .stat-label {
-            color: #6b7280;
-        }
-
-        .stat-divider {
-            width: 1px;
-            height: 24px;
-            background: #d1d5db;
-            margin: 0 8px;
-        }
-
-        .dropdown-nav {
-            margin-top: 12px;
-        }
-
-        .dropdown-nav ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            font-size: 14px;
-        }
-
-        .dropdown-nav li {
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .dropdown-nav li:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-nav a {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px;
-            text-decoration: none;
-            color: #374151;
-            transition: background 0.2s;
-        }
-
-        .dropdown-nav a:hover {
-            background: #f9fafb;
-        }
-
-        .nav-item-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-item-left i {
-            color: #9ca3af;
-            width: 20px;
-            text-align: center;
-        }
-
-        .dropdown-footer {
-            margin-top: 12px;
-            text-align: center;
-            font-size: 11px;
-            color: #9ca3af;
-            padding: 4px;
-        }
-
-        /* Main Content */
-        .main-content {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .page-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #10b981;
-        }
-
-        .page-subtitle {
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .booking-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            overflow: hidden;
-            display: flex;
-            position: relative;
-        }
-
-        .booking-image {
-            width: 350px;
-            height: 150px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .booking-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .booking-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(16, 185, 129, 0.8), rgba(5, 150, 105, 0.8));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px;
-            color: white;
-        }
-
-        .destination-name {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .travel-date {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .booking-logo {
-            position: absolute;
-            bottom: 15px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: white;
-        }
-
-        .booking-logo-icon {
-            width: 25px;
-            height: 25px;
-            background: white;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #10b981;
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        .booking-details {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
-        .show-details-btn {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.3s;
-        }
-
-        .show-details-btn:hover {
-            background: #059669;
-        }
-
-        /* Kyoto specific styling */
-        .kyoto-card .booking-overlay {
-            background: linear-gradient(45deg, rgba(255, 107, 53, 0.8), rgba(255, 140, 66, 0.8));
-        }
-
-        /* Footer */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 40px 0 20px;
-            margin-top: 80px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            padding: 0 20px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 15px;
-            color: #10b981;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-
-        .footer-section ul li:hover {
-            color: #10b981;
-        }
-
-        .footer-description {
-            line-height: 1.6;
-            color: #bdc3c7;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #34495e;
-            margin-top: 30px;
-            padding-top: 20px;
-            text-align: center;
-            color: #95a5a6;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .social-icon {
-            width: 35px;
-            height: 35px;
-            background: #10b981;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .social-icon:hover {
-            background: #059669;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healing Tour & Travel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    /* Ticket Card */
+    .ticket-card {
+      display: flex;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .ticket-left {
+      flex: 2;
+      position: relative;
+    }
+
+    .ticket-left img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .ticket-info {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      color: white;
+    }
+
+    .ticket-info h2 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .ticket-info p {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .ticket-logo {
+      margin-top: 5px;
+      font-size: 11px;
+    }
+
+    .ticket-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-left: 2px dashed #d1d5db;
+    }
+
+    .ticket-right::before,
+    .ticket-right::after {
+      content: "";
+      position: absolute;
+      left: -12px;
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .ticket-right::before {
+      top: -12px;
+    }
+
+    .ticket-right::after {
+      bottom: -12px;
+    }
+
+    .show-btn {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .show-btn:hover {
+      background: #f3f4f6;
+    }
+
+    /* Footer */
+    footer {
+      background: #3b2b25;
+      color: white;
+      padding: 40px 0 20px;
+      margin-top: 80px;
+    }
+
+    footer h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    footer ul li {
+      margin-bottom: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    footer ul li:hover {
+      color: #fbbf24;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #6b4f3a;
+      margin-top: 30px;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #d1d5db;
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Left: Logo -->
-            <div class="logo">
-                <div class="logo-icon">H</div>
-                <div class="logo-text">
-                    <div class="brand-name">Healing</div>
-                    <div class="brand-sub">Tour And Travel</div>
-                </div>
-            </div>
 
-            <!-- Center: Navigation -->
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="/home">Home</a></li>
-                    <li><a href="#" class="active">Schedule</a></li>
-                    <li><a href="/destinations">Destinations</a></li>
-                </ul>
-            </nav>
+  <!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm">
+    <div class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-3 relative">
+  <!-- Left: Logo -->
+  <div class="flex items-center gap-3">
+    <img src="assets/Logo_Healing_no_bg.png" class="w-10 h-10 object-contain" width="40" height="40" alt="Logo" />
+    <div class="text-[11px] leading-[14px]">
+      <div class="font-semibold text-black">Healing</div>
+      <div class="text-black">Tour And Travel</div>
+    </div>
+  </div>
 
-            <!-- Right: User info -->
-            <div class="user-profile">
-                <button id="profileButton" class="profile-button">
-                    <div class="profile-avatar"></div>
-                    <div class="profile-info">
-                        <div class="profile-name">StigeHealing</div>
-                        <div class="profile-email">stigehealing@gmail.com</div>
-                    </div>
-                </button>
-                <button id="arrowButton" class="arrow-button" aria-label="Open user menu">
-                    <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
-                </button>
-            </div>
+  <!-- Center: Navigation -->
+  <nav class="flex space-x-8 text-[14px] font-medium text-black">
+    <a href="/home" class="hover:underline transition-colors">Home</a>
+    <a href="/schedule" class="text-[#F97316] hover:underline transition-colors">Schedule</a>
+    <a href="/destinations" class="hover:underline transition-colors">Destinations</a>
+  </nav>
 
-            <!-- Profile dropdown -->
-            <div id="profileDropdown" class="profile-dropdown">
-                <div class="dropdown-content">
-                    <div class="dropdown-profile">
-                        <div class="dropdown-avatar"></div>
-                        <div class="dropdown-user-info">
-                            <div class="dropdown-user-name">StigeHealing</div>
-                            <div class="dropdown-user-email">stigehealing@gmail.com</div>
-                        </div>
-                    </div>
-
-                    <div class="stats-row">
-                        <div class="stat-item">
-                            <div class="stat-value">0</div>
-                            <div class="stat-label">Points</div>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat-item">
-                            <div class="stat-value">0</div>
-                            <div class="stat-label">Trips</div>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat-item">
-                            <div class="stat-value">0</div>
-                            <div class="stat-label">Bucket</div>
-                        </div>
-                    </div>
-
-                    <nav class="dropdown-nav">
-                        <ul>
-                            <li>
-                                <a href="/profile">
-                                    <div class="nav-item-left">
-                                        <i class="far fa-user"></i>
-                                        <span>Profile</span>
-                                    </div>
-                                    <i class="fas fa-chevron-right text-gray-400"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/bookmark">
-                                    <div class="nav-item-left">
-                                        <i class="far fa-bookmark"></i>
-                                        <span>Bookmarked</span>
-                                    </div>
-                                    <i class="fas fa-chevron-right text-gray-400"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    <div class="nav-item-left">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        <span>Log Out</span>
-                                    </div>
-                                    <i class="fas fa-chevron-right text-gray-400"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <div class="dropdown-footer">Healing Tour & Travel</div>
-                </div>
-            </div>
+  <!-- Right: User info -->
+  <div class="flex items-center gap-3">
+    @auth
+      <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
+        <img src="assets/Profile-Icon.png" class="w-8 h-8 rounded-full object-cover" width="32" height="32" />
+        <div class="min-w-[120px] text-right">
+          <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
+          <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
         </div>
-    </header>
+      </button>
+      <button id="arrowButton" aria-label="Open user menu" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
+        <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
+      </button>
+    @else
+      <a href="/login" class="text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors">Login</a>
+      <a href="/create-account" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
+    @endauth
+  </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <h1 class="page-title">Your Schedule</h1>
-        <p class="page-subtitle">All active booking tickets</p>
-
-        <!-- Kyoto Booking Card -->
-        <div class="booking-card kyoto-card">
-            <div class="booking-image">
-                <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500&h=300&fit=crop" alt="Kyoto Japan">
-                <div class="booking-overlay">
-                    <div class="destination-name">Kyoto • Japan</div>
-                    <div class="travel-date">15 October 2024</div>
-                    <div class="booking-logo">
-                        <div class="booking-logo-icon">H</div>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold;">Healing</div>
-                            <div style="font-size: 10px;">Tour And Travel</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="booking-details">
-                <button class="show-details-btn" onclick="showBookingDetails('kyoto')">Show Details</button>
-            </div>
+  <!-- Profile dropdown (only shown when authenticated) -->
+  @auth
+    <div id="profileDropdown" class="absolute right-6 top-full mt-2 min-w-[300px] max-w-[360px] w-auto bg-white rounded-2xl shadow-lg z-50 hidden overflow-auto">
+      <div class="p-3 flex flex-col">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+            <img src="assets/profile-icon.png" alt="Profil" class="w-full h-full object-cover"/>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-semibold text-gray-900 truncate">StigeHealing</div>
+            <div class="text-[11px] text-gray-500 truncate">stigehealing@gmail.com</div>
+          </div>
         </div>
 
-        <!-- Makkah Booking Card -->
-        <div class="booking-card">
-            <div class="booking-image">
-                <img src="https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=500&h=300&fit=crop" alt="Makkah Saudi Arabia">
-                <div class="booking-overlay">
-                    <div class="destination-name">Makkah • Saudi Arabia</div>
-                    <div class="travel-date">19 October 2024</div>
-                    <div class="booking-logo">
-                        <div class="booking-logo-icon">H</div>
-                        <div>
-                            <div style="font-size: 12px; font-weight: bold;">Healing</div>
-                            <div style="font-size: 10px;">Tour And Travel</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="booking-details">
-                <button class="show-details-btn" onclick="showBookingDetails('makkah')">Show Details</button>
-            </div>
+        <div class="flex items-center justify-between bg-gray-50 rounded-lg py-1.5 px-2 text-center text-xs mt-3">
+          <div class="flex-1">
+            <div class="font-semibold text-gray-700">0</div>
+            <div class="text-gray-500">Points</div>
+          </div>
+          <div class="w-px h-6 bg-gray-200 mx-2"></div>
+          <div class="flex-1">
+            <div class="font-semibold text-gray-700">0</div>
+            <div class="text-gray-500">Trips</div>
+          </div>
+          <div class="w-px h-6 bg-gray-200 mx-2"></div>
+          <div class="flex-1">
+            <div class="font-semibold text-gray-700">0</div>
+            <div class="text-gray-500">Bucket</div>
+          </div>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Healing</h3>
-                <p class="footer-description">
-                    Your trusted partner for spiritual journeys and cultural exploration. 
-                    We specialize in Hajj, Umrah, and premium travel experiences across the globe.
-                </p>
-                <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">t</div>
-                    <div class="social-icon">i</div>
-                    <div class="social-icon">y</div>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Destinations</h3>
-                <ul>
-                    <li>Saudi Arabia</li>
-                    <li>Japan</li>
-                    <li>Turkey</li>
-                    <li>Egypt</li>
-                    <li>Morocco</li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <ul>
-                    <li>@healingtraveltours</li>
-                    <li>@healing_official</li>
-                    <li>@healing-travel-tours</li>
-                    <li>Healing Tour & Travel</li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Company</h3>
-                <ul>
-                    <li>About Us</li>
-                    <li>Partners</li>
-                </ul>
-                <h3 style="margin-top: 20px;">Help</h3>
-                <ul>
-                    <li>Support</li>
-                    <li>FAQ</li>
-                    <li>Terms & Conditions</li>
-                    <li>Privacy Policy</li>
-                </ul>
-            </div>
+        <nav class="mt-3 overflow-auto">
+          <ul class="flex flex-col divide-y divide-gray-100 text-sm">
+            <li>
+              <a href="/profile" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
+                <div class="flex items-center gap-3"><i class="far fa-user text-gray-400 w-5 text-center"></i><span class="truncate">Profile</span></div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+              </a>
+            </li>
+            <li>
+              <a href="/bookmark" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
+                <div class="flex items-center gap-3"><i class="far fa-bookmark text-gray-400 w-5 text-center"></i><span class="truncate">Bookmarked</span></div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+              </a>
+            </li>
+            <li>
+              <a href="/keranjang" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
+                <div class="flex items-center gap-3"><i class="fas fa-shopping-cart text-gray-400 w-5 text-center"></i><span class="truncate">Keranjang</span></div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+              </a>
+            </li>
+            <li>
+              <a href="/" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
+                <div class="flex items-center gap-3"><i class="fas fa-sign-out-alt text-gray-400 w-5 text-center"></i><span class="truncate">Log Out</span></div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="mt-3 text-center text-[11px] text-gray-400 py-1">Healing Tour & Travel</div>
+      </div>
+    </div>
+  @endauth
+  </header>
+  <!-- Main -->
+  <main class="max-w-4xl mx-auto mt-28 px-4">
+    <h1 class="text-2xl font-bold mb-1">Your Schedule</h1>
+    <p class="text-gray-600 mb-6">All active booking tickets</p>
+
+    <!-- Ticket Kyoto -->
+    <div class="ticket-card">
+      <div class="ticket-left">
+        <img src="assets/shrine.png" alt="Kyoto Japan">
+        <div class="ticket-info">
+          <h2>Kyoto - Japan</h2>
+          <p>25 July 2024</p>
+          <div class="ticket-logo">Healing Tour and Travel</div>
         </div>
-        
-        <div class="footer-bottom">
-            © 2024 Healing Tour And Travel. All rights reserved.
+      </div>
+      <div class="ticket-right">
+        <button class="show-btn">Show Details</button>
+      </div>
+    </div>
+
+    <!-- Ticket Makkah -->
+    <div class="ticket-card">
+      <div class="ticket-left">
+        <img src="assets/masjid.png" alt="Makkah Saudi Arabia">
+        <div class="ticket-info">
+          <h2>Makkah - Saudi Arabia</h2>
+          <p>15 October 2024</p>
+          <div class="ticket-logo">Healing Tour and Travel</div>
         </div>
-    </footer>
+      </div>
+      <div class="ticket-right">
+        <button class="show-btn">Show Details</button>
+      </div>
+    </div>
+  </main>
 
-    <script>
-        // Profile dropdown functionality
-        const profileButton = document.getElementById('profileButton');
-        const arrowButton = document.getElementById('arrowButton');
-        const profileDropdown = document.getElementById('profileDropdown');
+  <!-- Footer -->
+  <footer class="bg-[#3B2F33] text-white w-full">
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-10 md:gap-0">
+      <div class="md:w-1/4 space-y-3">
+        <div class="flex items-center space-x-2">
+          <img class="w-8 h-8" height="32" src="assets/Logo_Healing_no_bg.png" width="32"/>
+          <div class="text-xs leading-tight">
+            <p class="font-semibold">Healing</p>
+            <p>Tour And Travel</p>
+          </div>
+        </div>
+        <p class="text-[10px] leading-tight max-w-[180px]">
+          Kami berkomitmen untuk memberikan pengalaman healing journey terbaik yang akan mengubah hidup anda menuju kebahagiaan dan kedamaian.
+        </p>
+      </div>
 
-        function toggleDropdown() {
-            if (profileDropdown.style.display === 'none' || profileDropdown.style.display === '') {
-                profileDropdown.style.display = 'block';
-            } else {
-                profileDropdown.style.display = 'none';
-            }
-        }
+      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
+        <p class="font-semibold text-xs mb-2">Destinations</p>
+        <p>Saudi Arabia</p>
+        <p>Japan</p>
+        <p>Bali</p>
+        <p>France</p>
+        <p>Italia</p>
+      </div>
 
-        profileButton.addEventListener('click', toggleDropdown);
-        arrowButton.addEventListener('click', toggleDropdown);
+      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
+        <p class="font-semibold text-xs mb-2">Follow Us</p>
+        <p class="flex items-center gap-2"><i class="fas fa-globe"></i>@healingtourandtravel</p>
+        <p class="flex items-center gap-2"><i class="fab fa-twitter"></i>@healingtourandtravel</p>
+        <p class="flex items-center gap-2"><i class="fas fa-phone-alt"></i>+62 8909 9897 3563</p>
+        <p class="flex items-center gap-2"><i class="fas fa-envelope"></i>healing@gmail.com</p>
+      </div>
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!profileButton.contains(event.target) && !arrowButton.contains(event.target) && !profileDropdown.contains(event.target)) {
-                profileDropdown.style.display = 'none';
-            }
-        });
+      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
+        <p class="font-semibold text-xs mb-2">Company</p>
+        <p>About Us</p>
+        <p>Partners</p>
+      </div>
 
-        function showBookingDetails(destination) {
-            if (destination === 'kyoto') {
-                alert('Kyoto, Japan Booking Details:\n\nDeparture: 15 October 2024\nDuration: 7 days\nPackage: Cultural Heritage Tour\nStatus: Confirmed\n\nIncludes:\n• Round-trip flights\n• 4-star hotel accommodation\n• Guided temple tours\n• Traditional tea ceremony\n• Cherry blossom viewing');
-            } else if (destination === 'makkah') {
-                alert('Makkah, Saudi Arabia Booking Details:\n\nDeparture: 19 October 2024\nDuration: 14 days\nPackage: Hajj Pilgrimage\nStatus: Confirmed\n\nIncludes:\n• Round-trip flights\n• 5-star hotel near Haram\n• Guided religious tours\n• Meals (Halal)\n• Transportation to holy sites');
-            }
-        }
+      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
+        <p class="font-semibold text-xs mb-2">Help</p>
+        <p>Help Center</p>
+        <p>FAQ</p>
+        <p>Terms &amp; Conditions</p>
+        <p>Privacy Policy</p>
+      </div>
+    </div>
 
-        // Add some interactive effects
-        document.querySelectorAll('.show-details-btn').forEach(btn => {
-            btn.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-            });
-            
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-                this.style.boxShadow = 'none';
-            });
-        });
+    <div class="mt-10 border-t border-[#5A4E50] pt-4 text-[10px] text-center">
+      Copyright © 2025 Healing Tour and Travel
+    </div>
 
-        // Add hover effect to booking cards
-        document.querySelectorAll('.booking-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-                this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-                this.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            });
-        });
-    </script>
+    <div class="flex justify-end mt-4">
+      <a aria-label="WhatsApp" href="https://wa.me/62890998973563" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1ebe57] transition-colors duration-300">
+        <i class="fab fa-whatsapp text-white text-2xl"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

@@ -36,7 +36,7 @@
             
             <nav class="flex space-x-8 text-[14px] font-medium text-black">
                 <a href="/home" class="hover:underline transition-colors">Home</a>
-                <a href="#" class="hover:underline transition-colors">Schedule</a>
+                <a href="/schedule" class="hover:underline transition-colors">Schedule</a>
                 <a href="{{ route('destinations.index') }}" class="hover:underline transition-colors">Destinations</a>
             </nav>
             

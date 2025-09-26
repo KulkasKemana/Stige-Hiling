@@ -284,62 +284,22 @@
         </div>
     </main>
     <!-- Footer -->
-  <footer class="bg-[#3B2F33] text-white w-full">
-  <div class="max-w-7xl mx-auto px-6 py-10">
-    <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-10 md:gap-0">
-      <div class="md:w-1/4 space-y-3">
-        <div class="flex items-center space-x-2">
-          <img class="w-8 h-8" height="32" src="assets/Logo_Healing_no_bg.png" width="32"/>
-          <div class="text-xs leading-tight">
-            <p class="font-semibold">Healing</p>
-            <p>Tour And Travel</p>
-          </div>
-        </div>
-        <p class="text-[10px] leading-tight max-w-[180px]">
-          Kami berkomitmen untuk memberikan pengalaman healing journey terbaik yang akan mengubah hidup anda menuju kebahagiaan dan kedamaian.
-        </p>
-      </div>
+    <footer class="mt-10 border-t border-[#989898] text-gray-300 py-4">
+  <div class="container mx-auto flex items-center justify-between">
+    <div class="w-1/3"></div>
 
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Destinations</p>
-        <p>Saudi Arabia</p>
-        <p>Japan</p>
-        <p>Bali</p>
-        <p>France</p>
-        <p>Italia</p>
-      </div>
-
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Follow Us</p>
-        <p class="flex items-center gap-2"><i class="fas fa-globe"></i>@healingtourandtravel</p>
-        <p class="flex items-center gap-2"><i class="fab fa-twitter"></i>@healingtourandtravel</p>
-        <p class="flex items-center gap-2"><i class="fas fa-phone-alt"></i>+62 8909 9897 3563</p>
-        <p class="flex items-center gap-2"><i class="fas fa-envelope"></i>healing@gmail.com</p>
-      </div>
-
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Company</p>
-        <p>About Us</p>
-        <p>Partners</p>
-      </div>
-
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Help</p>
-        <p>Help Center</p>
-        <p>FAQ</p>
-        <p>Terms &amp; Conditions</p>
-        <p>Privacy Policy</p>
-      </div>
-    </div>
-
-    <div class="mt-10 border-t border-[#5A4E50] pt-4 text-[10px] text-center">
+    <!-- copyright -->
+    <div class="w-1/3 text-center text-sm">
       Copyright © 2025 Healing Tour and Travel
     </div>
 
-    <div class="flex justify-end mt-4">
-      <a aria-label="WhatsApp" href="https://wa.me/62890998973563" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1ebe57] transition-colors duration-300">
-        <i class="fab fa-whatsapp text-white text-2xl"></i>
-      </a>
+    <!-- follow us -->
+    <div class="w-1/3 flex justify-end items-center space-x-3 text-sm">
+      <span class="font-semibold">Follow Us</span>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+      <a href="#"><i class="far fa-envelope"></i></a>
     </div>
   </div>
 </footer>

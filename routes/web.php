@@ -16,10 +16,14 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 });
-
+// Schedule Routes
 Route::get('/schedule', function () {
-    return view('schedule');
-})->name('schedule');
+    return view('schedule.schedule');
+})->name('schedule.index');
+
+Route::get('/schedule/ticket', function () {
+    return view('schedule.ticket');
+})->name('schedule.ticket');
 
 // Payment Routes
 Route::get('/payment', function () {

@@ -48,137 +48,184 @@
   #arrowButton.rotate i {
     transform: rotate(180deg);
   } 
-        .main-content {
-            padding: 120px 20px 40px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .page-title {
-            text-align: center;
-            color: white;
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 40px;
-        }
-
-        .payment-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .payment-row {
+        .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        .payment-row:last-child {
-            border-bottom: none;
-            padding-top: 15px;
-            font-weight: 600;
-        }
-
-        .payment-label {
-            color: #2c3e50;
-            font-size: 14px;
-        }
-
-        .payment-amount {
-            color: #2c3e50;
-            font-size: 14px;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 18px;
             font-weight: 500;
         }
 
-        .total-amount {
-            color: #e67e22 !important;
-            font-size: 16px !important;
-            font-weight: 600 !important;
+        .back-arrow {
+            margin-right: 12px;
+            font-size: 24px;
+            cursor: pointer;
         }
 
-        .method-title {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 20px;
+        .ticket-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
-        .payment-methods {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .ticket-header {
+            padding: 24px 24px 20px 24px;
+            position: relative;
         }
 
-        .payment-method {
+        .logo-section {
             display: flex;
             align-items: center;
-            padding: 15px;
-            border: 1px solid #ecf0f1;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            margin-bottom: 16px;
         }
 
-        .payment-method:hover {
-            border-color: #3498db;
-            background-color: #f8fafc;
-        }
-
-        .payment-method.expanded {
-            background-color: #fff3cd;
-            border-color: #ffc107;
-        }
-
-        .method-icon {
-            width: 35px;
-            height: 35px;
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            margin-right: 12px;
             font-weight: bold;
             font-size: 12px;
-            margin-right: 15px;
+            color: #333;
         }
 
-        .gopay { background-color: #00d4aa; }
-        .virtual { background-color: #ff6b35; }
-        .bca { background-color: #0066cc; }
-        .bni { background-color: #fd7e00; }
-        .mandiri { background-color: #1f4e79; }
-        .cimb { background-color: #dc143c; }
-
-        .method-info {
-            flex: 1;
+        .destination {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
         }
 
-        .method-name {
+        .ticket-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
             font-size: 14px;
             font-weight: 600;
-            color: #2c3e50;
+            color: #333;
         }
 
-        .method-desc {
+        .order-id {
+            background: #ffd700;
+            padding: 2px 8px;
+            border-radius: 4px;
             font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 2px;
+            font-weight: 600;
         }
 
-        .method-arrow {
-            color: #bdc3c7;
-            font-size: 18px;
+        .ticket-count {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ticket-icon {
+            width: 16px;
+            height: 16px;
+            background: #666;
+            border-radius: 2px;
+        }
+
+        .perforated-border {
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                #ddd 10px,
+                #ddd 15px
+            );
+            position: relative;
+        }
+
+        .perforated-border::before,
+        .perforated-border::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            border-radius: 50%;
+            top: 0;
+        }
+
+        .perforated-border::before {
+            left: -10px;
+        }
+
+        .perforated-border::after {
+            right: -10px;
+        }
+
+        .qr-section {
+            padding: 24px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .qr-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .qr-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .ticket-container {
+                max-width: 100%;
+            }
+            
+            .header {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -187,7 +234,7 @@
     <div class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-3 relative">
   <!-- Left: Logo -->
   <div class="flex items-center gap-3">
-    <img src="assets/Logo_Healing_no_bg.png" class="w-10 h-10 object-contain" width="40" height="40" alt="Logo" />
+    <img src="{{ asset('assets/Logo_Healing_no_bg.png') }}" class="w-10 h-10 object-contain" width="40" height="40" alt="Logo" />
     <div class="text-[11px] leading-[14px]">
       <div class="font-semibold text-black">Healing</div>
       <div class="text-black">Tour And Travel</div>
@@ -282,81 +329,63 @@
         @endauth
 <!-- main -->
   </header>
-    <main class="main-content">
-        <h1 class="page-title">Complete Your Payment</h1>
-        
-        <div class="payment-card">
-            <div class="card-title">Summary Payment</div>
-            <div class="payment-row">
-                <span class="payment-label">Subtotal (3 Items)</span>
-                <span class="payment-amount">Rp. 3.000.000</span>
-            </div>
-            <div class="payment-row">
-                <span class="payment-label">Service Fee</span>
-                <span class="payment-amount">Rp. 500.000</span>
-            </div>
-            <div class="payment-row">
-                <span class="payment-label">Total Payment</span>
-                <span class="payment-amount total-amount">Rp. 3.500.000</span>
-            </div>
-        </div>
+    <body>
+    <div class="header">
+        <span class="back-arrow">←</span>
+        <span>Ticket Details</span>
+    </div>
 
-        <div class="payment-card">
-            <div class="method-title">Choose Payment Method</div>
+    <div class="ticket-container">
+        <div class="ticket-header">
+            <div class="logo-section">
+                <img src="{{ asset('assets/Logo_Healing_no_bg.png') }}" class="w-10 h-10 object-contain" width="40" height="40" alt="Logo" />
+                <div>
+                    <div style="font-size: 12px; color: #666;">Healing</div>
+                    <div style="font-size: 12px; color: #666;">Tour And Travel</div>
+                </div>
+            </div>
             
-            <div class="payment-methods">
-                <div class="payment-method" onclick="toggleMethod(this)">
-                    <div class="method-icon gopay">GP</div>
-                    <div class="method-info">
-                        <div class="method-name">E-wallet (GoPay, OVO, etc)</div>
+            <div class="destination">Kyoto - Japan</div>
+            
+            <div class="ticket-info">
+                <div class="info-item">
+                    <div class="info-label">Order ID</div>
+                    <div class="info-value">
+                        <span class="order-id">ORDER 12345</span>
                     </div>
-                    <div class="method-arrow">›</div>
                 </div>
-
-                <div class="payment-method expanded" onclick="toggleMethod(this)">
-                    <div class="method-icon virtual">VA</div>
-                    <div class="method-info">
-                        <div class="method-name">Virtual Account Transfer</div>
-                        <div class="method-desc">Select bank to continue your payment</div>
-                    </div>
-                    <div class="method-arrow">∧</div>
+                <div class="info-item">
+                    <div class="info-label">Entry Date</div>
+                    <div class="info-value">25 July 2025</div>
                 </div>
-
-                <div class="payment-method" onclick="toggleMethod(this)">
-                    <div class="method-icon bca">BCA</div>
-                    <div class="method-info">
-                        <div class="method-name">BCA Virtual Account</div>
-                    </div>
-                    <div class="method-arrow">›</div>
+                <div class="info-item">
+                    <div class="info-label">Visitor</div>
+                    <div class="info-value">Stige</div>
                 </div>
-
-                <div class="payment-method" onclick="toggleMethod(this)">
-                    <div class="method-icon bni">BNI</div>
-                    <div class="method-info">
-                        <div class="method-name">BNI Virtual Account</div>
+                <div class="info-item">
+                    <div class="info-label">Ticket</div>
+                    <div class="info-value">
+                        <div class="ticket-count">
+                            <i class="fas fa-ticket-alt text-gray-600"></i>
+                            <span>1x</span>
+                        </div>
                     </div>
-                    <div class="method-arrow">›</div>
-                </div>
-
-                <div class="payment-method" onclick="toggleMethod(this)">
-                    <div class="method-icon mandiri">MDR</div>
-                    <div class="method-info">
-                        <div class="method-name">Mandiri Virtual Account</div>
-                    </div>
-                    <div class="method-arrow">›</div>
-                </div>
-
-                <div class="payment-method" onclick="toggleMethod(this)">
-                    <div class="method-icon cimb">CNB</div>
-                    <div class="method-info">
-                        <div class="method-name">CIMB NIAGA Virtual Account</div>
-                    </div>
-                    <div class="method-arrow">›</div>
                 </div>
             </div>
         </div>
-    </main>
 
+        <div class="perforated-border"></div>
+
+        <div class="qr-section">
+            <div class="qr-title">Scan the QR Code</div>
+            <div class="qr-code">
+                <img src="{{ asset('assets/qrcode.png') }}" 
+                     alt="QR Code" 
+                     class="qr-image"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;color: #999; font-size: 12px; text-align: center;&quot;>QR Code<br>Image not found<br><small>Please add qrcode.jpg to folder</small></div>'">
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
     <footer class="mt-10 border-t border-[#989898] text-gray-300 py-4">
   <div class="container mx-auto flex items-center justify-between">

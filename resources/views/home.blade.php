@@ -81,7 +81,7 @@
       </button>
     @else
       <a href="/login" class="text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors">Login</a>
-      <a href="/register" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
+      <a href="{{ route('register') }}" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
     @endauth
   </div>
 
@@ -137,10 +137,16 @@
               </a>
             </li>
             <li>
-              <a href="/" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                <div class="flex items-center gap-3"><i class="fas fa-sign-out-alt text-gray-400 w-5 text-center"></i><span class="truncate">Log Out</span></div>
-                <i class="fas fa-chevron-right text-gray-400"></i>
-              </a>
+              <form method="POST" action="{{ route('logout') }}" class="w-full">
+                @csrf
+                <button type="submit" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50 w-full text-left">
+                  <div class="flex items-center gap-3">
+                    <i class="fas fa-sign-out-alt text-gray-400 w-5 text-center"></i>
+                    <span class="truncate">Log Out</span>
+                  </div>
+                  <i class="fas fa-chevron-right text-gray-400"></i>
+                </button>
+              </form>
             </li>
           </ul>
         </nav>

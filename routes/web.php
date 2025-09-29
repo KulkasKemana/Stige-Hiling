@@ -3,10 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DestinationController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');
-Route::get('/destinations/{id}', [DestinationController::class, 'show'])->name('destinations.show');
 
 // Basic Routes
 Route::get('/', function () {
@@ -15,7 +13,8 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('home');
-});
+})->name('home');
+
 // Schedule Routes
 Route::get('/schedule', function () {
     return view('schedule.schedule');
@@ -52,65 +51,41 @@ Route::middleware(['guest'])->group(function () {
     })->name('otp');
 });
 
-// Logout (Auth only)
-Route::middleware(['auth'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
+// Public Routes (dapat diakses tanpa login)
+Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');
+Route::get('/destinations/{id}', [DestinationController::class, 'show'])->name('destinations.show');
 
-// Public Destinations (langsung bisa diakses frontend)
-Route::get('/destinations', function () {
-    $destinations = [
-        [
-            'id' => 1,
-            'name' => 'Kyoto',
-            'price' => 2500000,
-            'duration' => '5 Days',
-            'image' => 'assets/destinations/kyoto.jpg'
-        ],
-        [
-            'id' => 2,
-            'name' => 'Bali',
-            'price' => 1500000,
-            'duration' => '3 Days',
-            'image' => 'assets/destinations/bali.jpg'
-        ],
-        [
-            'id' => 3,
-            'name' => 'Rome',
-            'price' => 4000000,
-            'duration' => '7 Days',
-            'image' => 'assets/destinations/rome.jpg'
-        ],
-    ];
-    return view('destinations', compact('destinations'));
-})->name('destinations.index');
-
-// Booking Routes
+// Booking page (public)
 Route::get('/book/{id}', [BookingController::class, 'show'])->name('book.show');
 
+// Protected Routes (butuh authentication)
 Route::middleware(['auth'])->group(function () {
-    // proses simpan booking
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    // Booking
     Route::post('/book', [BookingController::class, 'store'])->name('book.store');
-
-    // lihat semua booking user
     Route::get('/bookings', [BookingController::class, 'index'])->name('book.index');
-
+    
+    Route::middleware(['auth'])->group(function () {
     // Cart Routes
     Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store'); // TAMBAHAN
     Route::patch('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     Route::post('/keranjang/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-
-    // Protected User Routes
+    });
+    
+    // User Pages
     Route::get('/bookmark', function () {
         return view('bookmark');
     })->name('bookmark');
-
+    
     Route::get('/profile', function () {
         return view('profile');
     })->name('profile');
-
+    
     Route::get('/checkout', function () {
         return view('checkout');
     })->name('checkout');

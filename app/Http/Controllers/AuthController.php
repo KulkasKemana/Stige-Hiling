@@ -50,8 +50,8 @@ class AuthController extends Controller
             'password' => Hash::make($data['password'])
         ]);
 
-        Auth::login($user);
-        return redirect('home');
+        // Redirect ke login dengan success message
+        return redirect()->route('login')->with('success', 'Registration successful! Please login with your account.');
     }
 
     public function logout(Request $request)

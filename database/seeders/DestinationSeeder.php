@@ -2,82 +2,63 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Destination;
+use Illuminate\Database\Seeder;
 
 class DestinationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $destinations = [
             [
-                'name' => 'Tokyo, Japan',
-                'description' => 'Explore the vibrant culture and modern attractions of Tokyo',
-                'image' => 'assets/tokyo.jpg',
-                'price' => 15000000,
-                'location' => 'Tokyo, Japan',
-                'duration' => '5 days 4 nights',
-                'category' => 'city',
-                'status' => 'active',
-                'features' => json_encode(['Accommodation', 'Meals', 'Transportation', 'Tour Guide'])
+                'name' => 'Masjid Nabawi',
+                'description' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+                'price' => 5000000,
+                'duration' => '7 Days 6 Nights',
+                'location' => 'Arab Saudi',
+                'image' => 'assets/masjid.png',
+                'rating' => 5.0,
+                'category' => 'Religious'
             ],
             [
-                'name' => 'Bali, Indonesia',
-                'description' => 'Experience the beautiful beaches and rich culture of Bali',
-                'image' => 'assets/bali.jpg',
-                'price' => 8500000,
-                'location' => 'Bali, Indonesia',
-                'duration' => '4 days 3 nights',
-                'category' => 'nature',
-                'status' => 'active',
-                'features' => json_encode(['Accommodation', 'Meals', 'Transportation', 'Tour Guide'])
-            ],
-            [
-                'name' => 'Paris, France',
-                'description' => 'Discover the romance and beauty of the City of Light',
-                'image' => 'assets/paris.jpg',
-                'price' => 18000000,
+                'name' => 'Eiffel Tower',
+                'description' => 'Experience the romance of Paris with iconic Eiffel Tower views and French culture.',
+                'price' => 8000000,
+                'duration' => '5 Days 4 Nights',
                 'location' => 'Paris, France',
-                'duration' => '6 days 5 nights',
-                'category' => 'city',
-                'status' => 'active',
-                'features' => json_encode(['Accommodation', 'Meals', 'Transportation', 'Tour Guide'])
+                'image' => 'assets/eifel.png',
+                'rating' => 4.8,
+                'category' => 'City Tour'
             ],
             [
-                'name' => 'Yogyakarta, Indonesia',
-                'description' => 'Explore the cultural heart of Java with ancient temples and traditional arts',
-                'image' => 'assets/yogya.jpg',
+                'name' => 'Japanese Shrine',
+                'description' => 'Discover ancient traditions and serene temples in the heart of Japan.',
+                'price' => 6500000,
+                'duration' => '6 Days 5 Nights',
+                'location' => 'Kyoto, Japan',
+                'image' => 'assets/shrine.png',
+                'rating' => 4.9,
+                'category' => 'Cultural'
+            ],
+            [
+                'name' => 'Beach Paradise',
+                'description' => 'Relax on pristine beaches with crystal clear waters and tropical vibes.',
                 'price' => 3500000,
-                'location' => 'Yogyakarta, Indonesia',
-                'duration' => '3 days 2 nights',
-                'category' => 'cultural',
-                'status' => 'active',
-                'features' => json_encode(['Accommodation', 'Meals', 'Transportation', 'Tour Guide'])
+                'duration' => '4 Days 3 Nights',
+                'location' => 'Bali, Indonesia',
+                'image' => 'assets/chill.png',
+                'rating' => 4.7,
+                'category' => 'Beach'
             ],
             [
-                'name' => 'Rome, Italy',
-                'description' => 'Walk through history in the Eternal City',
-                'image' => 'assets/rome.jpg',
-                'price' => 16500000,
-                'location' => 'Rome, Italy',
-                'duration' => '5 days 4 nights',
-                'category' => 'cultural',
-                'status' => 'active',
-                'features' => json_encode(['Accommodation', 'Meals', 'Transportation', 'Tour Guide'])
-            ],
-            [
-                'name' => 'Beijing, China',
-                'description' => 'Experience ancient wonders and modern marvels in China\'s capital',
-                'image' => 'assets/beijing.jpg',
-                'price' => 12000000,
-                'location' => 'Beijing, China',
-                'duration' => '4 days 3 nights',
-                'category' => 'cultural',
-                'status' => 'active',
-                'features' => json_encode(['Accommodation', 'Meals', 'Transportation', 'Tour Guide'])
+                'name' => 'Mountain Adventure',
+                'description' => 'Explore rugged terrains and breathtaking mountain landscapes.',
+                'price' => 4000000,
+                'duration' => '5 Days 4 Nights',
+                'location' => 'Iceland',
+                'image' => 'assets/jeep.png',
+                'rating' => 4.6,
+                'category' => 'Adventure'
             ]
         ];
 

@@ -2,57 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Destination;
+use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+    // Show booking form untuk destination tertentu
     public function show($id)
     {
-        // data dummy (sementara)
-        $destinations = [
-            1 => [
-                'id' => 1,
-                'name' => 'Kyoto',
-                'price' => 2500000,
-                'duration' => '5 Days',
-                'description' => 'Explore the beauty of Kyoto with traditional temples and gardens.',
-                'image' => 'assets/destinations/kyoto.jpg'
-            ],
-            2 => [
-                'id' => 2,
-                'name' => 'Bali',
-                'price' => 1500000,
-                'duration' => '3 Days',
-                'description' => 'Enjoy the beaches and culture of Bali with amazing vibes.',
-                'image' => 'assets/destinations/bali.jpg'
-            ],
-            3 => [
-                'id' => 3,
-                'name' => 'Rome',
-                'price' => 4000000,
-                'duration' => '7 Days',
-                'description' => 'Visit the historical city of Rome with all its monuments.',
-                'image' => 'assets/destinations/rome.jpg'
-            ],
-        ];
-
-        if (!isset($destinations[$id])) {
-            abort(404, 'Destination not found');
-        }
-
-        $destination = $destinations[$id];
-
+        $destination = Destination::findOrFail($id);
         return view('booking.show', compact('destination'));
     }
 
+    // Simpan booking ke database
     public function store(Request $request)
     {
-        // nanti buat simpan booking user
-        return redirect()->route('book.index')->with('success', 'Booking berhasil!');
+        $validated = $request->validate([
+            'destination_id' => 'required|exists:destinations,id',
+            'booking_date' => 'required|date|after_or_equal:today',
+            'guests' => 'required|integer|min:1',
+            'notes' => 'nullable|string|max:500'
+        ]);
+
+        $destination = Destination::findOrFail($validated['destination_id']);
+        
+        $booking = Booking::create([
+            'user_id' => Auth::id(),
+            'destination_id' => $validated['destination_id'],
+            'booking_date' => $validated['booking_date'],
+            'guests' => $validated['guests'],
+            'total_price' => $destination->price * $validated['guests'],
+            'notes' => $validated['notes'] ?? null,
+            'status' => 'pending'
+        ]);
+
+        return redirect()->route('book.index')->with('success', 'Booking berhasil dibuat!');
     }
 
+    // List semua booking user
     public function index()
     {
-        return view('booking.index'); // isi sesuai kebutuhan
+        $bookings = Booking::with('destination')
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('booking.index', compact('bookings'));
     }
 }

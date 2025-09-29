@@ -12,9 +12,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('destination_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity')->default(1);
             $table->date('booking_date');
-            $table->decimal('price_snapshot', 10, 2); // simpan harga saat booking
+            $table->integer('guests')->default(1);
+            $table->integer('total_price');
+            $table->text('notes')->nullable();
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

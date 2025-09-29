@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const images = [
     {
-      src: "/assets/GitarBoy.jpg",
+      src: "/assets/GitarBoy.jpg",  // ✅ Sudah sesuai
       caption:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
     },
     {
-      src: "/assets/Gunung.jpg",
+      src: "/assets/Gunung.jpg",  // ✅ Sudah sesuai
       caption:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
     },
     {
-      src: "/assets/Pantai.jpg",
+      src: "/assets/Pantai.jpg",  // ✅ Sudah sesuai
       caption:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
     },
@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < 3; i++) {
       const dot = document.getElementById(`dot-${i}`);
       dot.className = `cursor-pointer w-${i === idx ? "6 sm:w-8" : "4 sm:w-5"} h-2 sm:h-3 rounded-full ${
-        i === idx ? "bg-[#3b6dfd]" : "bg-[#a9b3f7]"}`
+        i === idx ? "bg-[#3b6dfd]" : "bg-[#a9b3f7]"
+      }`;
     }
   }
 

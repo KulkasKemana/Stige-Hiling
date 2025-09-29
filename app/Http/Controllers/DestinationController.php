@@ -1,21 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use App\Models\Destination;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class DestinationController extends Controller
+class Destination extends Model
 {
-    public function index()
-    {
-        $destinations = Destination::all();
-        return view('destinations.index', compact('destinations'));
-    }
+    use HasFactory;
 
-    public function show($id)
-    {
-        $destination = Destination::findOrFail($id);
-        return view('destinations.show', compact('destination'));
-    }
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'duration',
+        'location',
+        'image',
+        'rating',
+        'category'
+    ];
+
+    protected $casts = [
+        'price' => 'integer',
+        'rating' => 'decimal:1'
+    ];
 }

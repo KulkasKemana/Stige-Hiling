@@ -13,34 +13,51 @@ class Cart extends Model
         'user_id',
         'destination_id',
         'quantity',
-        'booking_date'
+        'price',
+        'total_price',
+        'booking_date',
+        'status'
     ];
     
     protected $casts = [
-        'booking_date' => 'date'
+        'booking_date' => 'date',
+        'quantity' => 'integer',
+        'price' => 'integer',
+        'total_price' => 'integer'
     ];
     
-    /**
-     * Get the user that owns the cart item
-     */
+    // Auto-calculate total_price saat saving
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($cart) {
+            if ($cart->destination) {
+                $cart->price = $cart->destination->price;
+            }
+            $cart->total_price = $cart->price * $cart->quantity;
+        });
+    }
+    
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
     }
     
-    /**
-     * Get the destination for this cart item
-     */
     public function destination()
     {
         return $this->belongsTo(Destination::class);
     }
     
-    /**
-     * Get total price for this cart item
-     */
-    public function getTotalPriceAttribute()
+    // Scopes
+    public function scopeForUser($query, $userId)
     {
-        return $this->destination->price * $this->quantity;
+        return $query->where('user_id', $userId);
+    }
+    
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
     }
 }

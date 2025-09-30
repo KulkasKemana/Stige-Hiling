@@ -3,25 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Healing Tour & Travel</title>
+  <title>Schedule - Healing Tour & Travel</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     body {
       font-family: "Inter", sans-serif;
-      background-color: #fff;
-      color: #333;
     }
 
-    /* Ticket Card */
+    @keyframes popupIn {
+      from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes popupOut {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to   { opacity: 0; transform: translateY(-12px) scale(0.98); }
+    }
+    .popup-animate-in { animation: popupIn 320ms cubic-bezier(.2,.9,.2,1) both; }
+    .popup-animate-out { animation: popupOut 240ms cubic-bezier(.4,0,.2,1) both; }
+
+    /* Ticket Card Styles */
     .ticket-card {
       display: flex;
       background: #fff;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .ticket-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
     .ticket-left {
@@ -31,30 +45,35 @@
 
     .ticket-left img {
       width: 100%;
-      height: 160px;
+      height: 180px;
       object-fit: cover;
     }
 
     .ticket-info {
       position: absolute;
-      bottom: 15px;
-      left: 15px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 20px;
       color: white;
     }
 
     .ticket-info h2 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
+      margin-bottom: 4px;
     }
 
     .ticket-info p {
-      font-size: 13px;
+      font-size: 14px;
       opacity: 0.9;
     }
 
     .ticket-logo {
-      margin-top: 5px;
+      margin-top: 8px;
       font-size: 11px;
+      opacity: 0.8;
     }
 
     .ticket-right {
@@ -63,7 +82,8 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      border-left: 2px dashed #d1d5db;
+      border-left: 2px dashed #e5e7eb;
+      background: #fafafa;
     }
 
     .ticket-right::before,
@@ -73,8 +93,9 @@
       left: -12px;
       width: 24px;
       height: 24px;
-      background: #fff;
+      background: #f3f4f6;
       border-radius: 50%;
+      border: 2px solid #e5e7eb;
     }
 
     .ticket-right::before {
@@ -86,275 +107,121 @@
     }
 
     .show-btn {
-      background: #fff;
-      border: 1px solid #d1d5db;
-      padding: 8px 16px;
-      border-radius: 6px;
+      background: #ff914d;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 8px;
       font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
+      border: none;
       transition: all 0.3s;
     }
 
     .show-btn:hover {
-      background: #f3f4f6;
-    }
-
-    /* Footer */
-    footer {
-      background: #3b2b25;
-      color: white;
-      padding: 40px 0 20px;
-      margin-top: 80px;
-    }
-
-    footer h3 {
-      color: #fff;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-
-    footer ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    footer ul li {
-      margin-bottom: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    footer ul li:hover {
-      color: #fbbf24;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid #6b4f3a;
-      margin-top: 30px;
-      padding-top: 20px;
-      text-align: center;
-      font-size: 14px;
-      color: #d1d5db;
+      background: #ff7a1a;
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body>
+<body class="bg-gray-50 pt-20">
 
-  <!-- Navbar -->
-<header class="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm">
-  <div class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-3 relative">
-    <!-- Left: Logo -->
-    <div class="flex items-center gap-3">
-      <img src="{{ asset('assets/Logo_Healing_no_bg.png') }}" class="w-10 h-10 object-contain" alt="Logo" />
-      <div class="text-[11px] leading-[14px]">
-        <div class="font-semibold text-black">Healing</div>
-        <div class="text-black">Tour And Travel</div>
-      </div>
+  {{-- Include Navbar --}}
+  @include('partials.navbar')
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto mt-12 px-6 pb-12">
+    
+    <!-- Header Section -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Your Schedule</h1>
+      <p class="text-gray-600">All your active booking tickets</p>
     </div>
 
-    <!-- Center: Navigation -->
-    <nav class="flex space-x-8 text-[14px] font-medium text-black">
-      <a href="{{ route('home') }}" class="hover:underline transition-colors">Home</a>
-      <a href="{{ route('schedule.index') }}" class="text-[#F97316] hover:underline transition-colors">Schedule</a>
-      <a href="{{ route('destinations.index') }}" class="hover:underline transition-colors">Destinations</a>
-    </nav>
-
-    <!-- Right: User info -->
-    <div class="flex items-center gap-3">
-      @auth
-        <button id="profileButton" class="flex items-center gap-3 bg-transparent p-0 focus:outline-none">
-          <img src="{{ asset('assets/Profile-Icon.png') }}" class="w-8 h-8 rounded-full object-cover" />
-          <div class="min-w-[120px] text-right">
-            <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
-            <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
-          </div>
-        </button>
-        <button id="arrowButton" class="bg-gray-100 w-9 h-9 rounded-full flex items-center justify-center ml-1 focus:outline-none hover:bg-gray-200 transition">
-          <i class="fas fa-chevron-down text-gray-700 text-sm"></i>
-        </button>
-      @else
-        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors">Login</a>
-        <a href="{{ route('register') }}" class="ml-4 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors">Register</a>
-      @endauth
-    </div>
-
-    <!-- Profile dropdown -->
-    @auth
-      <div id="profileDropdown" class="absolute right-6 top-full mt-2 min-w-[300px] max-w-[360px] w-auto bg-white rounded-2xl shadow-lg z-50 hidden overflow-auto">
-        <div class="p-3 flex flex-col">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-              <img src="{{ asset('assets/Profile-Icon.png') }}" alt="Profil" class="w-full h-full object-cover"/>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</div>
-              <div class="text-[11px] text-gray-500 truncate">{{ Auth::user()->email }}</div>
+    <!-- Tickets Container -->
+    <div class="space-y-6">
+      
+      <!-- Ticket 1: Kyoto -->
+      <div class="ticket-card">
+        <div class="ticket-left">
+          <img src="{{ asset('assets/shrine.png') }}" alt="Kyoto Japan">
+          <div class="ticket-info">
+            <h2>Kyoto - Japan</h2>
+            <p><i class="far fa-calendar-alt mr-2"></i>25 July 2024</p>
+            <div class="ticket-logo">
+              <i class="fas fa-plane mr-1"></i>Healing Tour and Travel
             </div>
           </div>
+        </div>
+        <div class="ticket-right">
+          <button class="show-btn">
+            <i class="fas fa-ticket-alt mr-2"></i>Show Details
+          </button>
+        </div>
+      </div>
 
-          <div class="flex items-center justify-between bg-gray-50 rounded-lg py-1.5 px-2 text-center text-xs mt-3">
-            <div class="flex-1">
-              <div class="font-semibold text-gray-700">0</div>
-              <div class="text-gray-500">Points</div>
-            </div>
-            <div class="w-px h-6 bg-gray-200 mx-2"></div>
-            <div class="flex-1">
-              <div class="font-semibold text-gray-700">0</div>
-              <div class="text-gray-500">Trips</div>
-            </div>
-            <div class="w-px h-6 bg-gray-200 mx-2"></div>
-            <div class="flex-1">
-              <div class="font-semibold text-gray-700">0</div>
-              <div class="text-gray-500">Bucket</div>
+      <!-- Ticket 2: Makkah -->
+      <div class="ticket-card">
+        <div class="ticket-left">
+          <img src="{{ asset('assets/masjid.png') }}" alt="Makkah Saudi Arabia">
+          <div class="ticket-info">
+            <h2>Makkah - Saudi Arabia</h2>
+            <p><i class="far fa-calendar-alt mr-2"></i>15 October 2024</p>
+            <div class="ticket-logo">
+              <i class="fas fa-plane mr-1"></i>Healing Tour and Travel
             </div>
           </div>
-
-          <nav class="mt-3 overflow-auto">
-            <ul class="flex flex-col divide-y divide-gray-100 text-sm">
-              <li>
-                <a href="{{ route('profile') }}" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                  <div class="flex items-center gap-3">
-                    <i class="far fa-user text-gray-400 w-5 text-center"></i>
-                    <span class="truncate">Profile</span>
-                  </div>
-                  <i class="fas fa-chevron-right text-gray-400"></i>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('bookmark') }}" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                  <div class="flex items-center gap-3">
-                    <i class="far fa-bookmark text-gray-400 w-5 text-center"></i>
-                    <span class="truncate">Bookmarked</span>
-                  </div>
-                  <i class="fas fa-chevron-right text-gray-400"></i>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('cart.index') }}" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50">
-                  <div class="flex items-center gap-3">
-                    <i class="fas fa-shopping-cart text-gray-400 w-5 text-center"></i>
-                    <span class="truncate">Keranjang</span>
-                  </div>
-                  <i class="fas fa-chevron-right text-gray-400"></i>
-                </a>
-              </li>
-              <li>
-                <form method="POST" action="{{ route('logout') }}" class="w-full">
-                  @csrf
-                  <button type="submit" class="flex items-center justify-between px-2 py-2 hover:bg-gray-50 w-full text-left">
-                    <div class="flex items-center gap-3">
-                      <i class="fas fa-sign-out-alt text-gray-400 w-5 text-center"></i>
-                      <span class="truncate">Log Out</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
-                  </button>
-                </form>
-              </li>
-            </ul>
-          </nav>
-
-          <div class="mt-3 text-center text-[11px] text-gray-400 py-1">Healing Tour & Travel</div>
+        </div>
+        <div class="ticket-right">
+          <button class="show-btn">
+            <i class="fas fa-ticket-alt mr-2"></i>Show Details
+          </button>
         </div>
       </div>
-    @endauth
-  </div>
-</header>
-  <!-- Main -->
-  <main class="max-w-4xl mx-auto mt-28 px-4">
-    <h1 class="text-2xl font-bold mb-1">Your Schedule</h1>
-    <p class="text-gray-600 mb-6">All active booking tickets</p>
 
-    <!-- Ticket Kyoto -->
-    <div class="ticket-card">
-      <div class="ticket-left">
-        <img src="assets/shrine.png" alt="Kyoto Japan">
-        <div class="ticket-info">
-          <h2>Kyoto - Japan</h2>
-          <p>25 July 2024</p>
-          <div class="ticket-logo">Healing Tour and Travel</div>
-        </div>
+      <!-- Empty State (jika tidak ada booking) -->
+      {{-- Uncomment ini kalau mau tampilkan saat tidak ada schedule
+      <div class="text-center py-16">
+        <i class="far fa-calendar-times text-6xl text-gray-300 mb-4"></i>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">No Schedule Yet</h3>
+        <p class="text-gray-500 mb-6">You haven't booked any trips yet</p>
+        <a href="{{ route('destinations.index') }}" class="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition">
+          Explore Destinations
+        </a>
       </div>
-      <div class="ticket-right">
-        <button class="show-btn">Show Details</button>
-      </div>
-    </div>
+      --}}
 
-    <!-- Ticket Makkah -->
-    <div class="ticket-card">
-      <div class="ticket-left">
-        <img src="assets/masjid.png" alt="Makkah Saudi Arabia">
-        <div class="ticket-info">
-          <h2>Makkah - Saudi Arabia</h2>
-          <p>15 October 2024</p>
-          <div class="ticket-logo">Healing Tour and Travel</div>
-        </div>
-      </div>
-      <div class="ticket-right">
-        <button class="show-btn">Show Details</button>
-      </div>
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-[#3B2F33] text-white w-full">
-  <div class="max-w-7xl mx-auto px-6 py-10">
-    <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-10 md:gap-0">
-      <div class="md:w-1/4 space-y-3">
-        <div class="flex items-center space-x-2">
-          <img class="w-8 h-8" height="32" src="assets/Logo_Healing_no_bg.png" width="32"/>
-          <div class="text-xs leading-tight">
-            <p class="font-semibold">Healing</p>
-            <p>Tour And Travel</p>
-          </div>
-        </div>
-        <p class="text-[10px] leading-tight max-w-[180px]">
-          Kami berkomitmen untuk memberikan pengalaman healing journey terbaik yang akan mengubah hidup anda menuju kebahagiaan dan kedamaian.
-        </p>
-      </div>
+  {{-- Include Footer --}}
+  @include('partials.footer')
 
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Destinations</p>
-        <p>Saudi Arabia</p>
-        <p>Japan</p>
-        <p>Bali</p>
-        <p>France</p>
-        <p>Italia</p>
-      </div>
+  <!-- Dropdown Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const profileButton = document.getElementById('profileButton');
+      const arrowButton = document.getElementById('arrowButton');
+      const profileDropdown = document.getElementById('profileDropdown');
+      if (!profileDropdown) return;
 
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Follow Us</p>
-        <p class="flex items-center gap-2"><i class="fas fa-globe"></i>@healingtourandtravel</p>
-        <p class="flex items-center gap-2"><i class="fab fa-twitter"></i>@healingtourandtravel</p>
-        <p class="flex items-center gap-2"><i class="fas fa-phone-alt"></i>+62 8909 9897 3563</p>
-        <p class="flex items-center gap-2"><i class="fas fa-envelope"></i>healing@gmail.com</p>
-      </div>
+      function toggleDropdown(e) {
+        e?.stopPropagation();
+        profileDropdown.classList.toggle('hidden');
+      }
 
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Company</p>
-        <p>About Us</p>
-        <p>Partners</p>
-      </div>
+      profileButton?.addEventListener('click', toggleDropdown);
+      arrowButton?.addEventListener('click', toggleDropdown);
 
-      <div class="md:w-1/5 text-[10px] leading-tight space-y-1">
-        <p class="font-semibold text-xs mb-2">Help</p>
-        <p>Help Center</p>
-        <p>FAQ</p>
-        <p>Terms &amp; Conditions</p>
-        <p>Privacy Policy</p>
-      </div>
-    </div>
-
-    <div class="mt-10 border-t border-[#5A4E50] pt-4 text-[10px] text-center">
-      Copyright © 2025 Healing Tour and Travel
-    </div>
-
-    <div class="flex justify-end mt-4">
-      <a aria-label="WhatsApp" href="https://wa.me/62890998973563" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-[#1ebe57] transition-colors duration-300">
-        <i class="fab fa-whatsapp text-white text-2xl"></i>
-      </a>
-    </div>
-  </div>
-</footer>
+      window.addEventListener('click', function (event) {
+        if (!profileDropdown.classList.contains('hidden')) {
+          if (!profileButton?.contains(event.target) && !arrowButton?.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
+          }
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>

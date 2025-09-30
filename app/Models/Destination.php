@@ -8,53 +8,37 @@ use Illuminate\Database\Eloquent\Model;
 class Destination extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'name',
         'description',
-        'image',
         'price',
-        'location',
         'duration',
-        'category',
-        'status',
-        'features'
+        'location',
+        'image',
+        'rating',
+        'category'
     ];
-    
+
     protected $casts = [
-        'price' => 'decimal:2',
-        'features' => 'array'
+        'price' => 'integer',
+        'rating' => 'decimal:1'
     ];
-    
-    /**
-     * Get cart items for this destination
-     */
-    public function cartItems()
+
+    // Relationships
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function carts()
     {
         return $this->hasMany(Cart::class);
     }
-    
-    /**
-     * Scope for active destinations
-     */
+
+    // Scopes
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
-    }
-    
-    /**
-     * Scope for specific category
-     */
-    public function scopeByCategory($query, $category)
-    {
-        return $query->where('category', $category);
-    }
-    
-    /**
-     * Get formatted price
-     */
-    public function getFormattedPriceAttribute()
-    {
-        return 'Rp ' . number_format($this->price, 0, ',', '.');
     }
 }

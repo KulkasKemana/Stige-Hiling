@@ -70,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth'])->group(function () {
     // Cart Routes
     Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store'); // TAMBAHAN
+    Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
     Route::patch('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');

@@ -75,7 +75,9 @@
 
     <!-- Contact Info Bar -->
     <div class="border-t border-white/10 pt-6 pb-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+        
+        <!-- Phone -->
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
             <i class="fas fa-phone-alt text-orange-400"></i>
@@ -85,6 +87,8 @@
             <p class="font-semibold">+62 890 9989 7356</p>
           </div>
         </div>
+
+        <!-- Email -->
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
             <i class="fas fa-envelope text-orange-400"></i>
@@ -94,15 +98,32 @@
             <p class="font-semibold">healing@travel.com</p>
           </div>
         </div>
+
+        <!-- Location -->
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
             <i class="fas fa-map-marker-alt text-orange-400"></i>
           </div>
           <div>
             <p class="text-xs text-gray-400">Location</p>
-            <p class="font-semibold">Jakarta, Indonesia</p>
+            <p class="font-semibold">Garut, Indonesia</p>
           </div>
         </div>
+
+        <!-- WhatsApp -->
+        <div class="flex items-center gap-3">
+          <a href="https://wa.me/62890998973563" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="w-10 h-10 bg-[#25D366] hover:bg-[#1ebe57] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+            <i class="fab fa-whatsapp text-white text-lg"></i>
+          </a>
+          <div>
+            <p class="text-xs text-gray-400">WhatsApp</p>
+            <p class="font-semibold">Chat with us</p>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -119,15 +140,4 @@
     </div>
 
   </div>
-
-  <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/62890998973563" 
-     target="_blank" 
-     rel="noopener noreferrer"
-     class="fixed bottom-6 right-6 bg-[#25D366] hover:bg-[#1ebe57] w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all z-50 group">
-    <i class="fab fa-whatsapp text-white text-2xl"></i>
-    <span class="absolute right-16 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
-      Chat with us
-    </span>
-  </a>
 </footer>

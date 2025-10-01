@@ -196,32 +196,5 @@
 
   {{-- Include Footer --}}
   @include('partials.footer')
-
-  <!-- Dropdown Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const profileButton = document.getElementById('profileButton');
-      const arrowButton = document.getElementById('arrowButton');
-      const profileDropdown = document.getElementById('profileDropdown');
-      if (!profileDropdown) return;
-
-      function toggleDropdown(e) {
-        e?.stopPropagation();
-        profileDropdown.classList.toggle('hidden');
-      }
-
-      profileButton?.addEventListener('click', toggleDropdown);
-      arrowButton?.addEventListener('click', toggleDropdown);
-
-      window.addEventListener('click', function (event) {
-        if (!profileDropdown.classList.contains('hidden')) {
-          if (!profileButton?.contains(event.target) && !arrowButton?.contains(event.target) && !profileDropdown.contains(event.target)) {
-            profileDropdown.classList.add('hidden');
-          }
-        }
-      });
-    });
-  </script>
-
 </body>
 </html>

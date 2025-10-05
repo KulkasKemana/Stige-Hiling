@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\Destination;
 use Illuminate\Database\Seeder;
+use App\Models\Destination;
 
 class DestinationSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
         $destinations = [
@@ -18,7 +21,7 @@ class DestinationSeeder extends Seeder
                 'location' => 'Arab Saudi',
                 'image' => 'assets/masjid.png',
                 'rating' => 5.0,
-                'category' => 'Religious'
+                'category' => 'Religious',
             ],
             [
                 'name' => 'Eiffel Tower',
@@ -28,7 +31,7 @@ class DestinationSeeder extends Seeder
                 'location' => 'Paris, France',
                 'image' => 'assets/eifel.png',
                 'rating' => 4.8,
-                'category' => 'City Tour'
+                'category' => 'City Tour',
             ],
             [
                 'name' => 'Japanese Shrine',
@@ -38,7 +41,7 @@ class DestinationSeeder extends Seeder
                 'location' => 'Kyoto, Japan',
                 'image' => 'assets/shrine.png',
                 'rating' => 4.9,
-                'category' => 'Cultural'
+                'category' => 'Cultural',
             ],
             [
                 'name' => 'Beach Paradise',
@@ -48,7 +51,7 @@ class DestinationSeeder extends Seeder
                 'location' => 'Bali, Indonesia',
                 'image' => 'assets/chill.png',
                 'rating' => 4.7,
-                'category' => 'Beach'
+                'category' => 'Beach',
             ],
             [
                 'name' => 'Mountain Adventure',
@@ -58,8 +61,8 @@ class DestinationSeeder extends Seeder
                 'location' => 'Iceland',
                 'image' => 'assets/jeep.png',
                 'rating' => 4.6,
-                'category' => 'Adventure'
-            ]
+                'category' => 'Adventure',
+            ],
         ];
 
         foreach ($destinations as $destination) {

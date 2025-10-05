@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'user_id',
         'destination_id',
@@ -18,15 +18,14 @@ class Cart extends Model
         'booking_date',
         'status'
     ];
-    
+
     protected $casts = [
-        'booking_date' => 'date',
         'quantity' => 'integer',
         'price' => 'integer',
-        'total_price' => 'integer'
+        'total_price' => 'integer',
+        'booking_date' => 'date'
     ];
-    
-    // Auto-calculate total_price saat saving
+
     protected static function boot()
     {
         parent::boot();
@@ -38,24 +37,24 @@ class Cart extends Model
             $cart->total_price = $cart->price * $cart->quantity;
         });
     }
-    
-    // Relationships
+
+    // relationships
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function destination()
     {
         return $this->belongsTo(Destination::class);
     }
-    
-    // Scopes
+
+    // scopes
     public function scopeForUser($query, $userId)
     {
         return $query->where('user_id', $userId);
     }
-    
+
     public function scopeActive($query)
     {
         return $query->where('status', 'active');

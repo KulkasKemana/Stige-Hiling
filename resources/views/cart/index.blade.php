@@ -9,24 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     body { font-family: "Inter", sans-serif; }
-    @keyframes popupIn {
-      from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes popupOut {
-      from { opacity: 1; transform: translateY(0) scale(1); }
-      to   { opacity: 0; transform: translateY(-12px) scale(0.98); }
-    }
-    .popup-animate-in { animation: popupIn 320ms cubic-bezier(.2,.9,.2,1) both; }
-    .popup-animate-out { animation: popupOut 240ms cubic-bezier(.4,0,.2,1) both; }
   </style>
 </head>
 <body class="bg-gray-50 pt-20">
 
-  {{-- Include Navbar --}}
   @include('partials.navbar')
 
-  <!-- Main Content -->
   <div class="max-w-7xl mx-auto p-6 pb-16">
     
     <!-- Page Header -->
@@ -75,7 +63,7 @@
                 <div class="flex items-center gap-4 pb-6 border-b last:border-b-0">
                   
                   <!-- Image -->
-                  <img src="{{ asset($item->destination->image) }}" 
+                  <img src="{{ asset('storage/' . $item->destination->image) }}" 
                        alt="{{ $item->destination->name }}" 
                        class="w-24 h-24 rounded-lg object-cover flex-shrink-0">
                   
@@ -85,22 +73,35 @@
                     <p class="text-gray-600 text-sm">
                       <i class="fas fa-map-marker-alt mr-1"></i>{{ $item->destination->location }}
                     </p>
-                    <p class="text-gray-600 text-sm">
-                      <i class="far fa-calendar mr-1"></i>{{ $item->booking_date ? \Carbon\Carbon::parse($item->booking_date)->format('d M Y') : 'Date not set' }}
-                    </p>
                     <div class="flex items-center gap-4 mt-3">
                       <span class="text-lg font-bold text-orange-500">
                         Rp {{ number_format($item->total_price, 0, ',', '.') }}
                       </span>
+                      
+                      <!-- Quantity Controls -->
                       <div class="flex items-center gap-2">
                         <label class="text-sm text-gray-600">Qty:</label>
-                        <select class="border border-gray-300 rounded px-2 py-1 text-sm quantity-select" 
-                                data-cart-id="{{ $item->id }}"
-                                data-price="{{ $item->price }}">
-                          @for($i = 1; $i <= 10; $i++)
-                            <option value="{{ $i }}" {{ $item->quantity == $i ? 'selected' : '' }}>{{ $i }}</option>
-                          @endfor
-                        </select>
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                          <button type="button" 
+                                  class="qty-btn px-3 py-1.5 bg-gray-100 hover:bg-orange-100 hover:text-orange-500 transition"
+                                  data-cart-id="{{ $item->id }}"
+                                  data-action="decrease">
+                            <i class="fas fa-minus text-xs"></i>
+                          </button>
+                          <input type="number" 
+                                 value="{{ $item->quantity }}" 
+                                 min="1" 
+                                 max="10"
+                                 readonly
+                                 class="w-12 text-center border-x border-gray-300 py-1.5 font-medium quantity-display focus:outline-none"
+                                 data-cart-id="{{ $item->id }}">
+                          <button type="button" 
+                                  class="qty-btn px-3 py-1.5 bg-gray-100 hover:bg-orange-100 hover:text-orange-500 transition"
+                                  data-cart-id="{{ $item->id }}"
+                                  data-action="increase">
+                            <i class="fas fa-plus text-xs"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -164,14 +165,11 @@
             </div>
 
             <!-- Checkout Button -->
-            <form method="POST" action="{{ route('cart.checkout') }}">
-              @csrf
-              <button type="submit"
-                      class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+            <a href="{{ route('checkout.index') }}"
+               class="block w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-lg transition duration-200 text-center">
                 Continue to Payment
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </form>
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
 
             <!-- Features -->
             <div class="mt-6 pt-6 border-t space-y-3 text-sm">
@@ -194,45 +192,63 @@
     </div>
   </div>
 
-  {{-- Include Footer --}}
   @include('partials.footer')
 
-  <!-- JavaScript for Update Quantity -->
   <script>
-    document.querySelectorAll('.quantity-select').forEach(select => {
-      select.addEventListener('change', function() {
-        const cartId = this.dataset.cartId;
-        const quantity = this.value;
-        
-        // Send AJAX request to update quantity
-        fetch(`/cart/${cartId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}'
-          },
-          body: JSON.stringify({ quantity: quantity })
-        })
-        .then(response => response.json())
-        .then(data => {
-          if(data.success) {
-            // Reload page to update totals
-            window.location.reload();
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Failed to update quantity');
+    document.querySelectorAll('.qty-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const cartId = this.dataset.cartId;
+            const action = this.dataset.action;
+            const input = document.querySelector(`.quantity-display[data-cart-id="${cartId}"]`);
+            let currentQty = parseInt(input.value);
+            
+            if (action === 'increase' && currentQty < 10) {
+                currentQty++;
+            } else if (action === 'decrease' && currentQty > 1) {
+                currentQty--;
+            } else {
+                return;
+            }
+            
+            this.disabled = true;
+            this.style.opacity = '0.5';
+            input.value = currentQty;
+            
+            fetch('/cart/update/' + cartId, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ quantity: currentQty })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to update quantity');
+                    this.disabled = false;
+                    this.style.opacity = '1';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to update quantity');
+                this.disabled = false;
+                this.style.opacity = '1';
+                input.value = action === 'increase' ? currentQty - 1 : currentQty + 1;
+            });
         });
-      });
     });
 
-    // Auto hide messages
     setTimeout(() => {
-      document.querySelectorAll('.bg-green-100, .bg-red-100').forEach(el => {
-        el.style.opacity = '0';
-        setTimeout(() => el.remove(), 300);
-      });
+        document.querySelectorAll('.bg-green-100, .bg-red-100').forEach(el => {
+            el.style.transition = 'opacity 0.3s';
+            el.style.opacity = '0';
+            setTimeout(() => el.remove(), 300);
+        });
     }, 5000);
   </script>
 </body>

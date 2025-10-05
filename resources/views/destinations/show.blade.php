@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
     <style>
         body { font-family: "Inter", sans-serif; }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.8) 0%, rgba(249, 115, 22, 0.9) 100%);
+        }
         @keyframes popupIn {
             from { opacity: 0; transform: translateY(-12px) scale(0.98); }
             to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -22,7 +25,7 @@
     </style>
 </head>
 <body class="bg-gray-50 pt-20">
-
+    
     {{-- Include Navbar --}}
     @include('partials.navbar')
 
@@ -30,7 +33,7 @@
     <div class="pb-4">
         <div class="max-w-7xl mx-auto px-4">
             <nav class="flex items-center gap-2 text-sm text-gray-600">
-                <a href="{{ route('home') }}" class="hover:text-orange-500">Home</a>
+                <a href="/home" class="hover:text-orange-500">Home</a>
                 <i class="fas fa-chevron-right text-xs"></i>
                 <a href="{{ route('destinations.index') }}" class="hover:text-orange-500">Destinations</a>
                 <i class="fas fa-chevron-right text-xs"></i>
@@ -40,25 +43,25 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="relative mb-12">
-        <div class="relative h-96 bg-cover bg-center" 
-             style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{{ asset($destination->image) }}');">
+    <section class="relative">
+        <div class="relative h-96 bg-cover bg-center hero-gradient" 
+             style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{{ $destination->image }}');">
             <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-center text-white px-4">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ $destination->name }}</h1>
-                    <p class="text-xl mb-6 max-w-2xl mx-auto">{{ $destination->description }}</p>
-                    <div class="flex items-center justify-center gap-6 text-sm flex-wrap">
+                    <p class="text-xl mb-6 max-w-2xl">{{ $destination->description ?? 'Discover the beauty and wonder of this amazing destination with our expertly crafted tour packages.' }}</p>
+                    <div class="flex items-center justify-center gap-6 text-sm">
                         <div class="flex items-center gap-2">
                             <i class="far fa-clock"></i>
-                            <span>{{ $destination->duration }}</span>
+                            <span>{{ $destination->duration ?? '3 days 2 nights' }}</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>{{ $destination->location }}</span>
+                            <span>{{ $destination->location ?? $destination->name }}</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <i class="fas fa-star text-yellow-400"></i>
-                            <span>{{ $destination->rating }} Rating</span>
+                            <i class="fas fa-users"></i>
+                            <span>Group Tour</span>
                         </div>
                     </div>
                 </div>
@@ -67,18 +70,16 @@
     </section>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto pb-12 px-4">
+    <div class="max-w-7xl mx-auto py-12 px-4">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
             <!-- Left Content -->
             <div class="lg:col-span-2 space-y-8">
-                
                 <!-- Overview -->
                 <div class="bg-white rounded-2xl shadow-sm p-8">
                     <h2 class="text-2xl font-bold mb-6">Tour Overview</h2>
                     <div class="prose max-w-none">
                         <p class="text-gray-600 leading-relaxed mb-6">
-                            {{ $destination->description }}
+                            {{ $destination->description ?? 'Embark on an unforgettable journey to one of the world\'s most captivating destinations. Our carefully curated tour package offers the perfect blend of adventure, culture, and relaxation, ensuring you create memories that will last a lifetime.' }}
                         </p>
                         
                         <h3 class="text-xl font-semibold mb-4">What Makes This Tour Special</h3>
@@ -119,10 +120,16 @@
                             <h3 class="text-lg font-semibold text-gray-900 mb-2">Day 3 - Adventure & Nature</h3>
                             <p class="text-gray-600">Outdoor activities, nature exploration, scenic viewpoints, and traditional cultural performances.</p>
                         </div>
+                        @if(str_contains($destination->duration ?? '', '4') || str_contains($destination->duration ?? '', '5') || str_contains($destination->duration ?? '', '6'))
+                        <div class="border-l-4 border-orange-200 pl-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Day 4 - Free Time & Departure</h3>
+                            <p class="text-gray-600">Free time for shopping, relaxation, or optional activities before airport transfer and departure.</p>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
-                <!-- Inclusions -->
+                <!-- Inclusions & Exclusions -->
                 <div class="bg-white rounded-2xl shadow-sm p-8">
                     <h2 class="text-2xl font-bold mb-6">What's Included</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -131,7 +138,7 @@
                             <ul class="space-y-2 text-gray-600">
                                 <li class="flex items-center gap-2">
                                     <i class="fas fa-check text-green-500"></i>
-                                    <span>Accommodation</span>
+                                    <span>Accommodation ({{ str_contains($destination->duration ?? '', '3') ? '2' : (str_contains($destination->duration ?? '', '4') ? '3' : '4') }} nights)</span>
                                 </li>
                                 <li class="flex items-center gap-2">
                                     <i class="fas fa-check text-green-500"></i>
@@ -148,6 +155,10 @@
                                 <li class="flex items-center gap-2">
                                     <i class="fas fa-check text-green-500"></i>
                                     <span>Entrance fees to attractions</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Travel insurance</span>
                                 </li>
                             </ul>
                         </div>
@@ -170,7 +181,48 @@
                                     <i class="fas fa-times text-red-500"></i>
                                     <span>Tips for guide & driver</span>
                                 </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-times text-red-500"></i>
+                                    <span>Visa fees (if required)</span>
+                                </li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews -->
+                <div class="bg-white rounded-2xl shadow-sm p-8">
+                    <h2 class="text-2xl font-bold mb-6">Customer Reviews</h2>
+                    <div class="space-y-6">
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex items-start gap-4">
+                                <img src="{{ asset('assets/Profile-Icon.png') }}" alt="User" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <h4 class="font-semibold">Sarah Johnson</h4>
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600">"Amazing experience! The tour was well organized and our guide was incredibly knowledgeable. Would definitely recommend!"</p>
+                                    <p class="text-sm text-gray-400 mt-2">2 weeks ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-200 pb-6">
+                            <div class="flex items-start gap-4">
+                                <img src="{{ asset('assets/Profile-Icon.png') }}" alt="User" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <h4 class="font-semibold">Michael Chen</h4>
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600">"Great value for money. The accommodations were comfortable and the itinerary was perfect for first-time visitors."</p>
+                                    <p class="text-sm text-gray-400 mt-2">1 month ago</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -178,13 +230,12 @@
 
             <!-- Right Sidebar - Booking Form -->
             <div class="lg:col-span-1">
-                <div class="sticky top-24 space-y-6">
-                    
+                <div class="sticky top-24">
                     <!-- Price Card -->
-                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
                         <div class="text-center mb-6">
                             <div class="text-3xl font-bold text-orange-500">
-                                Rp {{ number_format($destination->price, 0, ',', '.') }}
+                                Rp {{ number_format($destination->price ?? 0, 0, ',', '.') }}
                             </div>
                             <div class="text-sm text-gray-500">per person</div>
                         </div>
@@ -196,7 +247,7 @@
                                 <input type="hidden" name="destination_id" value="{{ $destination->id }}">
                                 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">
                                         <i class="fas fa-users mr-1"></i>
                                         Number of Travelers
                                     </label>
@@ -212,12 +263,12 @@
                                 <div class="bg-gray-50 rounded-lg p-4">
                                     <div class="flex justify-between items-center">
                                         <span class="text-sm text-gray-600">Total Price:</span>
-                                        <span id="totalPrice" class="font-semibold text-lg">Rp {{ number_format($destination->price, 0, ',', '.') }}</span>
+                                        <span id="totalPrice" class="font-semibold text-lg">Rp {{ number_format($destination->price ?? 0, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
                                 
                                 <button type="submit" 
-                                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-lg transition flex items-center justify-center gap-2">
+                                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2">
                                     <i class="fas fa-shopping-cart"></i>
                                     Add to Cart
                                 </button>
@@ -226,26 +277,33 @@
                             <div class="text-center">
                                 <p class="text-gray-600 mb-4">Please login to book this destination</p>
                                 <a href="{{ route('login') }}" 
-                                   class="block bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-lg transition">
-                                    <i class="fas fa-sign-in-alt mr-2"></i>
+                                   class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 inline-flex items-center justify-center gap-2">
+                                    <i class="fas fa-sign-in-alt"></i>
                                     Login to Book
                                 </a>
                             </div>
                         @endauth
 
                         <!-- Features -->
-                        <div class="mt-6 pt-6 border-t space-y-3 text-sm">
-                            <div class="flex items-center gap-2 text-gray-600">
-                                <i class="fas fa-shield-alt text-green-500"></i>
-                                <span>Best Price Guarantee</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-gray-600">
-                                <i class="fas fa-undo text-blue-500"></i>
-                                <span>Free Cancellation</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-gray-600">
-                                <i class="fas fa-headset text-purple-500"></i>
-                                <span>24/7 Support</span>
+                        <div class="mt-6 pt-6 border-t border-gray-200">
+                            <h3 class="text-sm font-semibold mb-3 text-gray-900">Why Book With Us?</h3>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-shield-alt text-green-500"></i>
+                                    <span>Best Price Guarantee</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-undo text-blue-500"></i>
+                                    <span>Free Cancellation</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-headset text-purple-500"></i>
+                                    <span>24/7 Customer Support</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-600">
+                                    <i class="fas fa-award text-yellow-500"></i>
+                                    <span>Verified Reviews</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,10 +311,20 @@
                     <!-- Contact Card -->
                     <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
                         <h3 class="text-lg font-semibold mb-3">Need Help?</h3>
-                        <p class="text-sm mb-4 text-orange-100">Our travel experts are here to help you.</p>
+                        <p class="text-sm mb-4 text-orange-100">Our travel experts are here to help you plan the perfect trip.</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-phone"></i>
+                                <span>+62 890 9989 7356</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-envelope"></i>
+                                <span>healing@gmail.com</span>
+                            </div>
+                        </div>
                         <a href="https://wa.me/62890998973563" target="_blank"
-                           class="block bg-white text-orange-600 font-medium py-2 px-4 rounded-lg transition hover:bg-gray-50 text-center">
-                            <i class="fab fa-whatsapp mr-2"></i>
+                           class="mt-4 w-full bg-white text-orange-600 font-medium py-2 px-4 rounded-lg transition duration-200 inline-flex items-center justify-center gap-2 hover:bg-gray-50">
+                            <i class="fab fa-whatsapp"></i>
                             Chat on WhatsApp
                         </a>
                     </div>
@@ -270,23 +338,29 @@
 
     <!-- Success/Error Messages -->
     @if(session('success'))
-        <div class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
-            <i class="fas fa-check mr-2"></i>{{ session('success') }}
+        <div class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-check"></i>
+                {{ session('success') }}
+            </div>
         </div>
     @endif
 
     @if(session('error'))
-        <div class="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
-            <i class="fas fa-times mr-2"></i>{{ session('error') }}
+        <div class="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-times"></i>
+                {{ session('error') }}
+            </div>
         </div>
     @endif
 
     <!-- JavaScript -->
     <script>
-        // Calculate total price
+        // Calculate total price based on quantity
         const quantitySelect = document.getElementById('quantity');
         const totalPriceElement = document.getElementById('totalPrice');
-        const basePrice = {{ $destination->price }};
+        const basePrice = {{ $destination->price ?? 0 }};
 
         if (quantitySelect && totalPriceElement) {
             quantitySelect.addEventListener('change', function() {
@@ -296,11 +370,12 @@
             });
         }
 
-        // Auto hide messages
-        setTimeout(() => {
-            document.querySelectorAll('.fixed.bottom-4').forEach(el => {
-                el.style.opacity = '0';
-                setTimeout(() => el.remove(), 300);
+        // Auto hide messages after 5 seconds
+        setTimeout(function() {
+            const messages = document.querySelectorAll('.fixed.bottom-4');
+            messages.forEach(msg => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.style.display = 'none', 300);
             });
         }, 5000);
     </script>

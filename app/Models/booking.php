@@ -2,62 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class Booking extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'user_id',
         'destination_id',
+        'booking_code',
+        'name',
+        'email',
+        'phone',
+        'address',
+        'travel_date',
         'quantity',
-        'price',
         'total_price',
-        'booking_date',
-        'status'
+        'payment_method',
+        'payment_proof',
+        'payment_status',
+        'notes',
     ];
 
     protected $casts = [
-        'quantity' => 'integer',
-        'price' => 'integer',
-        'total_price' => 'integer',
-        'booking_date' => 'date'
+        'travel_date' => 'date',
     ];
 
-    // Auto-calculate total_price saat quantity atau price berubah
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($cart) {
-            if ($cart->destination) {
-                $cart->price = $cart->destination->price;
-            }
-            $cart->total_price = $cart->price * $cart->quantity;
-        });
-    }
-
-    // Relationships
+    // Relationship dengan User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Relationship dengan Destination
     public function destination()
     {
         return $this->belongsTo(Destination::class);
-    }
-
-    // Scopes
-    public function scopeForUser($query, $userId)
-    {
-        return $query->where('user_id', $userId);
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->where('status', 'active');
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 // ==================== PUBLIC ROUTES ====================
@@ -16,14 +17,6 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 })->name('home');
-
-Route::get('/schedule', function () {
-    return view('schedule.schedule');
-})->name('schedule.index');
-
-Route::get('/schedule/ticket', function () {
-    return view('schedule.ticket');
-})->name('schedule.ticket');
 
 // Destinations (public access)
 Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');
@@ -93,4 +86,10 @@ Route::middleware(['auth'])->group(function () {
     // Backward compatibility
     Route::get('/book/{id}', [BookingController::class, 'show'])->name('book.show');
     Route::post('/book', [BookingController::class, 'store'])->name('book.store');
+
+    // Schedule Routes (butuh auth)
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/bookings', [BookingController::class, 'index'])->name('booking.index');
+    Route::get('/booking/{bookingCode}', [BookingController::class, 'show'])->name('booking.show');
+    }); 
 });

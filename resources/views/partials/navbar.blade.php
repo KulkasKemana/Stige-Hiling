@@ -16,7 +16,7 @@
       <a href="{{ route('home') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('home') ? 'text-orange-500' : 'text-gray-700' }}">
         Home
       </a>
-      <a href="{{ route('schedule.index') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('schedule.*') ? 'text-orange-500' : 'text-gray-700' }}">
+      <a href="{{ route('booking.index') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('schedule.*') ? 'text-orange-500' : 'text-gray-700' }}">
         Schedule
       </a>
       <a href="{{ route('destinations.index') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('destinations.*') ? 'text-orange-500' : 'text-gray-700' }}">

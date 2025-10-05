@@ -44,11 +44,17 @@ class BookingController extends Controller
     // List semua booking user
     public function index()
     {
+        $user = Auth::user();
+        
+        // Ambil semua booking user dengan relasi destination, diurutkan terbaru
         $bookings = Booking::with('destination')
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->get();
-            
-        return view('booking.index', compact('bookings'));
+        
+        // Group booking berdasarkan booking_code
+        $groupedBookings = $bookings->groupBy('booking_code');
+        
+        return view('booking.index', compact('groupedBookings'));
     }
 }

@@ -36,6 +36,39 @@ class Destination extends Model
         return $this->hasMany(Cart::class);
     }
 
+    // ===== TAMBAHKAN DARI SINI =====
+    
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function bookmarkedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'bookmarks')
+                    ->withTimestamps();
+    }
+
+    public function isBookmarkedBy($userId)
+    {
+        return $this->bookmarks()
+                    ->where('user_id', $userId)
+                    ->exists();
+    }
+
+    public function getBookmarkCountAttribute()
+    {
+        return $this->bookmarks()->count();
+    }
+
+    public function scopeBookmarkedBy($query, $userId)
+    {
+        return $query->whereHas('bookmarks', function($q) use ($userId) {
+            $q->where('user_id', $userId);
+        });
+    }
+    // ===== SAMPAI SINI =====
+
     // Scopes
     public function scopeActive($query)
     {

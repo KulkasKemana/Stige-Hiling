@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // ==================== PUBLIC ROUTES ====================
@@ -44,15 +46,20 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     
+    // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
+    // ==================== PROFILE ROUTES ====================
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     
-    Route::get('/bookmark', function () {
-        return view('bookmark');
-    })->name('bookmark');
+    // ==================== BOOKMARK ROUTES ====================
+    Route::prefix('bookmark')->name('bookmark.')->group(function () {
+        Route::get('/', [BookmarkController::class, 'index'])->name('index');
+        Route::post('/toggle/{destination}', [BookmarkController::class, 'toggle'])->name('toggle');
+        Route::get('/check/{destination}', [BookmarkController::class, 'check'])->name('check');
+        Route::delete('/{destination}', [BookmarkController::class, 'destroy'])->name('destroy');
+    });
     
     // ==================== CART ROUTES ====================
     Route::prefix('cart')->name('cart.')->group(function () {
@@ -78,18 +85,17 @@ Route::middleware(['auth'])->group(function () {
     });
     
     // ==================== BOOKING ROUTES ====================
-    Route::prefix('bookings')->name('bookings.')->group(function () {
+    Route::prefix('booking')->name('booking.')->group(function () {
+        // tampilkan form booking destinasi tertentu
+        Route::get('/create/{id}', [BookingController::class, 'show'])->name('create');
+
+        // simpan booking baru
+        Route::post('/store', [BookingController::class, 'store'])->name('store');
+
+        // daftar semua booking user
         Route::get('/', [BookingController::class, 'index'])->name('index');
+
+        // detail booking berdasarkan kode
         Route::get('/{bookingCode}', [BookingController::class, 'detail'])->name('show');
     });
-    
-    // Backward compatibility
-    Route::get('/book/{id}', [BookingController::class, 'show'])->name('book.show');
-    Route::post('/book', [BookingController::class, 'store'])->name('book.store');
-
-    // Schedule Routes (butuh auth)
-    Route::middleware(['auth'])->group(function () {
-    Route::get('/bookings', [BookingController::class, 'index'])->name('booking.index');
-    Route::get('/booking/{bookingCode}', [BookingController::class, 'show'])->name('booking.show');
-    }); 
 });

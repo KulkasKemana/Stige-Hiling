@@ -25,4 +25,42 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // ===== TAMBAHKAN DARI SINI =====
+    
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function bookmarkedDestinations()
+    {
+        return $this->belongsToMany(Destination::class, 'bookmarks')
+                    ->withTimestamps();
+    }
+
+    public function hasBookmarked($destinationId)
+    {
+        return $this->bookmarks()
+                    ->where('destination_id', $destinationId)
+                    ->exists();
+    }
+
+    public function toggleBookmark($destinationId)
+    {
+        $bookmark = $this->bookmarks()
+                         ->where('destination_id', $destinationId)
+                         ->first();
+
+        if ($bookmark) {
+            $bookmark->delete();
+            return false;
+        } else {
+            $this->bookmarks()->create([
+                'destination_id' => $destinationId
+            ]);
+            return true;
+        }
+    }
+    // ===== SAMPAI SINI =====
 }

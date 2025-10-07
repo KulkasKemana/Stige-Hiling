@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Destinations - Healing Tour and Travel</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
@@ -11,24 +12,6 @@
     body {
       font-family: "Inter", sans-serif;
     }
-    @keyframes popupIn {
-      from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes popupOut {
-      from { opacity: 1; transform: translateY(0) scale(1); }
-      to   { opacity: 0; transform: translateY(-12px) scale(0.98); }
-    }
-    .popup-animate-in { animation: popupIn 320ms cubic-bezier(.2,.9,.2,1) both; }
-    .popup-animate-out { animation: popupOut 240ms cubic-bezier(.4,0,.2,1) both; }
-    #arrowButton.rotate { transform: rotate(180deg); }
-    #arrowButton i {
-      display: inline-block;
-      transition: transform 220ms cubic-bezier(.2,.9,.2,1);
-      transform: rotate(0deg);
-      transform-origin: center;
-    }
-    #arrowButton.rotate i { transform: rotate(180deg); }
     .tab-active {
       background-color: #ff914d;
       color: white;
@@ -40,10 +23,20 @@
     .tab-inactive:hover {
       background-color: #e5e7eb;
     }
+    .bookmark-btn {
+      transition: all 0.3s ease;
+    }
+    .bookmark-btn:hover {
+      transform: scale(1.1);
+    }
+    .bookmark-btn.bookmarked i {
+      color: #ff914d;
+    }
   </style>
 </head>
-<body class="bg-white pt-16">
-  <!-- Navbar -->
+<body class="bg-white pt-20">
+  
+  {{-- Include Navbar --}}
   @include('partials.navbar')
 
   <!-- Hero Section with Search -->
@@ -124,9 +117,20 @@
           <img src="{{ asset($destination->image) }}" 
                alt="{{ $destination->name }}" 
                class="w-full h-48 object-cover">
-          <button class="absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 p-2 rounded-full transition">
-            <i class="far fa-bookmark text-white"></i>
-          </button>
+          
+          @auth
+            <button class="bookmark-btn absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 p-2 rounded-full transition"
+                    data-destination-id="{{ $destination->id }}"
+                    onclick="toggleBookmark({{ $destination->id }}, this)">
+              <i class="far fa-bookmark text-white"></i>
+            </button>
+          @else
+            <a href="{{ route('login') }}" 
+               class="absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 p-2 rounded-full transition">
+              <i class="far fa-bookmark text-white"></i>
+            </a>
+          @endauth
+          
           <div class="absolute top-3 left-3 bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">
             <i class="fas fa-star"></i> {{ $destination->rating }}
           </div>
@@ -158,10 +162,14 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  {{-- Include Footer --}}
   @include('partials.footer')
 
   <script>
+    // Setup CSRF token for AJAX requests
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    // Filter destinations function
     function filterDestinations(category) {
       const cards = document.querySelectorAll('.destination-card');
       const tabs = document.querySelectorAll('button[onclick^="filterDestinations"]');
@@ -184,23 +192,75 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const heartButtons = document.querySelectorAll('.fa-bookmark');
-      
-      heartButtons.forEach(button => {
-        button.parentElement.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (button.classList.contains('far')) {
-            button.classList.remove('far');
-            button.classList.add('fas');
-            button.style.color = '#ff914d';
-          } else {
-            button.classList.remove('fas');
-            button.classList.add('far');
-            button.style.color = '';
+    // Toggle bookmark function
+    async function toggleBookmark(destinationId, button) {
+      try {
+        const response = await fetch(`/bookmark/toggle/${destinationId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
           }
         });
-      });
+
+        const data = await response.json();
+        
+        if (data.success) {
+          const icon = button.querySelector('i');
+          if (data.bookmarked) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+            button.classList.add('bookmarked');
+            showNotification('Added to bookmarks!', 'success');
+          } else {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+            button.classList.remove('bookmarked');
+            showNotification('Removed from bookmarks!', 'info');
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showNotification('Something went wrong!', 'error');
+      }
+    }
+
+    // Show notification
+    function showNotification(message, type) {
+      const notification = document.createElement('div');
+      notification.className = `fixed top-24 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-white ${
+        type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+      }`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // Check bookmark status on page load
+    document.addEventListener('DOMContentLoaded', async function() {
+      const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
+      
+      for (const button of bookmarkButtons) {
+        const destinationId = button.dataset.destinationId;
+        try {
+          const response = await fetch(`/bookmark/check/${destinationId}`);
+          const data = await response.json();
+          
+          if (data.bookmarked) {
+            const icon = button.querySelector('i');
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+            button.classList.add('bookmarked');
+          }
+        } catch (error) {
+          console.error('Error checking bookmark:', error);
+        }
+      }
     });
   </script>
 </body>

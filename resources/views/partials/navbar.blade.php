@@ -16,7 +16,7 @@
       <a href="{{ route('home') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('home') ? 'text-orange-500' : 'text-gray-700' }}">
         Home
       </a>
-      <a href="{{ route('booking.index') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('schedule.*') ? 'text-orange-500' : 'text-gray-700' }}">
+      <a href="{{ route('booking.index') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('booking.index') ? 'text-orange-500' : 'text-gray-700' }}">
         Schedule
       </a>
       <a href="{{ route('destinations.index') }}" class="text-sm font-medium hover:text-orange-500 transition {{ request()->routeIs('destinations.*') ? 'text-orange-500' : 'text-gray-700' }}">
@@ -73,7 +73,7 @@
               <i class="far fa-user w-5 text-gray-400 group-hover:text-orange-500 transition"></i>
               <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Profile</span>
             </a>
-            <a href="{{ route('bookmark') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition group">
+            <a href="{{ route('bookmark.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition group">
               <i class="far fa-bookmark w-5 text-gray-400 group-hover:text-orange-500 transition"></i>
               <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Bookmarked</span>
             </a>

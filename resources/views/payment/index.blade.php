@@ -231,7 +231,26 @@
         </form>
     </main>
 
-    @include('partials.footer')
+        <!-- Footer -->
+        <footer class="mt-10 border-t border-[#989898] text-gray-300 py-4">
+    <div class="container mx-auto flex items-center justify-between">
+        <div class="w-1/3"></div>
+
+        <!-- copyright -->
+        <div class="w-1/3 text-center text-sm">
+        Copyright © 2025 Healing Tour and Travel
+        </div>
+
+        <!-- follow us -->
+        <div class="w-1/3 flex justify-end items-center space-x-3 text-sm">
+        <span class="font-semibold">Follow Us</span>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="far fa-envelope"></i></a>
+        </div>
+    </div>
+    </footer>
 
     <script>
         function selectMethod(element, method) {

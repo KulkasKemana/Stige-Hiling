@@ -6,17 +6,22 @@ use App\Models\Destination;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
-    // Show booking form untuk destination tertentu
+    /**
+     * tampilkan form booking untuk destinasi tertentu
+     */
     public function show($id)
     {
         $destination = Destination::findOrFail($id);
-        return view('booking.show', compact('destination'));
+        return view('booking.ticket', compact('destination'));
     }
 
-    // Simpan booking ke database
+    /**
+     * simpan booking baru ke database
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -27,8 +32,12 @@ class BookingController extends Controller
         ]);
 
         $destination = Destination::findOrFail($validated['destination_id']);
-        
+
+        // generate booking code unik untuk setiap pemesanan grup
+        $bookingCode = strtoupper(Str::random(8));
+
         $booking = Booking::create([
+            'booking_code' => $bookingCode,
             'user_id' => Auth::id(),
             'destination_id' => $validated['destination_id'],
             'booking_date' => $validated['booking_date'],
@@ -38,23 +47,39 @@ class BookingController extends Controller
             'status' => 'pending'
         ]);
 
-        return redirect()->route('book.index')->with('success', 'Booking berhasil dibuat!');
+        return redirect()->route('booking.index')->with('success', 'Booking berhasil dibuat!');
     }
 
-    // List semua booking user
+    /**
+     * tampilkan semua booking milik user
+     */
     public function index()
     {
-        $user = Auth::user();
-        
-        // Ambil semua booking user dengan relasi destination, diurutkan terbaru
-        $bookings = Booking::with('destination')
-            ->where('user_id', $user->id)
+        $groupedBookings = Booking::where('user_id', Auth::id())
+            ->with('destination')
             ->orderBy('created_at', 'desc')
-            ->get();
-        
-        // Group booking berdasarkan booking_code
-        $groupedBookings = $bookings->groupBy('booking_code');
-        
+            ->get()
+            ->groupBy('booking_code');
+
         return view('booking.index', compact('groupedBookings'));
+    }
+
+    /**
+     * tampilkan detail booking berdasarkan kode
+     */
+    public function detail($bookingCode)
+    {
+        $bookings = Booking::where('booking_code', $bookingCode)
+            ->where('user_id', Auth::id())
+            ->with('destination')
+            ->get();
+
+        if ($bookings->isEmpty()) {
+            return redirect()->route('booking.index')->with('error', 'Booking tidak ditemukan');
+        }
+
+        $bookingInfo = $bookings->first();
+
+        return view('booking.show', compact('bookings', 'bookingInfo'));
     }
 }

@@ -111,7 +111,28 @@
     </style>
 </head>
 <body>
-    
+    @include('partials.navbar')
+
+    <main class="main-content">
+        <div class="success-card">
+            <div class="success-icon"></div>
+            <h1 class="success-title">Payment Completed!!</h1>
+            <p class="success-message">
+                Thanks a lot! We've received and<br>
+                confirmed your order
+            </p>
+            <div class="amount">Rp {{ number_format($total, 0, ',', '.') }}</div>
+            <div class="transaction-id">Transaction ID : {{ $bookingCode }}</div>
+            <p class="email-info">
+                We've sent your e-ticket and order details to your email.<br>
+                Please check your inbox (or spam folder)
+            </p>
+            <div class="action-buttons">
+                <a href="{{ route('home') }}" class="btn btn-primary">Back to Home</a>
+                <a href="{{ route('booking.index') }}" class="btn btn-secondary">View My Bookings</a>
+            </div>
+        </div>
+    </main>
 
     <!-- Footer -->
         <footer class="mt-10 border-t border-[#989898] text-gray-300 py-4">
@@ -133,28 +154,6 @@
         </div>
     </div>
     </footer>
-
-    <main class="main-content">
-        <div class="success-card">
-            <div class="success-icon"></div>
-            <h1 class="success-title">Payment Completed!!</h1>
-            <p class="success-message">
-                Thanks a lot! We've received and<br>
-                confirmed your order
-            </p>
-            <div class="amount">Rp {{ number_format($total, 0, ',', '.') }}</div>
-            <div class="transaction-id">Transaction ID : {{ $bookingCode }}</div>
-            <p class="email-info">
-                We've sent your e-ticket and order details to your email.<br>
-                Please check your inbox (or spam folder)
-            </p>
-            <div class="action-buttons">
-                <a href="{{ route('home') }}" class="btn btn-primary">Back to Home</a>
-                <a href="{{ route('bookings.index') }}" class="btn btn-secondary">View My Bookings</a>
-            </div>
-        </div>
-    </main>
-
-    @include('partials.footer')
+    
 </body>
 </html>

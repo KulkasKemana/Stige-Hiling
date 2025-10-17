@@ -189,34 +189,6 @@
                 @enderror
             </div>
 
-            <!-- Upload Payment Proof -->
-            <div class="payment-card">
-                <div class="card-title">Upload Payment Proof (Optional)</div>
-                
-                <div class="upload-area" onclick="document.getElementById('paymentProof').click()">
-                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                    <p class="text-gray-600 font-medium mb-1">Click to upload payment proof</p>
-                    <p class="text-sm text-gray-500">JPG, PNG (Max 2MB)</p>
-                    <input type="file" 
-                           name="payment_proof" 
-                           id="paymentProof" 
-                           accept="image/jpeg,image/png,image/jpg"
-                           class="hidden"
-                           onchange="previewImage(this)">
-                </div>
-
-                <div id="imagePreview" class="mt-4 hidden">
-                    <img id="previewImg" src="" alt="Preview" class="w-full rounded-lg">
-                    <button type="button" onclick="removeImage()" class="mt-2 text-red-500 text-sm hover:underline">
-                        <i class="fas fa-trash mr-1"></i>Remove
-                    </button>
-                </div>
-
-                @error('payment_proof')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-
             <!-- Submit Button -->
             <button type="submit" 
                     class="w-full bg-orange-500 text-white py-4 rounded-lg font-semibold text-lg hover:bg-orange-600 transition duration-200 shadow-lg">

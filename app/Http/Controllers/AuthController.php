@@ -2,105 +2,106 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class AuthController extends Controller
 {
     /**
-     * Tampilkan halaman login
+     * Show login form
      */
-    public function showLogin()
+    public function showLoginForm(Request $request)
     {
+        // Store the intended URL if it exists in query parameter
+        if ($request->has('redirect')) {
+            $redirectUrl = $request->get('redirect');
+            
+            // Validate and store in session with custom key
+            if ($this->isValidRedirectUrl($redirectUrl)) {
+                session(['healing_redirect' => $redirectUrl]);
+                Log::info('Stored redirect URL in session', ['url' => $redirectUrl]);
+            }
+        }
+        
         return view('auth.login');
     }
 
     /**
-     * Alias untuk showLogin (backward compatibility dengan routes)
-     */
-    public function showLoginForm()
-    {
-        return $this->showLogin();
-    }
-
-    /**
-     * Proses login dengan redirect ke halaman sebelumnya
+     * Handle login request
      */
     public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        // Attempt login dengan remember me option
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            
-            // Redirect ke intended URL (halaman sebelum login) atau home
-            return redirect()->intended(route('home'))
-                ->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');
+
+            // Get redirect URL with proper priority
+            $redirectUrl = $this->getRedirectUrl($request);
+
+            Log::info('User logged in', [
+                'user' => Auth::user()->email,
+                'redirect_to' => $redirectUrl
+            ]);
+
+            return redirect($redirectUrl)->with('success', 'Welcome back, ' . Auth::user()->name . '!');
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password yang Anda masukkan salah.',
+            'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
 
     /**
-     * Tampilkan halaman register
+     * Show register form
      */
-    public function showRegister()
+    public function showRegisterForm(Request $request)
     {
+        // Store the intended URL if it exists
+        if ($request->has('redirect')) {
+            $redirectUrl = $request->get('redirect');
+            
+            if ($this->isValidRedirectUrl($redirectUrl)) {
+                session(['healing_redirect' => $redirectUrl]);
+            }
+        }
+        
         return view('auth.register');
     }
 
     /**
-     * Alias untuk showRegister (backward compatibility dengan routes)
-     */
-    public function showRegisterForm()
-    {
-        return $this->showRegister();
-    }
-
-    /**
-     * Proses registrasi dan auto-login
+     * Handle register request
      */
     public function register(Request $request)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed'
-        ], [
-            'name.required' => 'Nama harus diisi.',
-            'email.required' => 'Email harus diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'email.unique' => 'Email sudah terdaftar.',
-            'password.required' => 'Password harus diisi.',
-            'password.min' => 'Password minimal 6 karakter.',
-            'password.confirmed' => 'Konfirmasi password tidak cocok.'
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Create user
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
-        // Auto login setelah register
         Auth::login($user);
 
-        // Redirect ke intended URL atau home
-        return redirect()->intended(route('home'))
-            ->with('success', 'Akun berhasil dibuat! Selamat datang, ' . $user->name . '!');
+        // Get redirect URL
+        $redirectUrl = $this->getRedirectUrl($request);
+
+        return redirect($redirectUrl)->with('success', 'Account created successfully! Welcome to Healing Tour and Travel.');
     }
 
     /**
-     * Proses logout
+     * Handle logout request
      */
     public function logout(Request $request)
     {
@@ -109,7 +110,80 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')
-            ->with('success', 'Anda telah berhasil logout.');
+        return redirect()->route('login')->with('success', 'You have been logged out successfully.');
+    }
+
+    /**
+     * Get redirect URL with proper priority
+     */
+    private function getRedirectUrl(Request $request)
+    {
+        $redirectUrl = null;
+        
+        // Priority 1: Hidden form input
+        if ($request->has('redirect') && !empty($request->input('redirect'))) {
+            $redirectUrl = $request->input('redirect');
+            Log::info('Redirect from form input', ['url' => $redirectUrl]);
+        }
+        
+        // Priority 2: Our custom session key
+        if (!$redirectUrl && session()->has('healing_redirect')) {
+            $redirectUrl = session()->pull('healing_redirect');
+            Log::info('Redirect from custom session', ['url' => $redirectUrl]);
+        }
+        
+        // Priority 3: Laravel's default intended URL
+        if (!$redirectUrl && session()->has('url.intended')) {
+            $redirectUrl = session()->pull('url.intended');
+            Log::info('Redirect from Laravel intended', ['url' => $redirectUrl]);
+        }
+        
+        // Priority 4: Default to home
+        if (!$redirectUrl) {
+            $redirectUrl = route('home');
+            Log::info('Redirect to default home');
+        }
+
+        // Validate and return
+        return $this->validateRedirectUrl($redirectUrl);
+    }
+
+    /**
+     * Check if redirect URL is valid and safe
+     */
+    private function isValidRedirectUrl($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        // Allow relative URLs that start with /
+        if (strpos($url, '/') === 0 && strpos($url, '//') !== 0) {
+            return true;
+        }
+        
+        // Allow absolute URLs from our domain
+        $appUrl = rtrim(config('app.url'), '/');
+        $parsedUrl = parse_url($url);
+        $parsedAppUrl = parse_url($appUrl);
+        
+        if (isset($parsedUrl['host']) && isset($parsedAppUrl['host'])) {
+            return $parsedUrl['host'] === $parsedAppUrl['host'];
+        }
+        
+        return false;
+    }
+
+    /**
+     * Validate redirect URL to prevent open redirect attacks
+     */
+    private function validateRedirectUrl($url)
+    {
+        if ($this->isValidRedirectUrl($url)) {
+            return $url;
+        }
+        
+        Log::warning('Invalid redirect URL, defaulting to home', ['url' => $url]);
+        return route('home');
     }
 }

@@ -6,7 +6,6 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -73,8 +72,14 @@ Route::middleware(['auth'])->group(function () {
     // Alias untuk backward compatibility
     Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
     
-    // ==================== CHECKOUT ROUTES ====================
-    Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.index');
+    // ==================== BOOKING ROUTES ====================
+    Route::prefix('booking')->name('booking.')->group(function () {
+        Route::get('/', [BookingController::class, 'index'])->name('index');
+        Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout'); // ← TAMBAHKAN INI
+        Route::get('/create/{id}', [BookingController::class, 'show'])->name('create');
+        Route::post('/store', [BookingController::class, 'store'])->name('store');
+        Route::get('/{bookingCode}', [BookingController::class, 'detail'])->name('show');
+    });
     
     // ==================== PAYMENT ROUTES ====================
     Route::prefix('payment')->name('payment.')->group(function () {
@@ -82,20 +87,5 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/process', [PaymentController::class, 'process'])->name('process');
         Route::get('/success', [PaymentController::class, 'success'])->name('success');
         Route::get('/failed', [PaymentController::class, 'failed'])->name('failed');
-    });
-    
-    // ==================== BOOKING ROUTES ====================
-    Route::prefix('booking')->name('booking.')->group(function () {
-        // tampilkan form booking destinasi tertentu
-        Route::get('/create/{id}', [BookingController::class, 'show'])->name('create');
-
-        // simpan booking baru
-        Route::post('/store', [BookingController::class, 'store'])->name('store');
-
-        // daftar semua booking user
-        Route::get('/', [BookingController::class, 'index'])->name('index');
-
-        // detail booking berdasarkan kode
-        Route::get('/{bookingCode}', [BookingController::class, 'detail'])->name('show');
     });
 });

@@ -25,6 +25,12 @@
     }
     .bookmark-btn {
       transition: all 0.3s ease;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .bookmark-btn:hover {
       transform: scale(1.1);
@@ -40,26 +46,48 @@
   @include('partials.navbar')
 
   <!-- Hero Section with Search -->
-  <section class="relative w-full h-96 bg-cover bg-center" style="background-image: url('{{ asset('assets/banner.png') }}');">
-    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-    <div class="relative z-10 flex items-center justify-center h-full px-4">
-      <div class="w-full max-w-4xl">
-        <div class="bg-white rounded-lg shadow-lg p-6">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="md:col-span-1">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Destination</label>
-              <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-                <option value="">Select destination</option>
-                @foreach($destinations as $dest)
-                  <option value="{{ $dest->id }}">{{ $dest->name }}</option>
-                @endforeach
-              </select>
+  <section class="relative w-full h-[500px] bg-cover bg-center" style="background-image: url('{{ asset('assets/banner.png') }}');">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
+      <!-- Hero Text -->
+      <div class="text-center mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+          Discover Your Next Adventure
+        </h1>
+        <p class="text-lg md:text-xl text-white/90 drop-shadow-md">
+          Find the perfect destination for your dream vacation
+        </p>
+      </div>
+
+      <!-- Search Box -->
+      <div class="w-full max-w-5xl">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <!-- Search Bar for Destination -->
+            <div class="md:col-span-5">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <i class="fas fa-map-marker-alt text-orange-500 mr-1"></i>
+                Where to?
+              </label>
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="destinationSearch"
+                  placeholder="Search destination..." 
+                  class="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
+                >
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              </div>
             </div>
             
-            <div class="md:col-span-1">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
-              <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-                <option value="">Select type</option>
+            <!-- Type Dropdown -->
+            <div class="md:col-span-3">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <i class="fas fa-tag text-orange-500 mr-1"></i>
+                Type
+              </label>
+              <select id="typeFilter" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition appearance-none bg-white">
+                <option value="">All Types</option>
                 <option value="cultural">Cultural</option>
                 <option value="nature">Nature</option>
                 <option value="city">City Tour</option>
@@ -67,10 +95,14 @@
               </select>
             </div>
             
-            <div class="md:col-span-1">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
-              <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-                <option value="">Select duration</option>
+            <!-- Duration Dropdown -->
+            <div class="md:col-span-2">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <i class="fas fa-clock text-orange-500 mr-1"></i>
+                Duration
+              </label>
+              <select id="durationFilter" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition appearance-none bg-white">
+                <option value="">Any</option>
                 <option value="1-3">1-3 days</option>
                 <option value="4-7">4-7 days</option>
                 <option value="8-14">8-14 days</option>
@@ -78,8 +110,9 @@
               </select>
             </div>
             
-            <div class="md:col-span-1 flex items-end">
-              <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+            <!-- Search Button -->
+            <div class="md:col-span-2 flex items-end">
+              <button onclick="applyFilters()" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-200">
                 <i class="fas fa-search mr-2"></i>Search
               </button>
             </div>
@@ -119,17 +152,18 @@
                class="w-full h-48 object-cover">
           
           @auth
-            <button class="bookmark-btn absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 p-2 rounded-full transition"
-                    data-destination-id="{{ $destination->id }}"
-                    onclick="toggleBookmark({{ $destination->id }}, this)">
-              <i class="far fa-bookmark text-white"></i>
-            </button>
-          @else
-            <a href="{{ route('login') }}" 
-               class="absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 p-2 rounded-full transition">
-              <i class="far fa-bookmark text-white"></i>
-            </a>
-          @endauth
+          <button class="bookmark-btn absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 transition"
+                  data-destination-id="{{ $destination->id }}"
+                  onclick="toggleBookmark({{ $destination->id }}, this)">
+            <i class="far fa-bookmark text-white"></i>
+          </button>
+        @else
+          <a href="{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}" 
+            class="bookmark-btn absolute top-3 right-3 bg-white bg-opacity-30 hover:bg-opacity-90 transition"
+            title="Login to bookmark this destination">
+            <i class="far fa-bookmark text-white"></i>
+          </a>
+        @endauth
           
           <div class="absolute top-3 left-3 bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">
             <i class="fas fa-star"></i> {{ $destination->rating }}
@@ -168,6 +202,68 @@
   <script>
     // Setup CSRF token for AJAX requests
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    // Apply filters function
+    function applyFilters() {
+      const searchTerm = document.getElementById('destinationSearch').value.toLowerCase();
+      const typeFilter = document.getElementById('typeFilter').value.toLowerCase();
+      const durationFilter = document.getElementById('durationFilter').value;
+      const cards = document.querySelectorAll('.destination-card');
+      
+      cards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const location = card.querySelector('.fa-map-marker-alt').parentElement.textContent.toLowerCase();
+        const description = card.querySelector('.line-clamp-2').textContent.toLowerCase();
+        const duration = card.querySelector('.fa-clock').parentElement.textContent.trim();
+        
+        // Check search term
+        const matchesSearch = !searchTerm || 
+                            name.includes(searchTerm) || 
+                            location.includes(searchTerm) || 
+                            description.includes(searchTerm);
+        
+        // Check duration filter
+        let matchesDuration = !durationFilter;
+        if (durationFilter && duration) {
+          if (durationFilter === '1-3' && (duration.includes('1') || duration.includes('2') || duration.includes('3'))) {
+            matchesDuration = true;
+          } else if (durationFilter === '4-7' && (duration.includes('4') || duration.includes('5') || duration.includes('6') || duration.includes('7'))) {
+            matchesDuration = true;
+          } else if (durationFilter === '8-14') {
+            const days = parseInt(duration.match(/\d+/));
+            matchesDuration = days >= 8 && days <= 14;
+          } else if (durationFilter === '15+') {
+            const days = parseInt(duration.match(/\d+/));
+            matchesDuration = days >= 15;
+          }
+        }
+        
+        // Show/hide card based on all filters
+        if (matchesSearch && matchesDuration) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Real-time search as user types
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('destinationSearch');
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+      }
+      
+      const typeFilter = document.getElementById('typeFilter');
+      if (typeFilter) {
+        typeFilter.addEventListener('change', applyFilters);
+      }
+      
+      const durationFilter = document.getElementById('durationFilter');
+      if (durationFilter) {
+        durationFilter.addEventListener('change', applyFilters);
+      }
+    });
 
     // Filter destinations function
     function filterDestinations(category) {

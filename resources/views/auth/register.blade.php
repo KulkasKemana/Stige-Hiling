@@ -1,38 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Healing Tour and Travel Register</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
   <style>
     body { font-family: "Inter", sans-serif; }
+    
+    /* Carousel animations */
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 0; }
+    }
+    
+    .carousel-enter {
+      animation: slideIn 0.7s ease-out forwards;
+    }
+    
+    .carousel-exit {
+      animation: slideOut 0.7s ease-out forwards;
+    }
+    
+    /* Dot indicator active state */
+    .dot-active {
+      width: 1.25rem;
+      background-color: #3b6dfd;
+    }
+    
+    .dot-inactive {
+      width: 1rem;
+      background-color: #a9b3f7;
+    }
   </style>
 </head>
 <body class="bg-[#f5f5f7] min-h-screen flex items-center justify-center p-6">
   <main class="bg-white rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.15)] max-w-5xl w-full flex flex-col md:flex-row overflow-hidden">
 
-    <!-- LEFT: Carousel -->
+    <!-- LEFT: Carousel (SAMA DENGAN LOGIN) -->
     <section class="hidden md:flex md:w-1/2 w-full bg-white flex-col justify-center relative p-3">
-      <div class="overflow-hidden rounded-tl-[29px] rounded-bl-[29px] rounded-br-[120px] relative w-full aspect-[3/4] shadow-md">
-        <img id="imgA" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="transform: translateX(0);" />
-        <img id="imgB" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="transform: translateX(100%);" />
-        <div id="carousel-caption" class="absolute bottom-20 left-4 right-4 text-white font-semibold text-xs sm:text-sm leading-tight drop-shadow-[0_0_3px_rgba(0,0,0,0.8)]">
-          <!-- caption here -->
+      <div class="overflow-hidden rounded-tl-[24px] rounded-bl-[24px] rounded-br-[120px] relative w-full aspect-[3/4] shadow-md">
+        <!-- Carousel Images -->
+        <img id="imgA" 
+             src="{{ asset('assets/carousel-1.jpg') }}" 
+             alt="Travel destination 1"
+             class="absolute inset-0 w-full h-full object-cover transition-all duration-700" 
+             style="transform: translateX(0); opacity: 1;" />
+        <img id="imgB" 
+             src="{{ asset('assets/carousel-2.jpg') }}" 
+             alt="Travel destination 2"
+             class="absolute inset-0 w-full h-full object-cover transition-all duration-700" 
+             style="transform: translateX(100%); opacity: 0;" />
+        
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+        
+        <!-- Caption -->
+        <div id="carousel-caption" class="absolute bottom-16 left-6 right-6 text-white">
+          <h3 class="font-bold text-base mb-1 drop-shadow-lg">Discover Amazing Places</h3>
+          <p class="text-xs opacity-90 drop-shadow-md">Start your healing journey today</p>
         </div>
-        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
-          <span onclick="setCarousel(0,true)" id="dot-0" class="cursor-pointer w-5 h-2 rounded-full bg-[#3b6dfd]"></span>
-          <span onclick="setCarousel(1,true)" id="dot-1" class="cursor-pointer w-4 h-2 rounded-full bg-[#a9b3f7]"></span>
-          <span onclick="setCarousel(2,true)" id="dot-2" class="cursor-pointer w-4 h-2 rounded-full bg-[#a9b3f7]"></span>
+        
+        <!-- Dot Indicators -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          <button onclick="setCarousel(0)" 
+                  id="dot-0" 
+                  class="dot-active h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80"
+                  aria-label="Slide 1"></button>
+          <button onclick="setCarousel(1)" 
+                  id="dot-1" 
+                  class="dot-inactive h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80"
+                  aria-label="Slide 2"></button>
+          <button onclick="setCarousel(2)" 
+                  id="dot-2" 
+                  class="dot-inactive h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80"
+                  aria-label="Slide 3"></button>
         </div>
       </div>
     </section>
 
-    <!-- RIGHT: Register Form -->
-    <section class="md:w-1/2 w-full p-10 md:p-14 flex flex-col justify-center">
-      <div class="w-full max-w-md mx-auto">
+    <!-- RIGHT: Register Form (MATCHING LOGIN STYLE) -->
+    <section class="md:w-1/2 w-full flex flex-col justify-center items-center p-8 md:p-14">
+      <div class="w-full max-w-md">
         <div class="flex items-center space-x-3 mb-6">
           <img src="{{ asset('assets/Logo_Healing_no_bg.png') }}" alt="logo" class="w-10 h-10 object-contain" />
           <div class="text-sm font-bold leading-tight">
@@ -40,8 +96,10 @@
           </div>
         </div>
 
-        <h1 class="text-2xl font-extrabold mb-2 leading-tight">Create Your Account</h1>
-        <p class="text-sm mb-8">Please fill in the form below to sign up</p>
+        <h1 class="text-2xl font-extrabold mb-2 leading-tight">
+          CREATE YOUR<br />ACCOUNT
+        </h1>
+        <p class="text-sm mb-8">Please enter your details to sign up</p>
 
         {{-- Error Messages --}}
         @if($errors->any())
@@ -56,6 +114,11 @@
 
         <form method="POST" action="{{ route('register') }}" class="w-full space-y-4" id="registerForm">
           @csrf
+          
+          {{-- Hidden redirect URL --}}
+          @if(request()->has('redirect'))
+            <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
+          @endif
           
           <div>
             <input type="text" name="name" placeholder="Full Name" value="{{ old('name') }}"
@@ -87,13 +150,14 @@
             </button>
             @error('password')
               <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @else
+              <p class="text-gray-500 text-xs mt-1">Minimum 8 characters</p>
             @enderror
-            <p class="text-xs text-gray-600 mt-1">Minimum 6 characters</p>
           </div>
 
           <div class="relative">
             <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password"
-                   class="w-full border @error('password_confirmation') border-red-500 @else border-black @enderror rounded-lg px-5 py-3 pr-12 text-base placeholder-black focus:outline-none focus:ring-2 focus:ring-[#ff914d]" 
+                   class="w-full border border-black rounded-lg px-5 py-3 pr-12 text-base placeholder-black focus:outline-none focus:ring-2 focus:ring-[#ff914d]" 
                    required />
             <button type="button" onclick="togglePassword('password_confirmation', 'eyeIcon2')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800">
               <svg id="eyeIcon2" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -101,21 +165,19 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
             </button>
-            @error('password_confirmation')
-              <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-            @enderror
+            <p id="passwordMatch" class="text-xs mt-1 hidden"></p>
           </div>
 
-          <div class="flex items-start">
-            <input type="checkbox" id="terms" class="w-4 h-4 mt-1 text-[#ff914d] border-gray-300 rounded focus:ring-[#ff914d]" required>
+          <div class="flex items-center">
+            <input type="checkbox" name="terms" id="terms" class="w-4 h-4 text-[#ff914d] border-gray-300 rounded focus:ring-[#ff914d]" required>
             <label for="terms" class="ml-2 text-sm text-gray-700">
-              I agree to the <a href="/terms" class="text-blue-600 hover:underline">Terms and Conditions</a> and <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a>
+              I agree to the <a href="#" class="text-blue-600 hover:underline">Terms of Service</a>
             </label>
           </div>
 
           <button type="submit" id="submitBtn"
                   class="w-full bg-[#ff914d] text-white font-semibold rounded-lg py-3 text-lg hover:bg-[#ff7a1a] transition disabled:opacity-50 disabled:cursor-not-allowed">
-            <span id="btnText">Create Account</span>
+            <span id="btnText">Sign Up</span>
             <span id="btnLoader" class="hidden">
               <svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -131,24 +193,111 @@
           <hr class="flex-grow border-t border-black" />
         </div>
 
-        <button type="button" class="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-3 shadow-sm hover:shadow-md transition">
+        <button type="button"
+                class="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-3 shadow-sm hover:shadow-md transition">
           <img src="{{ asset('assets/LogoGoogle-removebg-preview.png') }}" alt="google" class="w-5 h-5 object-contain" />
           Sign up with Google
         </button>
 
         <p class="text-center mt-6 text-sm">
           Already have an account?
-          <a href="{{ route('login') }}" class="text-blue-600 hover:underline font-semibold">Log in</a>
+          <a href="{{ route('login') }}" class="text-blue-600 hover:underline font-semibold">Sign In</a>
         </p>
       </div>
     </section>
   </main>
 
-  <script src="{{ asset('js/carousel.js') }}"></script>
   <script>
+    // Carousel functionality (SAMA DENGAN LOGIN)
+    const images = [
+      '{{ asset("assets/GitarBoy.jpg") }}',
+      '{{ asset("assets/jeep.png") }}',
+      '{{ asset("assets/Pantai.jpg") }}'
+    ];
+    
+    const captions = [
+      { title: 'Discover Amazing Places', subtitle: 'Start your healing journey today' },
+      { title: 'Explore the World', subtitle: 'Create unforgettable memories' },
+      { title: 'Find Your Peace', subtitle: 'Travel to heal your soul' }
+    ];
+    
+    let currentIndex = 0;
+    let autoplayInterval;
+    
+    function setCarousel(index) {
+      if (index === currentIndex) return;
+      
+      const imgA = document.getElementById('imgA');
+      const imgB = document.getElementById('imgB');
+      const captionDiv = document.getElementById('carousel-caption');
+      
+      // Update dots
+      document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+        if (i === index) {
+          dot.className = 'dot-active h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80';
+        } else {
+          dot.className = 'dot-inactive h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80';
+        }
+      });
+      
+      // Determine which image is currently visible
+      const currentImg = imgA.style.opacity === '1' ? imgA : imgB;
+      const nextImg = currentImg === imgA ? imgB : imgA;
+      
+      // Set next image
+      nextImg.src = images[index];
+      nextImg.style.transform = 'translateX(100%)';
+      nextImg.style.opacity = '0';
+      
+      // Animate
+      setTimeout(() => {
+        currentImg.style.transform = 'translateX(-100%)';
+        currentImg.style.opacity = '0';
+        nextImg.style.transform = 'translateX(0)';
+        nextImg.style.opacity = '1';
+      }, 50);
+      
+      // Update caption
+      captionDiv.innerHTML = `
+        <h3 class="font-bold text-base mb-1 drop-shadow-lg">${captions[index].title}</h3>
+        <p class="text-xs opacity-90 drop-shadow-md">${captions[index].subtitle}</p>
+      `;
+      
+      currentIndex = index;
+      
+      // Reset autoplay
+      resetAutoplay();
+    }
+    
+    function nextSlide() {
+      const next = (currentIndex + 1) % images.length;
+      setCarousel(next);
+    }
+    
+    function startAutoplay() {
+      autoplayInterval = setInterval(nextSlide, 4000);
+    }
+    
+    function resetAutoplay() {
+      clearInterval(autoplayInterval);
+      startAutoplay();
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      startAutoplay();
+    });
+    
+    // Pause on hover
+    const carouselSection = document.querySelector('section');
+    if (carouselSection) {
+      carouselSection.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+      carouselSection.addEventListener('mouseleave', startAutoplay);
+    }
+    
     // Toggle password visibility
-    function togglePassword(inputId, iconId) {
-      const passwordInput = document.getElementById(inputId);
+    function togglePassword(fieldId, iconId) {
+      const passwordInput = document.getElementById(fieldId);
       const eyeIcon = document.getElementById(iconId);
       
       if (passwordInput.type === 'password') {
@@ -179,13 +328,25 @@
     // Real-time password match validation
     const password = document.getElementById('password');
     const passwordConfirmation = document.getElementById('password_confirmation');
+    const passwordMatch = document.getElementById('passwordMatch');
 
     passwordConfirmation.addEventListener('input', function() {
+      if (passwordConfirmation.value === '') {
+        passwordMatch.classList.add('hidden');
+        passwordConfirmation.setCustomValidity('');
+        return;
+      }
+      
       if (password.value !== passwordConfirmation.value) {
+        passwordMatch.textContent = '✗ Passwords do not match';
+        passwordMatch.className = 'text-red-500 text-xs mt-1';
         passwordConfirmation.setCustomValidity('Passwords do not match');
       } else {
+        passwordMatch.textContent = '✓ Passwords match';
+        passwordMatch.className = 'text-green-500 text-xs mt-1';
         passwordConfirmation.setCustomValidity('');
       }
+      passwordMatch.classList.remove('hidden');
     });
   </script>
 </body>

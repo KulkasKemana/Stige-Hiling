@@ -9,28 +9,84 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
   <style>
     body { font-family: "Inter", sans-serif; }
+    
+    /* Carousel animations */
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 0; }
+    }
+    
+    .carousel-enter {
+      animation: slideIn 0.7s ease-out forwards;
+    }
+    
+    .carousel-exit {
+      animation: slideOut 0.7s ease-out forwards;
+    }
+    
+    /* Dot indicator active state */
+    .dot-active {
+      width: 1.25rem;
+      background-color: #3b6dfd;
+    }
+    
+    .dot-inactive {
+      width: 1rem;
+      background-color: #a9b3f7;
+    }
   </style>
 </head>
 <body class="bg-[#f5f5f7] min-h-screen flex items-center justify-center p-6">
   <main class="bg-white rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.15)] max-w-5xl w-full flex flex-col md:flex-row overflow-hidden">
 
     <!-- LEFT: Carousel -->
-    <section class="hidden md:flex md:w-1/2 w-full bg-white flex-col justify-center relative p-2 md:p-3">
+    <section class="hidden md:flex md:w-1/2 w-full bg-white flex-col justify-center relative p-3">
       <div class="overflow-hidden rounded-tl-[24px] rounded-bl-[24px] rounded-br-[120px] relative w-full aspect-[3/4] shadow-md">
-        <img id="imgA" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="transform: translateX(0);" />
-        <img id="imgB" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700" style="transform: translateX(100%);" />
-        <div id="carousel-caption" class="absolute bottom-20 left-4 right-4 text-white font-semibold text-xs sm:text-sm leading-tight drop-shadow-[0_0_3px_rgba(0,0,0,0.8)]">
-          <!-- caption here -->
+        <!-- Carousel Images -->
+        <img id="imgA" 
+             src="{{ asset('assets/carousel-1.jpg') }}" 
+             alt="Travel destination 1"
+             class="absolute inset-0 w-full h-full object-cover transition-all duration-700" 
+             style="transform: translateX(0); opacity: 1;" />
+        <img id="imgB" 
+             src="{{ asset('assets/carousel-2.jpg') }}" 
+             alt="Travel destination 2"
+             class="absolute inset-0 w-full h-full object-cover transition-all duration-700" 
+             style="transform: translateX(100%); opacity: 0;" />
+        
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+        
+        <!-- Caption -->
+        <div id="carousel-caption" class="absolute bottom-16 left-6 right-6 text-white">
+          <h3 class="font-bold text-base mb-1 drop-shadow-lg">Discover Amazing Places</h3>
+          <p class="text-xs opacity-90 drop-shadow-md">Start your healing journey today</p>
         </div>
-        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
-          <span onclick="setCarousel(0, true)" id="dot-0" class="cursor-pointer w-5 h-2 rounded-full bg-[#3b6dfd] transition"></span>
-          <span onclick="setCarousel(1, true)" id="dot-1" class="cursor-pointer w-4 h-2 rounded-full bg-[#a9b3f7] transition"></span>
-          <span onclick="setCarousel(2, true)" id="dot-2" class="cursor-pointer w-4 h-2 rounded-full bg-[#a9b3f7] transition"></span>
+        
+        <!-- Dot Indicators -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          <button onclick="setCarousel(0)" 
+                  id="dot-0" 
+                  class="dot-active h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80"
+                  aria-label="Slide 1"></button>
+          <button onclick="setCarousel(1)" 
+                  id="dot-1" 
+                  class="dot-inactive h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80"
+                  aria-label="Slide 2"></button>
+          <button onclick="setCarousel(2)" 
+                  id="dot-2" 
+                  class="dot-inactive h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80"
+                  aria-label="Slide 3"></button>
         </div>
       </div>
     </section>
 
-    <!-- RIGHT: Login Form -->
+    <!-- RIGHT: Login Form (TIDAK DIUBAH) -->
     <section class="md:w-1/2 w-full flex flex-col justify-center items-center p-8 md:p-14">
       <div class="w-full max-w-md">
         <div class="flex items-center space-x-3 mb-6">
@@ -130,9 +186,95 @@
     </section>
   </main>
 
-  <script src="{{ asset('js/carousel.js') }}"></script>
   <script>
-    // Toggle password visibility
+    // Carousel functionality
+    const images = [
+      '{{ asset("assets/GitarBoy.jpg") }}',
+      '{{ asset("assets/jeep.png") }}',
+      '{{ asset("assets/Pantai.jpg") }}'
+    ];
+    
+    const captions = [
+      { title: 'Discover Amazing Places', subtitle: 'Start your healing journey today' },
+      { title: 'Explore the World', subtitle: 'Create unforgettable memories' },
+      { title: 'Find Your Peace', subtitle: 'Travel to heal your soul' }
+    ];
+    
+    let currentIndex = 0;
+    let autoplayInterval;
+    
+    function setCarousel(index) {
+      if (index === currentIndex) return;
+      
+      const imgA = document.getElementById('imgA');
+      const imgB = document.getElementById('imgB');
+      const captionDiv = document.getElementById('carousel-caption');
+      
+      // Update dots
+      document.querySelectorAll('[id^="dot-"]').forEach((dot, i) => {
+        if (i === index) {
+          dot.className = 'dot-active h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80';
+        } else {
+          dot.className = 'dot-inactive h-2 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80';
+        }
+      });
+      
+      // Determine which image is currently visible
+      const currentImg = imgA.style.opacity === '1' ? imgA : imgB;
+      const nextImg = currentImg === imgA ? imgB : imgA;
+      
+      // Set next image
+      nextImg.src = images[index];
+      nextImg.style.transform = 'translateX(100%)';
+      nextImg.style.opacity = '0';
+      
+      // Animate
+      setTimeout(() => {
+        currentImg.style.transform = 'translateX(-100%)';
+        currentImg.style.opacity = '0';
+        nextImg.style.transform = 'translateX(0)';
+        nextImg.style.opacity = '1';
+      }, 50);
+      
+      // Update caption
+      captionDiv.innerHTML = `
+        <h3 class="font-bold text-base mb-1 drop-shadow-lg">${captions[index].title}</h3>
+        <p class="text-xs opacity-90 drop-shadow-md">${captions[index].subtitle}</p>
+      `;
+      
+      currentIndex = index;
+      
+      // Reset autoplay
+      resetAutoplay();
+    }
+    
+    function nextSlide() {
+      const next = (currentIndex + 1) % images.length;
+      setCarousel(next);
+    }
+    
+    function startAutoplay() {
+      autoplayInterval = setInterval(nextSlide, 4000);
+    }
+    
+    function resetAutoplay() {
+      clearInterval(autoplayInterval);
+      startAutoplay();
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      startAutoplay();
+    });
+    
+    // Pause on hover
+    const carouselSection = document.querySelector('section');
+    if (carouselSection) {
+      carouselSection.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+      carouselSection.addEventListener('mouseleave', startAutoplay);
+    }
+    
+    // Toggle password visibility (TIDAK DIUBAH)
     function togglePassword() {
       const passwordInput = document.getElementById('password');
       const eyeIcon = document.getElementById('eyeIcon');
@@ -151,7 +293,7 @@
       }
     }
 
-    // Form submit loading state
+    // Form submit loading state (TIDAK DIUBAH)
     document.getElementById('loginForm').addEventListener('submit', function() {
       const submitBtn = document.getElementById('submitBtn');
       const btnText = document.getElementById('btnText');

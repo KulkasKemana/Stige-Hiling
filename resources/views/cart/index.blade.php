@@ -165,7 +165,7 @@
             </div>
 
             <!-- Checkout Button -->
-            <a href="{{ route('checkout.index') }}"
+            <a href="{{ route('booking.checkout') }}"
                class="block w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-lg transition duration-200 text-center">
                 Continue to Payment
                 <i class="fas fa-arrow-right ml-2"></i>

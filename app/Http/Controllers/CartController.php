@@ -46,7 +46,6 @@ class CartController extends Controller
             ->first();
 
         if ($cartItem) {
-            // Update quantity dan total_price
             $cartItem->quantity += $validated['quantity'];
             $cartItem->total_price = $cartItem->price * $cartItem->quantity;
             $cartItem->save();
@@ -115,37 +114,53 @@ class CartController extends Controller
     }
 
     /**
-     * Proses checkout dan redirect langsung ke payment
+     * Tampilkan halaman checkout
      */
     public function checkout()
     {
         $user = Auth::user();
-        
-        // Ambil semua cart items user yang active
+
         $cartItems = Cart::with('destination')
             ->where('user_id', $user->id)
             ->where('status', 'active')
             ->get();
-        
-        // Jika cart kosong, redirect ke halaman cart
+
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')
                 ->with('error', 'Your cart is empty. Please add items before checkout.');
         }
-        
-        // Hitung total
+
         $subtotal = $cartItems->sum('total_price');
-        
-        // Biaya admin (2% dari subtotal, minimal Rp 5.000)
         $adminFee = max(5000, $subtotal * 0.02);
-        
-        // Total keseluruhan
         $total = $subtotal + $adminFee;
-        
-        // Generate booking code
+
+        // kamu bisa pilih:
+        // 1. langsung redirect ke payment
+        // 2. tampilkan halaman checkout detail
+        // di bawah ini aku aktifkan opsi 2 (tampilkan halaman dulu)
+        return view('checkout', compact('cartItems', 'subtotal', 'adminFee', 'total'));
+    }
+
+    /**
+     * Konfirmasi checkout & redirect ke payment
+     */
+    public function confirmCheckout()
+    {
+        $user = Auth::user();
+
+        $cartItems = Cart::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+        }
+
+        $subtotal = $cartItems->sum('total_price');
+        $adminFee = max(5000, $subtotal * 0.02);
+        $total = $subtotal + $adminFee;
         $bookingCode = 'BK-' . strtoupper(uniqid());
-        
-        // Simpan data checkout ke session untuk halaman payment
+
         session([
             'checkout_data' => [
                 'booking_code' => $bookingCode,
@@ -161,8 +176,7 @@ class CartController extends Controller
                 'cart_items' => $cartItems->toArray(),
             ]
         ]);
-        
-        // Redirect langsung ke payment
+
         return redirect()->route('payment.index');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Destination;
 use App\Models\Booking;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -13,10 +14,25 @@ class BookingController extends Controller
     /**
      * tampilkan form booking untuk destinasi tertentu
      */
-    public function show($id)
+    public function show($bookingCode)
     {
-        $destination = Destination::findOrFail($id);
-        return view('booking.ticket', compact('destination'));
+        // Get all bookings with the same booking_code for this user
+        $bookings = Booking::where('booking_code', $bookingCode)
+                          ->where('user_id', Auth::id())
+                          ->with('destination')
+                          ->get();
+        
+        // Check if bookings exist
+        if ($bookings->isEmpty()) {
+            return redirect()
+                ->route('booking.index')
+                ->with('error', 'Booking not found');
+        }
+        
+        // Get booking info (common data from first booking)
+        $bookingInfo = $bookings->first();
+        
+        return view('booking.show', compact('bookings', 'bookingInfo'));
     }
 
     /**
@@ -65,21 +81,28 @@ class BookingController extends Controller
     }
 
     /**
-     * tampilkan detail booking berdasarkan kode
+     * tampilkan detail booking berdasarkan kode (alias untuk show)
      */
     public function detail($bookingCode)
     {
-        $bookings = Booking::where('booking_code', $bookingCode)
-            ->where('user_id', Auth::id())
-            ->with('destination')
-            ->get();
+        return $this->show($bookingCode);
+    }
 
-        if ($bookings->isEmpty()) {
-            return redirect()->route('booking.index')->with('error', 'Booking tidak ditemukan');
+    /**
+     * Display checkout page
+     */
+    public function checkout()
+    {
+        $cartItems = Cart::where('user_id', Auth::id())
+                        ->with('destination')
+                        ->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()
+                ->route('cart.index')
+                ->with('error', 'Your cart is empty. Add some destinations first!');
         }
 
-        $bookingInfo = $bookings->first();
-
-        return view('booking.show', compact('bookings', 'bookingInfo'));
+        return view('booking.checkout', compact('cartItems'));
     }
 }

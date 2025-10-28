@@ -1,72 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Models\Bookmark;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class BookmarkController extends Controller
+return new class extends Migration
 {
-    /**
-     * Display a listing of bookmarks
-     */
-    public function index()
+    public function up(): void
     {
-        $bookmarks = Auth::user()->bookmarks()
-                        ->with('destination')
-                        ->latest()
-                        ->get();
-        
-        return view('bookmark', compact('bookmarks'));
+        Schema::create('bookmarks', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('destination_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
-    /**
-     * Toggle bookmark (add or remove)
-     */
-    public function toggle($destinationId)
+    public function down(): void
     {
-        $isBookmarked = Auth::user()->toggleBookmark($destinationId);
-        
-        return response()->json([
-            'success' => true,
-            'bookmarked' => $isBookmarked,
-            'message' => $isBookmarked ? 'Added to bookmarks' : 'Removed from bookmarks'
-        ]);
+        Schema::dropIfExists('bookmarks');
     }
-
-    /**
-     * Check if destination is bookmarked
-     */
-    public function check($destinationId)
-    {
-        $bookmarked = Auth::user()->hasBookmarked($destinationId);
-        
-        return response()->json([
-            'bookmarked' => $bookmarked
-        ]);
-    }
-
-    /**
-     * Remove bookmark
-     */
-    public function destroy($destinationId)
-    {
-        $bookmark = Bookmark::where('user_id', Auth::id())
-                           ->where('destination_id', $destinationId)
-                           ->first();
-        
-        if ($bookmark) {
-            $bookmark->delete();
-            return response()->json([
-                'success' => true,
-                'message' => 'Bookmark removed successfully'
-            ]);
-        }
-        
-        return response()->json([
-            'success' => false,
-            'message' => 'Bookmark not found'
-        ], 404);
-    }
-}
+};

@@ -30,7 +30,7 @@
         <h1 class="font-semibold text-2xl">Checkout</h1>
       </div>
 
-      <form action="{{ route('payment.process') }}" method="POST" class="flex flex-col lg:flex-row gap-8">
+      <form action="{{ route('booking.checkout.process') }}" method="POST" class="flex flex-col lg:flex-row gap-8">
         @csrf
         
         <!-- Left: Personal Info & Reservation -->

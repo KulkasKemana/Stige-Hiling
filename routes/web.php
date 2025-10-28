@@ -9,7 +9,19 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes - Healing Tour and Travel
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
 // ==================== PUBLIC ROUTES ====================
+// Routes that can be accessed without authentication
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -19,33 +31,45 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-// Destinations (public access)
+// Destinations (public access - anyone can view)
 Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');
 Route::get('/destinations/{id}', [DestinationController::class, 'show'])->name('destinations.show');
 
 // ==================== GUEST ROUTES ====================
+// Routes that can only be accessed by guests (not logged in)
 
 Route::middleware(['guest'])->group(function () {
+    
+    // ==================== LOGIN ROUTES ====================
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     
+    // ==================== REGISTER ROUTES ====================
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
     
-    Route::get('/forgot-password', function () {
-        return view('auth.forgot-password');
-    })->name('forgot-password');
+    // ==================== FORGOT PASSWORD FLOW ====================
+    // Step 1: Enter Email
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('forgot-password');
+    Route::post('/forgot-password/send', [AuthController::class, 'sendResetOTP'])->name('forgot-password.send');
     
-    Route::get('/otp', function () {
-        return view('auth.otp');
-    })->name('otp');
+    // Step 2: OTP Verification
+    Route::get('/otp/verify', [AuthController::class, 'showOTPForm'])->name('otp.verify');
+    Route::post('/otp/verify', [AuthController::class, 'verifyOTP'])->name('otp.verify.submit');
+    Route::post('/otp/resend', [AuthController::class, 'resendOTP'])->name('otp.resend');
+    
+    // Step 3: Reset Password
+    Route::get('/password/reset', [AuthController::class, 'showResetPasswordForm'])->name('password.reset.form');
+    Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset.submit');
+    
 });
 
 // ==================== AUTHENTICATED ROUTES ====================
+// Routes that require user to be logged in
 
 Route::middleware(['auth'])->group(function () {
     
-    // Logout
+    // ==================== LOGOUT ====================
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
     // ==================== PROFILE ROUTES ====================
@@ -69,13 +93,14 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/clear', [CartController::class, 'clear'])->name('clear');
     });
     
-    // Alias untuk backward compatibility
+    // Alias route untuk backward compatibility
     Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
     
     // ==================== BOOKING ROUTES ====================
     Route::prefix('booking')->name('booking.')->group(function () {
         Route::get('/', [BookingController::class, 'index'])->name('index');
-        Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout'); // ← TAMBAHKAN INI
+        Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
+        Route::post('/checkout/process', [BookingController::class, 'processCheckout'])->name('checkout.process'); // ← TAMBAH INI
         Route::get('/create/{id}', [BookingController::class, 'show'])->name('create');
         Route::post('/store', [BookingController::class, 'store'])->name('store');
         Route::get('/{bookingCode}', [BookingController::class, 'detail'])->name('show');
@@ -88,4 +113,5 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/success', [PaymentController::class, 'success'])->name('success');
         Route::get('/failed', [PaymentController::class, 'failed'])->name('failed');
     });
+    
 });

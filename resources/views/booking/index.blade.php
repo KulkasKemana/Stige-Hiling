@@ -117,6 +117,18 @@
       <p class="text-gray-600">All your booking history and active tickets</p>
     </div>
 
+    @if(session('success'))
+      <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        {{ session('success') }}
+      </div>
+    @endif
+
+    @if(session('error'))
+      <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+        {{ session('error') }}
+      </div>
+    @endif
+
     @if($groupedBookings->isEmpty())
       <!-- Empty State -->
       <div class="text-center py-16 bg-white rounded-2xl shadow-sm">
@@ -140,15 +152,26 @@
             // Status styling
             $statusClass = $firstBooking->payment_status === 'paid' ? 'status-paid' : 'status-pending';
             $statusText = $firstBooking->payment_status === 'paid' ? 'Paid' : 'Pending';
+            
+            // Check if destination exists
+            $destinationImage = $firstBooking->destination ? ($firstBooking->destination->image ?? 'assets/default-destination.jpg') : 'assets/default-destination.jpg';
+            $destinationName = $firstBooking->destination ? $firstBooking->destination->name : 'Destination';
           @endphp
           
           <div class="ticket-card">
             <div class="ticket-left">
               <span class="status-badge {{ $statusClass }}">{{ $statusText }}</span>
-              <img src="{{ asset('storage/' . $firstBooking->destination->image) }}" 
-                   alt="{{ $firstBooking->destination->name }}">
+              
+              @if(Str::startsWith($destinationImage, 'http'))
+                <img src="{{ $destinationImage }}" alt="{{ $destinationName }}">
+              @else
+                <img src="{{ asset($destinationImage) }}" 
+                     alt="{{ $destinationName }}"
+                     onerror="this.src='{{ asset('assets/default-destination.jpg') }}'">
+              @endif
+              
               <div class="ticket-info">
-                <h2>{{ $firstBooking->destination->name }}</h2>
+                <h2>{{ $destinationName }}</h2>
                 @if($totalDestinations > 1)
                   <p class="text-xs mb-1">+{{ $totalDestinations - 1 }} more destination{{ $totalDestinations > 2 ? 's' : '' }}</p>
                 @endif

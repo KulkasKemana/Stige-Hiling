@@ -49,12 +49,12 @@
       <div class="overflow-hidden rounded-tl-[24px] rounded-bl-[24px] rounded-br-[120px] relative w-full aspect-[3/4] shadow-md">
         <!-- Carousel Images -->
         <img id="imgA" 
-             src="{{ asset('assets/carousel-1.jpg') }}" 
+             src="{{ asset('assets/GitarBoy.jpg') }}" 
              alt="Travel destination 1"
              class="absolute inset-0 w-full h-full object-cover transition-all duration-700" 
              style="transform: translateX(0); opacity: 1;" />
         <img id="imgB" 
-             src="{{ asset('assets/carousel-2.jpg') }}" 
+             src="{{ asset('assets/jeep.png') }}" 
              alt="Travel destination 2"
              class="absolute inset-0 w-full h-full object-cover transition-all duration-700" 
              style="transform: translateX(100%); opacity: 0;" />

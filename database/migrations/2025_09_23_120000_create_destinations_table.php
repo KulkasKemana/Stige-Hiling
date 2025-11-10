@@ -9,16 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('destinations', function (Blueprint $table) {
-            $table->id(); // big integer unsigned
-            $table->string('name');
-            $table->text('description');
-            $table->bigInteger('price');
-            $table->string('duration');
-            $table->string('location');
-            $table->string('image');
-            $table->decimal('rating', 2, 1);
-            $table->string('category');
+            $table->id();
+            $table->string('name', 100);
+            $table->text('description'); 
+            $table->unsignedBigInteger('price');
+            $table->string('duration', 50);
+            $table->string('location', 100);
+            $table->string('image')->nullable();
+            $table->decimal('rating', 3, 1)->default(0.0);
+            $table->string('category', 50);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

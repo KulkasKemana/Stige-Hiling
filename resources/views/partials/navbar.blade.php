@@ -83,6 +83,18 @@
             </a>
           </nav>
 
+          <!-- Admin Link -->
+          @auth
+            @if(auth()->user()->is_admin)
+              <div class="border-t">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition group">
+                  <i class="fas fa-user-shield w-5 text-gray-400 group-hover:text-orange-500 transition"></i>
+                  <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">Admin Panel</span>
+                </a>
+              </div>
+            @endif
+          @endauth
+
           <!-- Logout -->
           <div class="border-t p-2">
             <form method="POST" action="{{ route('logout') }}">
